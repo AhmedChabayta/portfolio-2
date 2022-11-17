@@ -7,10 +7,18 @@
   margin: 0;
   box-sizing: border-box;
   scroll-behavior: smooth;
+  background-color: transparent;
 }
 
 @layer components {
   .heroButton {
     @apply px-6 py-2 my-4 uppercase text-xs tracking-widest font-black;
+  }
+}
+
+@later base {
+  body,
+  html {
+    @apply relative bg-gradient-to-br from-sky-500 to-amber-600;
   }
 }

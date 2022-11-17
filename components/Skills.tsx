@@ -17,7 +17,7 @@ export default function Skills() {
       <div className="flex flex-col items-center justify-center">
         <motion.h3
           initial={{ color: "rgb(107,114,128)" }}
-          whileInView={{ color: ["#acb3c2", "#000", "#576175", "#fff"] }}
+          whileInView={{ color: ["#acb3c2", "#576175", "#fff"] }}
           transition={{ duration: 2 }}
           viewport={{ once: true }}
           className="uppercase tracking-[20px] text-white text-2xl "

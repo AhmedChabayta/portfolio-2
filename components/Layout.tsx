@@ -20,93 +20,102 @@ export default function Layout({ children }: { children: ReactNode }) {
   const audioRef = useRef<HTMLAudioElement>(null);
 
   useEffect(() => {
-    const canvas = canvasRef.current;
-    const audio = audioRef.current;
-    const ctx = canvas?.getContext("2d");
-    let audioSource: any;
-    let analyser: any;
+    if (canvasRef && audioRef) {
+      const canvas = canvasRef.current;
+      const audio = audioRef.current;
+      const ctx = canvas?.getContext("2d");
+      let audioSource: any;
+      let analyser: any;
 
-    let bufferLength: number;
-    let dataArray: Uint8Array;
-    let barWidth: number;
-    let barHeight: number;
-    let x: number;
-    let animationFrame: number;
-    const audioCtx = new (AudioContext || window.webkitAudioContext)();
-    if (audio && canvas) {
-      audio.volume = 0.5;
-      audioSource = audioCtx.createMediaElementSource(audio);
-      analyser = audioCtx.createAnalyser();
-      audioSource.connect(analyser);
-      analyser.connect(audioCtx.destination);
-      analyser.fftSize = 1024 * 4;
-      bufferLength = analyser.frequencyBinCount;
-      dataArray = new Uint8Array(bufferLength);
-      barWidth = 10;
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
+      let bufferLength: number;
+      let dataArray: Uint8Array;
+      let barWidth: number;
+      let barHeight: number;
+      let x: number;
+      let animationFrame: number;
+      const audioCtx = new (AudioContext || window.webkitAudioContext)();
+      if (audio && canvas) {
+        audio.volume = 0.5;
+        audioSource = audioCtx.createMediaElementSource(audio);
+        analyser = audioCtx.createAnalyser();
+        audioSource.connect(analyser);
+        analyser.connect(audioCtx.destination);
+        analyser.fftSize = 1024 * 2;
+        bufferLength = analyser.frequencyBinCount;
+        dataArray = new Uint8Array(bufferLength);
+        barWidth = 10;
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
 
-      function animate() {
-        if (canvas) {
-          x = 0;
-          ctx?.clearRect(0, 0, canvas.width, canvas.height);
-          analyser.getByteFrequencyData(dataArray);
-          drawVisualizer();
-          animationFrame = requestAnimationFrame(animate);
-        }
-      }
-      audio.addEventListener("play", () => {
-        cancelAnimationFrame(animationFrame);
-        animate();
-        audioCtx.resume();
-        setIsPlaying(true);
-      });
-      audio.addEventListener("pause", () => {
-        setIsPlaying(false);
-        cancelAnimationFrame(animationFrame);
-        audioCtx.suspend();
-      });
-
-      function drawVisualizer() {
-        if (ctx && canvas) {
-          for (let i = 0; i < bufferLength; Math.floor(i++)) {
-            barHeight = dataArray[i] * 3;
-            ctx?.save();
-
-            ctx.fillStyle = "#11f900";
-
-            ctx.strokeStyle = "black";
-            ctx?.fillRect(i * 3, canvas.height, barWidth, -barHeight);
-            ctx.stroke();
-            x -= barWidth;
-            ctx?.restore();
+        function animate() {
+          if (canvas) {
+            x = 0;
+            ctx?.clearRect(0, 0, canvas.width, canvas.height);
+            analyser.getByteFrequencyData(dataArray);
+            drawVisualizer();
+            animationFrame = requestAnimationFrame(animate);
           }
         }
-      }
-      window.addEventListener("resize", () => {
-        if (canvas) {
-          canvas.width = window.innerWidth;
-          canvas.height = window.innerHeight;
+        audio.addEventListener("play", () => {
+          cancelAnimationFrame(animationFrame);
+          animate();
+          audioCtx.resume();
+          setIsPlaying(true);
+        });
+        audio.addEventListener("pause", () => {
+          setIsPlaying(false);
+          cancelAnimationFrame(animationFrame);
+          audioCtx.suspend();
+        });
+
+        function drawVisualizer() {
+          if (ctx && canvas) {
+            for (let i = 0; i < bufferLength; Math.floor(i++)) {
+              barHeight = dataArray[i] * 4;
+              ctx.fillStyle = "#ff00d9";
+              ctx.strokeStyle = "#fff";
+              ctx.fillRect(i * 3, canvas.height, barWidth, -barHeight);
+              ctx.stroke();
+              x -= barWidth;
+            }
+          }
         }
-      });
+        window.addEventListener("resize", () => {
+          if (canvas) {
+            cancelAnimationFrame(animationFrame);
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+          }
+        });
+      }
     }
-  }, []);
+  }, [canvasRef, audioRef]);
 
   const router = useRouter();
   return (
-    <>
+    <div className="relative h-screen overflow-y-scroll overflow-x-hidden">
       <motion.canvas
-        initial={{ filter: "hue-rotate(0deg) blur(10px) contrast(2)" }}
-        animate={{ filter: "hue-rotate(360deg) blur(10px) contrast(2)" }}
-        transition={{ duration: 30, repeat: Infinity }}
+        initial={{
+          filter: "contrast(200)",
+        }}
+        animate={{
+          filter: "contrast(200)",
+        }}
+        transition={{
+          duration: 30,
+          repeat: Infinity,
+          repeatType: "mirror",
+          ease: "circInOut",
+        }}
         ref={canvasRef}
-        className="fixed w-screen h-screen z-[-1] bg-gradient-to-br from-sky-500 to-amber-600"
+        className="fixed w-screen h-screen"
       />
       <audio
         src="/On & On.mp3"
         ref={audioRef}
         className="fixed bottom-0 w-screen z-10 bg-transparent"
       />
+      <motion.div className="fixed z-1 top-0 bottom-0 left-0 right-0 h-screen w-screen bg-gradient-to-br from-fuchsia-500/70 to-orange-500/70 backdrop-blur-xl overflow-hidden" />
       <NoSsrWrapper>
         {audioRef.current ? (
           <div
@@ -165,6 +174,6 @@ export default function Layout({ children }: { children: ReactNode }) {
         </div>
       </NoSsrWrapper>
       <>{children}</>
-    </>
+    </div>
   );
 }

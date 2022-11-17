@@ -17,7 +17,7 @@ export default function Hero({}: Props) {
   return (
     <div
       id="hero"
-      className="h-screen flex flex-col space-y-8 items-center justify-center text-center"
+      className="h-screen w-screen relative z-10 flex flex-col space-y-8 items-center justify-center text-center"
     >
       <Image
         className="relative h-44 w-44 mx-auto rounded-2xl object-cover"
