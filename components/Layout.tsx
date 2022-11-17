@@ -39,7 +39,7 @@ export default function Layout({ children }: { children: ReactNode }) {
       analyser = audioCtx.createAnalyser();
       audioSource.connect(analyser);
       analyser.connect(audioCtx.destination);
-      analyser.fftSize = 1024 * 2;
+      analyser.fftSize = 1024 * 4;
       bufferLength = analyser.frequencyBinCount;
       dataArray = new Uint8Array(bufferLength);
       barWidth = 10;
@@ -69,14 +69,15 @@ export default function Layout({ children }: { children: ReactNode }) {
 
       function drawVisualizer() {
         if (ctx && canvas) {
-          for (let i = 0; i < bufferLength; i++) {
+          for (let i = 0; i < bufferLength; Math.floor(i++)) {
             barHeight = dataArray[i] * 3;
             ctx?.save();
 
-            ctx.fillStyle = `#e06c3a`;
-            ctx.stroke();
-            ctx?.fillRect(i * 4, canvas.height, barWidth, -barHeight);
+            ctx.fillStyle = "#11f900";
 
+            ctx.strokeStyle = "black";
+            ctx?.fillRect(i * 3, canvas.height, barWidth, -barHeight);
+            ctx.stroke();
             x -= barWidth;
             ctx?.restore();
           }
@@ -95,11 +96,11 @@ export default function Layout({ children }: { children: ReactNode }) {
   return (
     <>
       <motion.canvas
-        initial={{ filter: "hue-rotate(0deg)" }}
-        animate={{ filter: "hue-rotate(360deg)" }}
+        initial={{ filter: "hue-rotate(0deg) blur(10px) contrast(2)" }}
+        animate={{ filter: "hue-rotate(360deg) blur(10px) contrast(2)" }}
         transition={{ duration: 30, repeat: Infinity }}
         ref={canvasRef}
-        className="fixed w-screen h-screen z-[-1] contrast-100 hue-rotate-[200deg] bg-gradient-to-br from-sky-500 to-amber-600"
+        className="fixed w-screen h-screen z-[-1] bg-gradient-to-br from-sky-500 to-amber-600"
       />
       <audio
         src="/On & On.mp3"
@@ -134,8 +135,7 @@ export default function Layout({ children }: { children: ReactNode }) {
           <Link href="#home">
             <button
               style={{
-                color:
-                  router.asPath === "/#home" ? "rgb(94, 234, 212)" : "#fff",
+                color: router.asPath === "/#home" ? "#ae00f3" : "#fff",
               }}
               className="heroButton"
             >
@@ -145,7 +145,7 @@ export default function Layout({ children }: { children: ReactNode }) {
           <Link href="#about">
             <button
               style={{
-                color: router.asPath === "/#about" ? "rgb(94,234,212)" : "#fff",
+                color: router.asPath === "/#about" ? "#ae00f3" : "#fff",
               }}
               className="heroButton"
             >
@@ -155,8 +155,7 @@ export default function Layout({ children }: { children: ReactNode }) {
           <Link href="#skills">
             <button
               style={{
-                color:
-                  router.asPath === "/#skills" ? "rgb(94,234,212)" : "#fff",
+                color: router.asPath === "/#skills" ? "#ae00f3" : "#fff",
               }}
               className="heroButton"
             >

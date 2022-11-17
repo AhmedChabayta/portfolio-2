@@ -1,12 +1,17 @@
 import { motion, useInView } from "framer-motion";
 import Image from "next/image";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { skills } from "./skillsData";
 
 export default function Skills() {
+  const [showSkills, setShowSkills] = useState<boolean>();
   const iconRef = useRef(null);
-  const isInView = useInView(iconRef, { amount: "all" });
-  useEffect(() => {}, [isInView]);
+  const isInView = useInView(iconRef, { amount: "some" });
+  useEffect(() => {
+    if (isInView) {
+      setShowSkills(true);
+    }
+  }, [isInView]);
   return (
     <div className="h-screen relative flex flex-col overflow-hidden max-w-full justify-evenly items-center">
       <div className="flex flex-col items-center justify-center">
@@ -24,15 +29,21 @@ export default function Skills() {
       <motion.div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 mx-auto py-10">
         {skills.map(({ name, icon, image }) => (
           <motion.div
-            ref={iconRef}
-            animate={{
-              filter: isInView ? `brightness(1)` : `brightness(0.2)`,
-            }}
-            transition={{ duration: 0.8 }}
             className="cursor-pointer group flex flex-col place-items-center"
             key={name}
           >
-            {icon}
+            {showSkills}
+            <motion.div
+              ref={iconRef}
+              initial={{ filter: "brightness(0.2)" }}
+              whileInView={{
+                filter: "brightness(1)",
+              }}
+              transition={{ duration: 0.8 }}
+            >
+              {icon}
+            </motion.div>
+
             {image && <Image width={100} height={100} src={image} alt="" />}
             <p className="my-2 uppercase text-white hidden md:inline md:invisible md:group-hover:visible">
               {name}
