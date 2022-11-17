@@ -9,7 +9,7 @@ import Skills from "../components/Skills";
 
 export default function Home() {
   return (
-    <div className="text-white h-screen z-0">
+    <div className="text-white h-screen z-0 overflow-y-scroll">
       <Head>
         <title>Ahmed&apos;s Portfolio</title>
       </Head>

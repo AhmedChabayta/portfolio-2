@@ -32,7 +32,7 @@ export default function Layout({ children }: { children: ReactNode }) {
     let barHeight: number;
     let x: number;
     let animationFrame: number;
-    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    const audioCtx = new (AudioContext || window.webkitAudioContext)();
     if (audio && canvas) {
       audio.volume = 0.5;
       audioSource = audioCtx.createMediaElementSource(audio);
@@ -93,13 +93,13 @@ export default function Layout({ children }: { children: ReactNode }) {
 
   const router = useRouter();
   return (
-    <div className="overflow-hidden h-screen">
+    <>
       <motion.canvas
         initial={{ filter: "hue-rotate(0deg)" }}
         animate={{ filter: "hue-rotate(360deg)" }}
         transition={{ duration: 30, repeat: Infinity }}
         ref={canvasRef}
-        className="fixed w-screen h-screen z-[0] contrast-100 hue-rotate-[200deg] bg-gradient-to-br from-sky-500 to-amber-500"
+        className="fixed w-screen h-screen z-[-1] contrast-100 hue-rotate-[200deg] bg-gradient-to-br from-sky-500 to-amber-600"
       />
       <audio
         src="/On & On.mp3"
@@ -166,6 +166,6 @@ export default function Layout({ children }: { children: ReactNode }) {
         </div>
       </NoSsrWrapper>
       <>{children}</>
-    </div>
+    </>
   );
 }
