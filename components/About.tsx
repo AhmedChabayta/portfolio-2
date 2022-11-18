@@ -1,11 +1,17 @@
 import { motion, useInView } from "framer-motion";
 import Image from "next/image";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import me from "../me.png";
+import { useRouter } from "next/router";
+
 
 export default function About() {
+
   const imageRef = useRef(null);
   const isInView = useInView(imageRef, { amount: "all", once: true });
+
+  const router = useRouter();
+  console.log(router);
 
   return (
     <motion.div

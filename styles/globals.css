@@ -2,6 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+@property --num {
+  syntax: "<integer>";
+  initial-value: 0;
+  inherits: false;
+}
+
 * {
   padding: 0;
   margin: 0;
@@ -21,4 +27,42 @@
   html {
     @apply relative bg-gradient-to-br from-sky-500 to-amber-600;
   }
+}
+
+.skill > svg {
+  transition: all 500ms ease;
+}
+.skill > img {
+  transition: all 500ms ease;
+}
+
+.skill:hover > svg {
+  -moz-transform: rotate(360deg) scale(0.3) translate3d(-60px, -40px, 0);
+  -webkit-transform: rotate(360deg) scale(0.3) translate3d(-60px, -40px, 0);
+  -o-transform: rotate(360deg) scale(0.3) translate3d(-60px, -40px, 0);
+  transform: rotate(360deg) scale(0.3) translate3d(-60px, -40px, 0);
+  counter-set: num var(--num);
+  -webkit-transition: all 0.4s ease-in-out;
+  -moz-transition: all 0.4s ease-in-out;
+  -o-transition: all 0.4s ease-in-out;
+  transition: all 0.4s ease-in-out;
+  z-index: -10;
+  --num: 100;
+}
+.skill:hover > img {
+  -moz-transform: rotate(360deg) scale(0.3) translate3d(-60px, -40px, 0);
+  -webkit-transform: rotate(360deg) scale(0.3) translate3d(-60px, -40px, 0);
+  -o-transform: rotate(360deg) scale(0.3) translate3d(-60px, -40px, 0);
+  transform: rotate(360deg) scale(0.3) translate3d(-60px, -40px, 0);
+  counter-set: num var(--num);
+  -webkit-transition: all 0.4s ease-in-out;
+  -moz-transition: all 0.4s ease-in-out;
+  -o-transition: all 0.4s ease-in-out;
+  transition: all 0.4s ease-in-out;
+  z-index: -10;
+  --num: 100;
+}
+
+.skill:hover > p {
+  visibility: visible;
 }
