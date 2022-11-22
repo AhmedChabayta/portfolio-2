@@ -1,8 +1,8 @@
-import { SocialIcon } from "react-social-icons";
-import { motion } from "framer-motion";
-type Props = {};
+import { SocialIcon } from 'react-social-icons';
+import { motion } from 'framer-motion';
 
-export default function Header({}: Props) {
+
+export default function Header() {
   const leftContainer = {
     initial: {
       x: -500,

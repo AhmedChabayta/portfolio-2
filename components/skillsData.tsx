@@ -80,47 +80,47 @@ const mantine = (
 
 export const skills = [
   {
-    name: "javascript",
+    name: 'javascript',
     icon: js,
     skill: 90,
   },
   {
-    name: "typescript",
+    name: 'typescript',
     icon: ts,
     skill: 90,
   },
   {
-    name: "react js",
+    name: 'react js',
     icon: react,
     skill: 90,
   },
   {
-    name: "next js",
+    name: 'next js',
     icon: next,
     skill: 90,
   },
   {
-    name: "html",
+    name: 'html',
     icon: html,
     skill: 95,
   },
   {
-    name: "css",
+    name: 'css',
     icon: css,
     skill: 95,
   },
   {
-    name: "tailwind css",
+    name: 'tailwind css',
     icon: tw,
     skill: 90,
   },
   {
-    name: "styled components",
-    image: "/styled-components.png",
+    name: 'styled components',
+    image: '/styled-components.png',
     skill: 80,
   },
   {
-    name: "mantine",
+    name: 'mantine',
     icon: mantine,
     skill: 70,
   },

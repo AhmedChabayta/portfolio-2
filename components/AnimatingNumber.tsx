@@ -1,5 +1,5 @@
-import { animate } from "framer-motion";
-import { useEffect, useRef } from "react";
+import { animate } from 'framer-motion';
+import { useEffect, useRef } from 'react';
 
 export default function AnimatingNumber({ value }: { value: number }) {
   const numberRef = useRef<HTMLParagraphElement>(null);

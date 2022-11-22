@@ -1,38 +1,31 @@
-import { motion, useInView } from "framer-motion";
-import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
-import me from "../me.png";
-import { useRouter } from "next/router";
-
+import { motion, useInView } from 'framer-motion';
+import Image from 'next/image';
+import { useRef } from 'react';
+import me from '../me.png';
 
 export default function About() {
-
   const imageRef = useRef(null);
-  const isInView = useInView(imageRef, { amount: "all", once: true });
-
-  const router = useRouter();
-  console.log(router);
+  const isInView = useInView(imageRef, { amount: 'all', once: true });
 
   return (
     <motion.div
       initial={{ opacity: 0.1 }}
       whileInView={{ opacity: 1 }}
       transition={{ duration: 0.8 }}
-      className="flex flex-col relative h-screen text-center md:text-left md:flex-row max-w-7xl px-10 justify-center items-center mx-auto"
+      className="flex flex-col relative h-screen text-center md:text-center lg:flex-row max-w-7xl px-10 justify-start items-center space-x-8 space-y-8 mx-auto"
     >
       <motion.h3
-        initial={{ color: "rgb(107,114,128)" }}
-        whileInView={{ color: ["#acb3c2", "#576175", "#fff"] }}
+        initial={{ color: 'rgb(107,114,128)' }}
+        whileInView={{ color: ['#acb3c2', '#576175', '#fff'] }}
         transition={{ duration: 2 }}
         viewport={{ once: true }}
-        className="absolute top-24 uppercase tracking-[20px] text-2xl"
+        className="absolute top-24 left-1/2 -translate-x-1/2 uppercase tracking-[20px] text-2xl"
       >
         About
       </motion.h3>
       <motion.div
         animate={{
-          transform: isInView ? "translateX(0px)" : "translateX(-100px)",
-          opacity: isInView ? 1 : 0,
+          transform: isInView ? 'translateX(0px)' : 'translateX(-100px)',
         }}
         transition={{
           duration: 0.2,
@@ -40,17 +33,18 @@ export default function About() {
         ref={imageRef}
       >
         <Image
+          priority
           src={me}
           alt=""
-          className="z-10 w-56 h-56 object-cover rounded-full md:rounded-lg md:w-64 md:h-96 xl:w-[500px] lg:h-[600px] mt-44"
+          className="relative z-50 w-56 h-56 object-cover rounded-full lg:rounded-lg lg:w-64 lg:h-96 xl:w-[500px] xl:h-[500px] mt-28"
         />
       </motion.div>
       <div className="space-y-10 md:px-10">
         <h4 className="text-4xl font-semibold ">
-          Here is a{" "}
+          Here is a{' '}
           <span className="underline decoration-teal-500 underline-offset-4">
             little
-          </span>{" "}
+          </span>{' '}
           background
         </h4>
         <p className="text-base max-w-xl">

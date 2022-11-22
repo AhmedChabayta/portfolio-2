@@ -1,45 +1,34 @@
-import Image from "next/image";
+import Image from 'next/image';
 
-function Projects() {
+function Projects({
+  image,
+  title,
+  text,
+  type,
+}: {
+  image: any;
+  title: string;
+  text: string;
+  type: string;
+}) {
   return (
-    <div className="h-screen overflow-x-scroll flex items-center w-full mx-auto space-x-52 snap-x snap-mandatory relative z-50">
-      <div className="flex flex-col justify-center items-center shrink-0 w-screen snap-center">
-        <Image
-          className="relative z-10"
-          width={400}
-          height={400}
-          src="/ecommerce.png"
-          alt=""
-        />
-        <div className="mt-20">
-          <h1>CONSUME</h1>
-          <p>E-commerce</p>
-          <p className="text-xl my-8 max-w-lg">
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quidem
-            magnam assumenda aliquam ullam! At quo dicta a eveniet cumque.
-            Reprehenderit atque ipsa voluptates voluptatum, repudiandae iure eos
-            officiis mollitia molestias!
-          </p>
-        </div>
-      </div>
-      <div className="flex flex-col justify-center items-center shrink-0 w-screen snap-center">
-        <Image
-          className="relative z-10"
-          width={400}
-          height={400}
-          src="/ecommerce.png"
-          alt=""
-        />
-        <div className="mt-20">
-          <h1>CONSUME</h1>
-          <p>E-commerce</p>
-          <p className="text-xl my-8 max-w-lg">
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quidem
-            magnam assumenda aliquam ullam! At quo dicta a eveniet cumque.
-            Reprehenderit atque ipsa voluptates voluptatum, repudiandae iure eos
-            officiis mollitia molestias!
-          </p>
-        </div>
+    <div
+      id="title"
+      className="flex flex-col h-screen w-screen shrink-0 items-center justify-center relative z-10 snap-center"
+    >
+      <Image
+        placeholder="blur"
+        priority
+        className=""
+        width={400}
+        height={400}
+        src={image}
+        alt=""
+      />
+      <div className="mt-20">
+        <h1>{title}</h1>
+        <p>{type}</p>
+        <p className="text-xl my-8 max-w-lg">{text}</p>
       </div>
     </div>
   );
