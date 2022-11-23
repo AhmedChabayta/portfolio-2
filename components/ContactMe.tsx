@@ -16,7 +16,6 @@ interface PersonalProps {
 export default function ContactMe({ personal }: PersonalProps) {
   const { register, handleSubmit } = useForm<Inputs>();
 
-
   const onSubmit: SubmitHandler<Inputs> = (formData) => {
     window.location.href = `mailTo:chabays@gmail.com?subject=${formData.subject}&body=Hi, my name is ${formData.name}. ${formData.message}`;
   };
@@ -46,7 +45,7 @@ export default function ContactMe({ personal }: PersonalProps) {
         </div>
         <form
           onSubmit={handleSubmit(onSubmit)}
-          className="flex flex-col space-y-2 w-fit mx-auto bg-sky-200/30 p-10 rounded backdrop-blur-3xl"
+          className="flex flex-col justify-center gap-2 bg-sky-200/30 p-10 rounded backdrop-blur-3xl"
         >
           <div className="flex space-x-2">
             <input

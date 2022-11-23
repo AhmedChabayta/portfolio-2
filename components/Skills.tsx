@@ -20,7 +20,7 @@ export default function Skills({ skill }: { skill: Skill[] }) {
           Skills
         </motion.h3>
 
-        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-8 mx-auto mt-10 relative items-center lg:bg-white/20 backdrop-blue-2xl p-20  rounded-2xl">
+        <div className="flex flex-wrap md:grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-8 mx-auto mt-20 relative items-center lg:bg-white/20 backdrop-blue-2xl p-20 rounded-2xl">
           {skill.map(({ title, image, progress }) => (
             <motion.div
               ref={iconRef}
@@ -33,7 +33,7 @@ export default function Skills({ skill }: { skill: Skill[] }) {
               key={title}
             >
               <Image
-                style={{ width: 'auto', height: 'auto' }}
+                className="object-contain w-[60px] md:w-[80px]"
                 height={100}
                 width={100}
                 src={urlFor(image.asset).url()}

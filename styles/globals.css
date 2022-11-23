@@ -10,14 +10,16 @@
     @apply focus:outline-none
     outline-none
     bg-transparent
-    rounded-sm
+    rounded
     border-b
     border-sky-200/20
     px-5 py-4
     text-white
     placeholder-gray-100
     transition-all
-    font-bold;
+    font-bold
+    w-44
+    md:w-full;
   }
   .wallpaper {
     @apply transition-[filter] duration-[1s] ease-linear;
