@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { GetStaticProps } from 'next';
+import { GetServerSideProps } from 'next';
 import Head from 'next/head';
 import { useRef } from 'react';
 import About from '../components/About';
@@ -14,7 +14,8 @@ interface Props {
   data: Personal[];
 }
 const BASE = process.env.NEXT_PUBLIC_BASE_URL;
-console.log(BASE);
+
+
 export default function Home({ data }: Props) {
   const assets = data[0];
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -58,7 +59,7 @@ export default function Home({ data }: Props) {
     </div>
   );
 }
-export const getServerSideProps: GetStaticProps<Props> = async () => {
+export const getServerSideProps: GetServerSideProps<Props> = async () => {
   const res = await fetch(`${BASE}/api/details`);
 
   const { data } = await res.json();
