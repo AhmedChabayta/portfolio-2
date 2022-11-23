@@ -1,41 +1,44 @@
 import { motion } from 'framer-motion';
+import { GetStaticProps } from 'next';
 import Head from 'next/head';
 import { useRef } from 'react';
 import About from '../components/About';
 import Header from '../components/Header';
 import Hero from '../components/Hero';
-import Projects from '../components/Projects';
 import Skills from '../components/Skills';
-import spotifyDummy from '../assets/spotify.png';
-import netflix from '../assets/netflix.png';
-import ecommerce from '../assets/consume.png';
-import palestine from '../assets/palestine.png';
 import ContactMe from '../components/ContactMe';
+import { Personal } from '../types/typings';
+import ProjectsContainer from '../components/ProjectsContainer';
 
-export default function Home() {
-  const sectionRef = useRef(null);
-
+interface Props {
+  data: Personal[];
+}
+const BASE = process.env.NEXT_PUBLIC_BASE_URL;
+console.log(BASE);
+export default function Home({ data }: Props) {
+  const assets = data[0];
+  const sectionRef = useRef<HTMLDivElement>(null);
   return (
     <div className="text-white h-screen z-0 snap-mandatory snap-both overflow-y-scroll scrollbar scrollbar-thumb-white scrollbar-track-transparent scrollbar-rounded-0">
       <Head>
         <title>Ahmed&apos;s Portfolio</title>
       </Head>
-      <Header />
+      <Header social={data[0].social} />
       <section id="home" className="section">
-        <Hero />
+        <Hero name={assets.name} title={assets.title} image={assets.images} />
       </section>
       <section ref={sectionRef} id="about" className="section">
-        <About />
+        <About personalImage={assets.images} />
       </section>
       <section
         className="w-fit h-fit mx-auto relative snap-center section"
         id="skills"
       >
-        <Skills />
+        <Skills skill={assets.skill} />
       </section>
 
       <section id="projects" className="relative section">
-        <div className="flex items-center mt-24 overflow-scroll snap-x snap-mandatory scrollbar scrollbar-thumb-white scrollbar-track-transparent">
+        <div className="flex items-center mt-24 overflow-scroll snap-x snap-mandatory scrollbar-thin scrollbar-thumb-white scrollbar-track-transparent">
           <motion.h3
             initial={{ color: 'rgb(107,114,128)' }}
             whileInView={{ color: ['#acb3c2', '#576175', '#fff'] }}
@@ -46,35 +49,22 @@ export default function Home() {
             Projects
           </motion.h3>
 
-          <Projects
-            text="spotify"
-            title="spotify"
-            image={spotifyDummy}
-            type="multimedia"
-          />
-          <Projects
-            text="spotify"
-            title="spotify"
-            image={netflix}
-            type="multimedia"
-          />
-          <Projects
-            text="spotify"
-            title="spotify"
-            image={ecommerce}
-            type="multimedia"
-          />
-          <Projects
-            text="spotify"
-            title="spotify"
-            image={palestine}
-            type="multimedia"
-          />
+          <ProjectsContainer projects={assets.project} />
         </div>
       </section>
       <section id="contact" className="section">
-        <ContactMe />
+        <ContactMe personal={assets} />
       </section>
     </div>
   );
 }
+export const getServerSideProps: GetStaticProps<Props> = async () => {
+  const res = await fetch(`${BASE}/api/details`);
+
+  const { data } = await res.json();
+  return {
+    props: {
+      data,
+    },
+  };
+};

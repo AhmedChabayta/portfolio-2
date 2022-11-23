@@ -1,8 +1,9 @@
 import { SocialIcon } from 'react-social-icons';
 import { motion } from 'framer-motion';
+import { Social } from '../types/typings';
+import Link from 'next/link';
 
-
-export default function Header() {
+export default function Header({ social }: { social: Social[] }) {
   const leftContainer = {
     initial: {
       x: -500,
@@ -56,28 +57,15 @@ export default function Header() {
         animate="animate"
         className="flex items-center"
       >
-        <motion.div variants={leftChild}>
-          <SocialIcon
-            fgColor="white"
-            bgColor="transparent"
-            network="instagram"
-            url="https://www.instagram.com/salatinata/"
-          />
-        </motion.div>
-        <motion.div variants={leftChild}>
-          <SocialIcon
-            fgColor="white"
-            bgColor="transparent"
-            url="https://twitter.com/nerdyDevelopurr"
-          />
-        </motion.div>
-        <motion.div variants={leftChild}>
-          <SocialIcon
-            fgColor="white"
-            bgColor="transparent"
-            url="https://twitter.com/nerdyDevelopurr"
-          />
-        </motion.div>
+        {social.map((social: Social) => (
+          <motion.div key={social.title} variants={leftChild}>
+            <SocialIcon
+              fgColor="white"
+              bgColor="transparent"
+              url={social.url}
+            />
+          </motion.div>
+        ))}
       </motion.div>
       <motion.div
         variants={rightContainer}
@@ -88,9 +76,11 @@ export default function Header() {
         <motion.div variants={rightChild}>
           <SocialIcon fgColor="white" bgColor="transparent" network="email" />
         </motion.div>
-        <p className="uppercase hidden md:inline-flex text-sm text-white">
-          get in touch
-        </p>
+        <Link href="#contact">
+          <p className="uppercase hidden md:inline-flex text-sm text-white">
+            get in touch
+          </p>
+        </Link>
       </motion.div>
     </header>
   );

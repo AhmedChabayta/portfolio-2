@@ -50,35 +50,31 @@ export default function Layout({ children }: { children: ReactNode }) {
     <div className="flex relative h-screen w-screen overflow-y-scroll overflow-x-hidden bg-black">
       <NoSsrWrapper>
         <Canvas hue={hue} />
-        <div className="lg:pr-32">
-          <div className="fixed z-[100] flex pl-8 lg:pl-0 justify-center bg-black/90 bottom-0 left-0 right-0 lg:flex-col lg:top-1/2 lg:-translate-y-1/2 lg:left-0 lg:bg-transparent lg:h-fit lg:w-fit">
-            {links.map((link) => (
-              <React.Fragment key={link.link}>
-                <Link href={link.link}>
-                  <button className="heroButton">
-                    <link.icon
-                      className={`w-8 ${
-                        router.asPath === `/${link.link}`
-                          ? ' text-[#00e7f3]'
-                          : 'text-white'
-                      }`}
-                    />
-                    <p
-                      style={{
-                        color:
-                          router.asPath === `/${link.link}`
-                            ? '#00e7f3'
-                            : '#fff',
-                      }}
-                      className="hidden md:inline"
-                    >
-                      {link.link.split('#')}
-                    </p>
-                  </button>
-                </Link>
-              </React.Fragment>
-            ))}
-          </div>
+        <div className="fixed z-[100] flex justify-center bg-black/90 bottom-0 left-0 right-0 lg:flex-col lg:top-1/2 lg:-translate-y-1/2 lg:left-0 lg:bg-transparent lg:h-fit lg:w-fit">
+          {links.map((link) => (
+            <React.Fragment key={link.link}>
+              <Link href={link.link}>
+                <button className="heroButton">
+                  <link.icon
+                    className={`w-8 ${
+                      router.asPath === `/${link.link}`
+                        ? ' text-[#00e7f3]'
+                        : 'text-white'
+                    }`}
+                  />
+                  <p
+                    style={{
+                      color:
+                        router.asPath === `/${link.link}` ? '#00e7f3' : '#fff',
+                    }}
+                    className="hidden md:inline"
+                  >
+                    {link.link.split('#')}
+                  </p>
+                </button>
+              </Link>
+            </React.Fragment>
+          ))}
         </div>
       </NoSsrWrapper>
       <>{children}</>

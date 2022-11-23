@@ -1,10 +1,10 @@
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import React, { useRef } from 'react';
+import { urlFor } from '../sanity/sanity';
+import { Skill } from '../types/typings';
 
-import { skills } from './skillsData';
-
-export default function Skills() {
+export default function Skills({ skill }: { skill: Skill[] }) {
   const iconRef = useRef(null);
 
   return (
@@ -20,8 +20,8 @@ export default function Skills() {
           Skills
         </motion.h3>
 
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 mx-auto mt-10 relative items-center lg:bg-white/20 backdrop-blue-2xl p-20  rounded-2xl">
-          {skills.map(({ name, icon, image, skill }) => (
+        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-8 mx-auto mt-10 relative items-center lg:bg-white/20 backdrop-blue-2xl p-20  rounded-2xl">
+          {skill.map(({ title, image, progress }) => (
             <motion.div
               ref={iconRef}
               className="skill cursor-pointer group flex flex-col place-items-center"
@@ -30,15 +30,18 @@ export default function Skills() {
                 filter: 'brightness(1)',
               }}
               transition={{ duration: 0.8 }}
-              key={name}
+              key={title}
             >
-              {icon}
-
+              <Image
+                style={{ width: 'auto', height: 'auto' }}
+                height={100}
+                width={100}
+                src={urlFor(image.asset).url()}
+                alt=""
+              />
               <p className="numbers_container hidden group-hover:block text-5xl absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-                {skill}%
+                {progress}%
               </p>
-
-              {image && <Image width={100} height={100} src={image} alt="" />}
             </motion.div>
           ))}
         </div>

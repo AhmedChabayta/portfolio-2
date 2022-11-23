@@ -7,7 +7,17 @@
     @apply flex items-center space-x-2 px-6 py-2 my-4 uppercase text-xs tracking-widest font-black;
   }
   .contact-inputs {
-    @apply w-[200px] mx-auto placeholder:opacity-50 transition-all duration-150 ease-linear border-none rounded focus:outline-none;
+    @apply focus:outline-none
+    outline-none
+    bg-transparent
+    rounded-sm
+    border-b
+    border-sky-200/20
+    px-5 py-4
+    text-white
+    placeholder-gray-100
+    transition-all
+    font-bold;
   }
   .wallpaper {
     @apply transition-[filter] duration-[1s] ease-linear;
@@ -33,18 +43,6 @@
 }
 
 .skill:hover > svg {
-  -moz-transform: rotate(360deg) scale(0.3) translate3d(-60px, -40px, 0);
-  -webkit-transform: rotate(360deg) scale(0.3) translate3d(-60px, -40px, 0);
-  -o-transform: rotate(360deg) scale(0.3) translate3d(-60px, -40px, 0);
-  transform: rotate(360deg) scale(0.3) translate3d(-60px, -40px, 0);
-
-  -webkit-transition: all 0.4s ease-in-out;
-  -moz-transition: all 0.4s ease-in-out;
-  -o-transition: all 0.4s ease-in-out;
-  transition: all 0.4s ease-in-out;
-  z-index: -10;
-}
-.skill:hover > img {
   -moz-transform: rotate(360deg) scale(0.3) translate3d(-60px, -40px, 0);
   -webkit-transform: rotate(360deg) scale(0.3) translate3d(-60px, -40px, 0);
   -o-transform: rotate(360deg) scale(0.3) translate3d(-60px, -40px, 0);

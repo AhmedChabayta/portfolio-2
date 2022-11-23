@@ -1,9 +1,20 @@
 import { motion, useInView } from 'framer-motion';
 import Image from 'next/image';
 import { useRef } from 'react';
-import me from '../me.png';
+import { urlFor } from '../sanity/sanity';
 
-export default function About() {
+interface Props {
+  personalImage: {
+    _type: string;
+    asset: {
+      _ref: string;
+      _type: string;
+    };
+  };
+}
+
+export default function About({ personalImage }: Props) {
+ 
   const imageRef = useRef(null);
   const isInView = useInView(imageRef, { amount: 'all', once: true });
 
@@ -34,7 +45,9 @@ export default function About() {
       >
         <Image
           priority
-          src={me}
+          src={urlFor(personalImage.asset).url()}
+          width={200}
+          height={200}
           alt=""
           className="relative z-50 w-56 h-56 object-cover rounded-full lg:rounded-lg lg:w-64 lg:h-96 xl:w-[500px] xl:h-[500px] mt-28"
         />
