@@ -14,7 +14,6 @@ interface Props {
 }
 
 export default function About({ personalImage }: Props) {
- 
   const imageRef = useRef(null);
   const isInView = useInView(imageRef, { amount: 'all', once: true });
 
@@ -61,10 +60,8 @@ export default function About({ personalImage }: Props) {
           background
         </h4>
         <p className="text-base max-w-xl">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit.
-          Necessitatibus, possimus quidem. Eos impedit voluptas ipsa enim, quos
-          in et sit libero quo assumenda sunt fugit eum consequuntur ad illo
-          error!
+          Ahmed Chabayta, Junior Front-end web-developer, specializing in
+          ReactJs, NextJs.
         </p>
       </div>
     </motion.div>

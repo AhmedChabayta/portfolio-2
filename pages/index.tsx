@@ -15,7 +15,6 @@ interface Props {
 }
 const BASE = process.env.NEXT_PUBLIC_BASE_URL;
 
-
 export default function Home({ data }: Props) {
   const assets = data[0];
   const sectionRef = useRef<HTMLDivElement>(null);
