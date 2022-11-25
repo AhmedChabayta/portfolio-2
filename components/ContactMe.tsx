@@ -1,23 +1,35 @@
-import { EnvelopeIcon, MapPinIcon, PhoneIcon } from '@heroicons/react/24/solid';
-import { useForm, SubmitHandler } from 'react-hook-form';
+import { useRef } from 'react';
 import { Personal } from '../types/typings';
 import ContactInfo from './ContactInfo';
+import emailjs from '@emailjs/browser';
+import { EnvelopeIcon, MapPinIcon, PhoneIcon } from '@heroicons/react/24/solid';
 
-interface Inputs {
-  name: string;
-  email: string;
-  subject: string;
-  message: string;
-}
 interface PersonalProps {
   personal: Personal;
 }
 
 export default function ContactMe({ personal }: PersonalProps) {
-  const { register, handleSubmit } = useForm<Inputs>();
+  const form = useRef<HTMLFormElement>(null);
 
-  const onSubmit: SubmitHandler<Inputs> = (formData) => {
-    window.location.href = `mailTo:chabays@gmail.com?subject=${formData.subject}&body=Hi, my name is ${formData.name}. ${formData.message}`;
+  const sendEmail = (e: any) => {
+    e.preventDefault();
+    if (form.current) {
+      emailjs
+        .sendForm(
+          'service_fq4cchd',
+          'template_f81r4zw',
+          form.current,
+          'FTSB3T9QVjfnESP97'
+        )
+        .then(
+          (result) => {
+            console.log(result.text);
+          },
+          (error) => {
+            console.log(error.text);
+          }
+        );
+    }
   };
 
   return (
@@ -44,34 +56,26 @@ export default function ContactMe({ personal }: PersonalProps) {
           />
         </div>
         <form
-          onSubmit={handleSubmit(onSubmit)}
-          className="flex flex-col justify-center gap-2 bg-sky-200/30 p-10 rounded backdrop-blur-3xl"
+          className="form-control flex flex-col justify-center gap-2 p-10 rounded"
+          ref={form}
+          onSubmit={sendEmail}
         >
           <div className="flex space-x-2">
             <input
-              {...register('name')}
-              placeholder="Name"
+              placeholder="name"
               className="contact-inputs"
               type="text"
+              name="from_name"
             />
             <input
-              {...register('email')}
-              placeholder="E-mail"
+              placeholder="email"
               className="contact-inputs"
-              type="email"
+              type="text"
+              name="from_email"
             />
           </div>
-          <input
-            {...register('subject')}
-            placeholder="Subject"
-            className="contact-inputs"
-            type="text"
-          />
-          <textarea
-            {...register('message')}
-            placeholder="Message"
-            className="contact-inputs"
-          />
+          <label>Message</label>
+          <textarea className="contact-inputs" name="message" />
           <button
             className="text-white font-black uppercase bg-sky-200/20 rounded py-5 active:scale-95 transition-all ease-linear"
             type="submit"
