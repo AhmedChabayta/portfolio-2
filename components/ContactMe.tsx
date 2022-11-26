@@ -3,6 +3,7 @@ import { Personal } from '../types/typings';
 import ContactInfo from './ContactInfo';
 import emailjs from '@emailjs/browser';
 import { EnvelopeIcon, MapPinIcon, PhoneIcon } from '@heroicons/react/24/solid';
+import { Input, TextArea } from './Input';
 
 interface PersonalProps {
   personal: Personal;
@@ -56,30 +57,26 @@ export default function ContactMe({ personal }: PersonalProps) {
           />
         </div>
         <form
-          className="form-control flex flex-col justify-center gap-2 p-10 rounded"
+          className="form-control flex flex-col justify-center gap-4 p-10 rounded"
           ref={form}
           onSubmit={sendEmail}
         >
-          <div className="flex space-x-2">
-            <input
-              placeholder="name"
-              className="contact-inputs"
-              type="text"
+          <div className="flex flex-col items-center lg:flex-row space-y-4 md:space-y-0 lg:space-x-2">
+            <Input
+              label="user name"
+              placeholder="user name"
               name="from_name"
-            />
-            <input
-              placeholder="email"
-              className="contact-inputs"
               type="text"
+            />
+            <Input
+              label="user email"
+              placeholder="user email"
               name="from_email"
+              type="text"
             />
           </div>
 
-          <textarea
-            placeholder="message"
-            className="contact-inputs w-full"
-            name="message"
-          />
+          <TextArea placeholder="message" name="message" label="message" />
           <button
             className="text-white font-black uppercase bg-sky-200/20 rounded py-5 active:scale-95 transition-all ease-linear"
             type="submit"

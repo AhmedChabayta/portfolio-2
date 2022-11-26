@@ -18,6 +18,7 @@ const BASE = process.env.NEXT_PUBLIC_BASE_URL;
 export default function Home({ data }: Props) {
   const assets = data[0];
   const sectionRef = useRef<HTMLDivElement>(null);
+
   return (
     <div className="text-white h-screen z-0 snap-mandatory snap-both overflow-y-scroll scrollbar scrollbar-thumb-white scrollbar-track-transparent scrollbar-rounded-0">
       <Head>

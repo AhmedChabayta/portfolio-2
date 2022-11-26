@@ -3,28 +3,21 @@ import Image from 'next/image';
 import React, { useRef } from 'react';
 import { urlFor } from '../sanity/sanity';
 import { Skill } from '../types/typings';
+import SectionTitle from './SectionTitle';
 
 export default function Skills({ skill }: { skill: Skill[] }) {
   const iconRef = useRef(null);
 
   return (
     <>
-      <div className="h-screen flex flex-col justify-center rounded-lg max-w-[800px] lg:w-[800px] ">
-        <motion.h3
-          initial={{ color: 'rgb(107,114,128)' }}
-          whileInView={{ color: ['#acb3c2', '#576175', '#fff'] }}
-          transition={{ duration: 2 }}
-          viewport={{ once: true }}
-          className="absolute top-24 left-1/2 -translate-x-1/2 uppercase tracking-[20px] text-2xl"
-        >
-          Skills
-        </motion.h3>
+      <div className="h-screen flex justify-center items-center rounded-lg max-w-[800px] lg:w-[800px] ">
+        <SectionTitle title="skills" />
 
-        <div className="flex flex-wrap md:grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-8 mx-auto mt-20 relative items-center lg:bg-white/20 backdrop-blue-2xl p-20 rounded-2xl">
+        <div className="flex flex-wrap gap-12 mx-auto relative items-center p-20">
           {skill.map(({ title, image, progress }) => (
             <motion.div
               ref={iconRef}
-              className="skill cursor-pointer group flex flex-col place-items-center"
+              className="cursor-pointer group flex items-center justify-center"
               initial={{ filter: 'brightness(0.2)' }}
               whileInView={{
                 filter: 'brightness(1)',
@@ -33,13 +26,13 @@ export default function Skills({ skill }: { skill: Skill[] }) {
               key={title}
             >
               <Image
-                className="object-contain w-[60px] md:w-[80px]"
+                className="group-hover:rotate-[360deg] group-hover:-translate-x-[50%] -translate-y-[50%] group-hover:scale-[0.5] transition-all duration-200 ease-linear object-contain w-[60px] md:w-[80px]"
                 height={100}
                 width={100}
                 src={urlFor(image.asset).url()}
                 alt=""
               />
-              <p className="numbers_container hidden group-hover:block text-5xl absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+              <p className="numbers_container hidden group-hover:block text-2xl absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
                 {progress}%
               </p>
             </motion.div>

@@ -19,7 +19,7 @@ function Projects({ image, title, description, linkToBuild }: Props) {
   return (
     <div
       id="title"
-      className="flex flex-col h-screen w-screen shrink-0 items-center justify-center relative z-10 snap-center"
+      className="flex flex-col h-screen w-full shrink-0 items-center justify-center relative z-10 snap-center"
     >
       <Image
         priority

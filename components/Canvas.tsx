@@ -8,12 +8,15 @@ declare global {
   }
 }
 export default function Canvas({ hue = 0 }: { hue?: number }) {
+  const [mounted, setMounted] = useState(false);
   const [isPlaying, setIsPlaying] = useState<boolean>();
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const audioRef = useRef<HTMLAudioElement>(null);
 
   useEffect(() => {
+    setMounted(false);
     if (canvasRef.current != null && audioRef.current != null) {
+      setMounted(true);
       const canvas = canvasRef.current;
       const audio = audioRef.current;
       const ctx = canvas?.getContext('2d');
@@ -91,12 +94,12 @@ export default function Canvas({ hue = 0 }: { hue?: number }) {
         className={`wallpaper fixed z-1 top-0 bottom-0 left-0 right-0 h-screen w-screen bg-gradient-to-br from-fuchsia-500/70 to-orange-500/70 backdrop-blur-xl contrast-200 overflow-hidden`}
       />
 
-      {audioRef.current != null && canvasRef.current && (
+      {mounted ? (
         <div
           onClick={() => {
             isPlaying ? audioRef?.current?.pause() : audioRef?.current?.play();
           }}
-          className="fixed bottom-6 left-2 z-[500] font-black text-white text-3xl cursor-pointer"
+          className="fixed bottom-2 left-2 z-[500] font-black text-white text-3xl cursor-pointer"
         >
           {isPlaying ? (
             <PauseIcon className="w-8" />
@@ -104,8 +107,9 @@ export default function Canvas({ hue = 0 }: { hue?: number }) {
             <PlayIcon className="w-8" />
           )}
         </div>
+      ) : (
+        ''
       )}
-
       <div className="fixed right-2 bottom-0 max-w-xs lg:max-w-none text-gray-200/40">
         <p>
           MUSIC FOR DEMO PURPOSES ONLY. I DO NOT OWN ANY OF THE MUSIC PRESENT

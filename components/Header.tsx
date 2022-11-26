@@ -2,6 +2,9 @@ import { SocialIcon } from 'react-social-icons';
 import { motion } from 'framer-motion';
 import { Social } from '../types/typings';
 import Link from 'next/link';
+import { useRecoilState } from 'recoil';
+import { canvasState } from '../atoms/canvasState';
+import { EyeSlashIcon, EyeIcon } from '@heroicons/react/24/solid';
 
 export default function Header({ social }: { social: Social[] }) {
   const leftContainer = {
@@ -48,17 +51,21 @@ export default function Header({ social }: { social: Social[] }) {
       x: 0,
     },
   };
-
+  const [canvas, setCanvas] = useRecoilState(canvasState);
   return (
     <header className="sticky top-0 p-5 flex items-start justify-between max-w-7xl mx-auto z-20 ">
       <motion.div
         variants={leftContainer}
         initial="initial"
         animate="animate"
-        className="flex items-center"
+        className="flex relative justify-center items-center z-[500]"
       >
         {social.map((social: Social) => (
-          <motion.div key={social.title} variants={leftChild}>
+          <motion.div
+            className="relative z-[900]"
+            key={social.title}
+            variants={leftChild}
+          >
             <SocialIcon
               fgColor="white"
               bgColor="transparent"
@@ -73,6 +80,17 @@ export default function Header({ social }: { social: Social[] }) {
         animate="animate"
         className="flex items-center text-white cursor-pointer"
       >
+        <button
+          className="flex items-center"
+          onClick={() => setCanvas((prev) => !prev)}
+        >
+          {canvas ? (
+            <EyeSlashIcon className="w-8 ml-2" />
+          ) : (
+            <EyeIcon className="w-8 ml-2" />
+          )}
+        </button>
+
         <motion.div variants={rightChild}>
           <SocialIcon fgColor="white" bgColor="transparent" network="email" />
         </motion.div>

@@ -2,6 +2,7 @@ import { motion, useInView } from 'framer-motion';
 import Image from 'next/image';
 import { useRef } from 'react';
 import { urlFor } from '../sanity/sanity';
+import SectionTitle from './SectionTitle';
 
 interface Props {
   personalImage: {
@@ -22,17 +23,9 @@ export default function About({ personalImage }: Props) {
       initial={{ opacity: 0.1 }}
       whileInView={{ opacity: 1 }}
       transition={{ duration: 0.8 }}
-      className="flex flex-col relative h-screen text-center md:text-center lg:flex-row max-w-7xl px-10 justify-start items-center space-x-8 space-y-8 mx-auto"
+      className="flex flex-col relative h-screen text-center md:text-center xl:flex-row max-w-7xl px-10 justify-center items-center space-x-8 space-y-16 mx-auto"
     >
-      <motion.h3
-        initial={{ color: 'rgb(107,114,128)' }}
-        whileInView={{ color: ['#acb3c2', '#576175', '#fff'] }}
-        transition={{ duration: 2 }}
-        viewport={{ once: true }}
-        className="absolute top-24 left-1/2 -translate-x-1/2 uppercase tracking-[20px] text-2xl"
-      >
-        About
-      </motion.h3>
+      <SectionTitle title="about" />
       <motion.div
         animate={{
           transform: isInView ? 'translateX(0px)' : 'translateX(-100px)',

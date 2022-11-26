@@ -10,6 +10,8 @@ import {
   BuildingLibraryIcon,
   UserCircleIcon,
 } from '@heroicons/react/24/solid';
+import { useRecoilState } from 'recoil';
+import { canvasState } from '../atoms/canvasState';
 
 const NoSsrWrapper = dynamic(() => import('./NoSsr'), {
   ssr: false,
@@ -42,6 +44,8 @@ export default function Layout({ children }: { children: ReactNode }) {
   const [hue, setHue] = useState(0);
   const router = useRouter();
 
+  const [canvas, setCanvas] = useRecoilState(canvasState);
+
   useEffect(() => {
     setHue(Math.ceil(Math.random() * 290));
   }, [router]);
@@ -49,8 +53,8 @@ export default function Layout({ children }: { children: ReactNode }) {
   return (
     <div className="flex relative h-screen w-screen overflow-y-scroll overflow-x-hidden bg-black">
       <NoSsrWrapper>
-        <Canvas hue={hue} />
-        <div className="fixed z-[100] flex justify-center flex-col top-1/2 -translate-y-1/2 left-0 bg-transparent h-fit w-fit ">
+        {canvas ? <Canvas hue={hue} /> : ''}
+        <div className="hidden fixed z-[100] lg:flex justify-center flex-col top-1/2 -translate-y-1/2 left-0 bg-transparent h-fit w-fit ">
           {links.map((link) => (
             <React.Fragment key={link.link}>
               <Link href={link.link}>

@@ -36,11 +36,15 @@
   scroll-behavior: smooth;
   background-color: transparent;
 }
+input:focus {
+  outline: none;
+  border: none;
+}
 
-.skill > svg {
+.skill > .svg {
   transition: all 500ms ease;
 }
-.skill > img {
+.skill > .img {
   transition: all 500ms ease;
 }
 
