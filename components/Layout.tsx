@@ -50,7 +50,7 @@ export default function Layout({ children }: { children: ReactNode }) {
     <div className="flex relative h-screen w-screen overflow-y-scroll overflow-x-hidden bg-black">
       <NoSsrWrapper>
         <Canvas hue={hue} />
-        <div className="fixed z-[100] flex justify-center bg-black/90 bottom-0 left-0 right-0 lg:flex-col lg:top-1/2 lg:-translate-y-1/2 lg:left-0 lg:bg-transparent lg:h-fit lg:w-fit">
+        <div className="fixed z-[100] flex justify-center flex-col top-1/2 -translate-y-1/2 left-0 bg-transparent h-fit w-fit ">
           {links.map((link) => (
             <React.Fragment key={link.link}>
               <Link href={link.link}>

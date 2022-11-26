@@ -74,8 +74,12 @@ export default function ContactMe({ personal }: PersonalProps) {
               name="from_email"
             />
           </div>
-          <label>Message</label>
-          <textarea className="contact-inputs" name="message" />
+
+          <textarea
+            placeholder="message"
+            className="contact-inputs w-full"
+            name="message"
+          />
           <button
             className="text-white font-black uppercase bg-sky-200/20 rounded py-5 active:scale-95 transition-all ease-linear"
             type="submit"
