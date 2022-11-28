@@ -37,7 +37,7 @@ export default function ContactMe({ personal }: PersonalProps) {
   };
   return (
     <div className="h-screen relative flex items-center justify-center gap-6 z-50 ">
-      <div className="flex flex-col space-y-10 items-center">
+      <div className="flex flex-col space-y-10 items-center mt-8">
         <h4 className="text-4xl font-semibold text-center relative w-fit mx-auto mt-12">
           Lets{' '}
           <span className="before:absolute before:w-1/2 before:h-1 before:rounded before:bg-red-500 before:top-[110%] before:-skew-y-3 -skew-y-6">

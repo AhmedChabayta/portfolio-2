@@ -13,7 +13,7 @@ export default function Skills({ skill }: { skill: Skill[] }) {
       <div className="h-screen flex justify-center items-center rounded-lg max-w-[800px] lg:w-[800px] ">
         <SectionTitle title="skills" />
 
-        <div className="flex flex-wrap gap-12 mx-auto relative items-center p-20">
+        <div className="flex items-center justify-center w-[90%] flex-wrap mt-24 gap-12 relative ">
           {skill.map(({ title, image, progress }) => (
             <motion.div
               ref={iconRef}
