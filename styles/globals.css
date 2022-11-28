@@ -59,8 +59,11 @@ ul {
 
 li:hover {
   background-color: white !important;
+  color: black;
 }
-
 .MuiPaper-root {
-  background-color: transparent !important;
+  background-color: black;
+  border-radius: 5px;
+  padding: 0 !important;
+  height: fit-content;
 }

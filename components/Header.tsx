@@ -3,15 +3,17 @@ import { motion } from 'framer-motion';
 import { Social } from '../types/typings';
 import Link from 'next/link';
 import { useRecoilState } from 'recoil';
-import { canvasState, qualityState } from '../atoms/canvasState';
+import { canvasShape, canvasState, qualityState } from '../atoms/canvasState';
 import { EyeSlashIcon, EyeIcon } from '@heroicons/react/24/solid';
 import {
   Button,
   FormControl,
+  IconButton,
   InputLabel,
   MenuItem,
   Select,
   SelectChangeEvent,
+  Tooltip,
 } from '@mui/material';
 import { useState } from 'react';
 import { useRouter } from 'next/router';
@@ -20,6 +22,7 @@ export default function Header({ social }: { social: Social[] }) {
   const [quality, setQuality] = useRecoilState(qualityState);
   const [canvas, setCanvas] = useRecoilState(canvasState);
   const [changingQuality, setChangingQuality] = useState(false);
+  const [shape, setShape] = useRecoilState(canvasShape);
 
   const router = useRouter();
 
@@ -33,6 +36,17 @@ export default function Header({ social }: { social: Social[] }) {
     setChangingQuality(false);
     setCanvas(true);
   };
+
+  const handleShapeChange = () => {
+    if (shape === 'rect') {
+      setShape('arc');
+      router.reload();
+    } else if (shape === 'arc') {
+      setShape('rect');
+      router.reload();
+    }
+  };
+
   const leftContainer = {
     initial: {
       x: -500,
@@ -79,12 +93,12 @@ export default function Header({ social }: { social: Social[] }) {
   };
 
   return (
-    <header className="sticky top-0 p-5 flex items-center justify-between max-w-7xl mx-auto z-20 ">
+    <header className="sticky top-0 p-5 flex items-center justify-between max-w-7xl mx-auto z-[500]">
       <motion.div
         variants={leftContainer}
         initial="initial"
         animate="animate"
-        className="flex relative justify-center items-center z-[500]"
+        className="flex relative justify-center items-center "
       >
         {social.map((social: Social) => (
           <motion.div
@@ -106,31 +120,53 @@ export default function Header({ social }: { social: Social[] }) {
         animate="animate"
         className="flex items-center text-white cursor-pointer "
       >
-        <Button
-          className="flex items-center ml-2"
-          onClick={() => setCanvas((prev: boolean) => !prev)}
-        >
-          {canvas ? (
-            <EyeSlashIcon className="w-7" />
-          ) : (
-            <EyeIcon className="w-7" />
-          )}
-        </Button>
-        <FormControl className="flex items-center text-white lg:mx-3">
-          <InputLabel className="text-white">Canvas Quality</InputLabel>
-          <Select
-            variant="standard"
-            value={quality?.toString()}
-            onChange={handleChange}
-            className="text-white bg-transparent w-full lg:w-44"
+        <Tooltip title={canvas ? 'Hide Canvas' : 'Show Canvas'}>
+          <Button
+            className="flex items-center ml-2"
+            onClick={() => setCanvas((prev: boolean) => !prev)}
           >
-            <MenuItem value={64}>Low Quality(64bit)</MenuItem>
-            <MenuItem value={1024}>Medium Quality(512bit)</MenuItem>
-            <MenuItem value={2048}>High Quality(2048bit)</MenuItem>
-            <MenuItem value={4096}>Extreme Quality(4096bit)</MenuItem>
-            <MenuItem value={8192}>Crazy Quality(8192bit)</MenuItem>
-          </Select>
-        </FormControl>
+            {canvas ? (
+              <EyeSlashIcon className="w-7" />
+            ) : (
+              <EyeIcon className="w-7" />
+            )}
+          </Button>
+        </Tooltip>
+        <Tooltip title="Canvas Quality">
+          <FormControl
+            size="small"
+            className="flex items-center text-white lg:mx-3"
+          >
+            <Select
+              size="small"
+              variant="standard"
+              value={quality?.toString()}
+              onChange={handleChange}
+              className="text-white bg-transparent w-14 lg:w-44"
+            >
+              <MenuItem value={64}>Low Quality(64bit)</MenuItem>
+              <MenuItem value={1024}>Medium Quality(512bit)</MenuItem>
+              <MenuItem value={2048}>High Quality(2048bit)</MenuItem>
+              <MenuItem value={4096}>Extreme Quality(4096bit)</MenuItem>
+              <MenuItem value={8192}>Crazy Quality(8192bit)</MenuItem>
+            </Select>
+          </FormControl>
+        </Tooltip>
+        <Tooltip title={canvas ? 'Rectangles' : 'Circles'}>
+          <div className="flex">
+            {shape === 'rect' ? (
+              <div
+                onClick={handleShapeChange}
+                className="w-5 h-5 border bg-sky-500 lg:bg-transparent border-sky-500"
+              />
+            ) : (
+              <div
+                onClick={handleShapeChange}
+                className="w-5 h-5 border bg-sky-500 lg:bg-transparent border-sky-500 rounded-full"
+              />
+            )}
+          </div>
+        </Tooltip>
         <motion.div variants={rightChild}>
           <SocialIcon fgColor="white" bgColor="transparent" network="email" />
         </motion.div>

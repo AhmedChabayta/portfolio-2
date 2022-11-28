@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { PlayIcon, PauseIcon } from '@heroicons/react/24/solid';
-import {  useRecoilValue } from 'recoil';
-import { qualityState } from '../atoms/canvasState';
+import { useRecoilValue } from 'recoil';
+import { canvasShape, qualityState } from '../atoms/canvasState';
 declare global {
   // eslint-disable-next-line no-unused-vars
   interface Window {
@@ -15,7 +15,8 @@ export default function Canvas({ hue = 0 }: { hue?: number }) {
   const audioRef = useRef<HTMLAudioElement>(null);
 
   const quality = useRecoilValue(qualityState);
-  console.log(quality);
+  const shape = useRecoilValue(canvasShape);
+
   useEffect(() => {
     setMounted(false);
     if (canvasRef.current != null && audioRef.current != null) {
@@ -31,6 +32,7 @@ export default function Canvas({ hue = 0 }: { hue?: number }) {
       let barHeight: number;
       let animationFrame: number;
       let audioCtx: any;
+
       if (!audioCtx) {
         audioCtx = new (window.AudioContext || window.webkitAudioContext)();
       }
@@ -50,7 +52,7 @@ export default function Canvas({ hue = 0 }: { hue?: number }) {
         if (canvas) {
           ctx?.clearRect(0, 0, canvas.width, canvas.height);
           analyser.getByteFrequencyData(dataArray);
-          drawVisualizer();
+          shape === 'rect' ? drawVisualizer() : drawCircularVizualizer();
           animationFrame = requestAnimationFrame(animate);
         }
       };
@@ -70,6 +72,7 @@ export default function Canvas({ hue = 0 }: { hue?: number }) {
         if (ctx && canvas) {
           for (let i = 0; i < bufferLength; Math.floor(i++)) {
             barHeight = dataArray[i] * 4;
+
             ctx.fillStyle = '#ff00d9';
             ctx.strokeStyle = '#fff';
             ctx.fillRect(
@@ -85,6 +88,22 @@ export default function Canvas({ hue = 0 }: { hue?: number }) {
               -barHeight
             );
             ctx.stroke();
+          }
+        }
+      };
+
+      const drawCircularVizualizer = () => {
+        if (ctx && canvas) {
+          for (let i = 0; i < bufferLength; i++) {
+            barHeight = dataArray[i] * 2;
+            ctx.save();
+            ctx.translate(canvas.width / 2, canvas.height / 2);
+            ctx.rotate((i * (Math.PI * 64)) / bufferLength);
+            ctx.fillStyle = '#ff00d9';
+            ctx.beginPath();
+            ctx.arc(barWidth, barHeight * 2, i / 10, i, 2 * Math.PI, true);
+            ctx.fill();
+            ctx.restore();
           }
         }
       };

@@ -14,3 +14,9 @@ export const qualityState = atom({
   default: 64,
   effects_UNSTABLE: [persistAtom],
 });
+
+export const canvasShape = atom({
+  key: 'canvasShape',
+  default: 'rect',
+  effects_UNSTABLE: [persistAtom],
+});
