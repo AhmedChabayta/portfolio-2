@@ -17,7 +17,7 @@ export default function Skills({ skill }: { skill: Skill[] }) {
           {skill.map(({ title, image, progress }) => (
             <motion.div
               ref={iconRef}
-              className="cursor-pointer group flex items-center justify-center"
+              className="cursor-pointer group will-change-transform"
               initial={{ filter: 'brightness(0.2)' }}
               whileInView={{
                 filter: 'brightness(1)',
@@ -26,7 +26,7 @@ export default function Skills({ skill }: { skill: Skill[] }) {
               key={title}
             >
               <Image
-                className="group-hover:rotate-[360deg] group-hover:-translate-x-[50%] -translate-y-[50%] group-hover:scale-[0.5] transition-all duration-200 ease-linear object-contain w-[60px] md:w-[80px]"
+                className="group-hover:rotate-[360deg] group-hover:-translate-x-[50%] group-hover:-translate-y-[50%] group-hover:scale-[0.5] transition-transform duration-200 ease-linear object-contain w-[60px] md:w-[80px]"
                 height={100}
                 width={100}
                 src={urlFor(image.asset).url()}

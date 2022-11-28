@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
-import { motion } from 'framer-motion';
 import { PlayIcon, PauseIcon } from '@heroicons/react/24/solid';
+import {  useRecoilValue } from 'recoil';
+import { qualityState } from '../atoms/canvasState';
 declare global {
   // eslint-disable-next-line no-unused-vars
   interface Window {
@@ -13,6 +14,8 @@ export default function Canvas({ hue = 0 }: { hue?: number }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const audioRef = useRef<HTMLAudioElement>(null);
 
+  const quality = useRecoilValue(qualityState);
+  console.log(quality);
   useEffect(() => {
     setMounted(false);
     if (canvasRef.current != null && audioRef.current != null) {
@@ -36,7 +39,7 @@ export default function Canvas({ hue = 0 }: { hue?: number }) {
       analyser = audioCtx.createAnalyser();
       audioSource.connect(analyser);
       analyser.connect(audioCtx.destination);
-      analyser.fftSize = 1024 * 2;
+      analyser.fftSize = quality || 64;
       bufferLength = analyser.frequencyBinCount;
       dataArray = new Uint8Array(bufferLength);
       barWidth = 10;
@@ -69,7 +72,18 @@ export default function Canvas({ hue = 0 }: { hue?: number }) {
             barHeight = dataArray[i] * 4;
             ctx.fillStyle = '#ff00d9';
             ctx.strokeStyle = '#fff';
-            ctx.fillRect(i * 3, canvas.height, barWidth, -barHeight);
+            ctx.fillRect(
+              quality <= 64
+                ? i * 100
+                : quality > 1000
+                ? i * 20
+                : quality > 2000
+                ? i * 2
+                : i,
+              canvas.height,
+              barWidth,
+              -barHeight
+            );
             ctx.stroke();
           }
         }
@@ -79,19 +93,25 @@ export default function Canvas({ hue = 0 }: { hue?: number }) {
         canvas.height = window.innerHeight;
       });
     }
-  }, []);
-
+  }, [quality]);
   return (
     <>
-      <canvas ref={canvasRef} className="fixed w-screen h-screen" />
+      <canvas
+        ref={canvasRef}
+        className="fixed w-screen h-screen will-change-auto"
+      />
       <audio
         src="/On & On.mp3"
         ref={audioRef}
         className="fixed bottom-0 w-screen z-10 bg-transparent"
       />
-      <motion.div
-        style={{ filter: `hue-rotate(${hue}deg)` }}
-        className={`wallpaper fixed z-1 top-0 bottom-0 left-0 right-0 h-screen w-screen bg-gradient-to-br from-fuchsia-500/70 to-orange-500/70 backdrop-blur-xl contrast-200 overflow-hidden`}
+      <div
+        style={{
+          filter: `contrast(2) hue-rotate(${hue}deg)`,
+          backdropFilter: 'blur(24px)',
+        }}
+        className={`wallpaper fixed z-1 top-0 bottom-0 left-0 right-0 h-screen w-screen
+        bg-gradient-to-br from-fuchsia-500/70 to-orange-500/70 overflow-hidden`}
       />
 
       {mounted ? (

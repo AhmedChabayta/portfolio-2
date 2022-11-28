@@ -1,4 +1,3 @@
-import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { ReactNode, useEffect, useState } from 'react';
@@ -10,12 +9,9 @@ import {
   BuildingLibraryIcon,
   UserCircleIcon,
 } from '@heroicons/react/24/solid';
-import { useRecoilState } from 'recoil';
+import { useRecoilValue } from 'recoil';
 import { canvasState } from '../atoms/canvasState';
-
-const NoSsrWrapper = dynamic(() => import('./NoSsr'), {
-  ssr: false,
-});
+import { AnimatePresence, motion } from 'framer-motion';
 
 const links = [
   {
@@ -44,7 +40,7 @@ export default function Layout({ children }: { children: ReactNode }) {
   const [hue, setHue] = useState(0);
   const router = useRouter();
 
-  const [canvas, setCanvas] = useRecoilState(canvasState);
+  const canvas = useRecoilValue(canvasState);
 
   useEffect(() => {
     setHue(Math.ceil(Math.random() * 290));
@@ -52,35 +48,47 @@ export default function Layout({ children }: { children: ReactNode }) {
 
   return (
     <div className="flex relative h-screen w-screen overflow-y-scroll overflow-x-hidden bg-black">
-      <NoSsrWrapper>
-        {canvas ? <Canvas hue={hue} /> : ''}
-        <div className="hidden fixed z-[100] lg:flex justify-center flex-col top-1/2 -translate-y-1/2 left-0 bg-transparent h-fit w-fit ">
-          {links.map((link) => (
-            <React.Fragment key={link.link}>
-              <Link href={link.link}>
-                <button className="heroButton">
-                  <link.icon
-                    className={`w-8 ${
-                      router.asPath === `/${link.link}`
-                        ? ' text-[#00e7f3]'
-                        : 'text-white'
-                    }`}
-                  />
-                  <p
-                    style={{
-                      color:
-                        router.asPath === `/${link.link}` ? '#00e7f3' : '#fff',
-                    }}
-                    className="hidden md:inline"
-                  >
-                    {link.link.split('#')}
-                  </p>
-                </button>
-              </Link>
-            </React.Fragment>
-          ))}
-        </div>
-      </NoSsrWrapper>
+      <AnimatePresence>
+        {canvas ? (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.6 }}
+          >
+            <Canvas hue={hue} />
+          </motion.div>
+        ) : (
+          ''
+        )}
+      </AnimatePresence>
+      <div className="hidden fixed z-[100] lg:flex justify-center flex-col top-1/2 -translate-y-1/2 left-0 bg-transparent h-fit w-fit ">
+        {links.map((link) => (
+          <React.Fragment key={link.link}>
+            <Link href={link.link}>
+              <button className="heroButton">
+                <link.icon
+                  className={`w-8 ${
+                    router.asPath === `/${link.link}`
+                      ? ' text-[#00e7f3]'
+                      : 'text-white'
+                  }`}
+                />
+                <p
+                  style={{
+                    color:
+                      router.asPath === `/${link.link}` ? '#00e7f3' : '#fff',
+                  }}
+                  className="hidden md:inline"
+                >
+                  {link.link.split('#')}
+                </p>
+              </button>
+            </Link>
+          </React.Fragment>
+        ))}
+      </div>
+
       <>{children}</>
     </div>
   );

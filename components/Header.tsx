@@ -3,10 +3,36 @@ import { motion } from 'framer-motion';
 import { Social } from '../types/typings';
 import Link from 'next/link';
 import { useRecoilState } from 'recoil';
-import { canvasState } from '../atoms/canvasState';
+import { canvasState, qualityState } from '../atoms/canvasState';
 import { EyeSlashIcon, EyeIcon } from '@heroicons/react/24/solid';
+import {
+  Button,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  SelectChangeEvent,
+} from '@mui/material';
+import { useState } from 'react';
+import { useRouter } from 'next/router';
 
 export default function Header({ social }: { social: Social[] }) {
+  const [quality, setQuality] = useRecoilState(qualityState);
+  const [canvas, setCanvas] = useRecoilState(canvasState);
+  const [changingQuality, setChangingQuality] = useState(false);
+
+  const router = useRouter();
+
+  const handleChange = (event: SelectChangeEvent) => {
+    setChangingQuality(true);
+    if (changingQuality === true) {
+      setCanvas(false);
+    }
+    router.reload();
+    setQuality(event.target.value);
+    setChangingQuality(false);
+    setCanvas(true);
+  };
   const leftContainer = {
     initial: {
       x: -500,
@@ -45,15 +71,15 @@ export default function Header({ social }: { social: Social[] }) {
   };
   const rightChild = {
     initial: {
-      x: 500,
+      x: 100,
     },
     animate: {
       x: 0,
     },
   };
-  const [canvas, setCanvas] = useRecoilState(canvasState);
+
   return (
-    <header className="sticky top-0 p-5 flex items-start justify-between max-w-7xl mx-auto z-20 ">
+    <header className="sticky top-0 p-5 flex items-center justify-between max-w-7xl mx-auto z-20 ">
       <motion.div
         variants={leftContainer}
         initial="initial"
@@ -78,19 +104,33 @@ export default function Header({ social }: { social: Social[] }) {
         variants={rightContainer}
         initial="initial"
         animate="animate"
-        className="flex items-center text-white cursor-pointer"
+        className="flex items-center text-white cursor-pointer "
       >
-        <button
-          className="flex items-center"
-          onClick={() => setCanvas((prev) => !prev)}
+        <Button
+          className="flex items-center ml-2"
+          onClick={() => setCanvas((prev: boolean) => !prev)}
         >
           {canvas ? (
-            <EyeSlashIcon className="w-8 ml-2" />
+            <EyeSlashIcon className="w-7" />
           ) : (
-            <EyeIcon className="w-8 ml-2" />
+            <EyeIcon className="w-7" />
           )}
-        </button>
-
+        </Button>
+        <FormControl className="flex items-center text-white lg:mx-3">
+          <InputLabel className="text-white">Canvas Quality</InputLabel>
+          <Select
+            variant="standard"
+            value={quality?.toString()}
+            onChange={handleChange}
+            className="text-white bg-transparent w-full lg:w-44"
+          >
+            <MenuItem value={64}>Low Quality(64bit)</MenuItem>
+            <MenuItem value={1024}>Medium Quality(512bit)</MenuItem>
+            <MenuItem value={2048}>High Quality(2048bit)</MenuItem>
+            <MenuItem value={4096}>Extreme Quality(4096bit)</MenuItem>
+            <MenuItem value={8192}>Crazy Quality(8192bit)</MenuItem>
+          </Select>
+        </FormControl>
         <motion.div variants={rightChild}>
           <SocialIcon fgColor="white" bgColor="transparent" network="email" />
         </motion.div>

@@ -3,7 +3,8 @@ import { Personal } from '../types/typings';
 import ContactInfo from './ContactInfo';
 import emailjs from '@emailjs/browser';
 import { EnvelopeIcon, MapPinIcon, PhoneIcon } from '@heroicons/react/24/solid';
-import { Input, TextArea } from './Input';
+import { Inputs, TextArea } from './Input';
+import { Button } from '@mui/material';
 
 interface PersonalProps {
   personal: Personal;
@@ -17,22 +18,23 @@ export default function ContactMe({ personal }: PersonalProps) {
     if (form.current) {
       emailjs
         .sendForm(
-          'service_fq4cchd',
-          'template_f81r4zw',
+          `${process.env.NEXT_PUBLIC_SERVICE}`,
+          `${process.env.NEXT_PUBLIC_TEMPLATE}`,
           form.current,
-          'FTSB3T9QVjfnESP97'
+          `${process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY}`
         )
         .then(
           (result) => {
-            console.log(result.text);
+            if (result.text === 'OK') {
+              console.log(result.text);
+            }
           },
           (error) => {
-            console.log(error.text);
+            console.log(error);
           }
         );
     }
   };
-
   return (
     <div className="h-screen relative flex items-center justify-center gap-6 z-50 ">
       <div className="flex flex-col space-y-10 items-center">
@@ -62,13 +64,13 @@ export default function ContactMe({ personal }: PersonalProps) {
           onSubmit={sendEmail}
         >
           <div className="flex flex-col items-center lg:flex-row space-y-4 md:space-y-0 lg:space-x-2">
-            <Input
+            <Inputs
               label="user name"
               placeholder="user name"
               name="from_name"
               type="text"
             />
-            <Input
+            <Inputs
               label="user email"
               placeholder="user email"
               name="from_email"
@@ -77,12 +79,13 @@ export default function ContactMe({ personal }: PersonalProps) {
           </div>
 
           <TextArea placeholder="message" name="message" label="message" />
-          <button
-            className="text-white font-black uppercase bg-sky-200/20 rounded py-5 active:scale-95 transition-all ease-linear"
+          <Button
+            variant="contained"
+            className="text-white font-black uppercase bg-sky-500 rounded py-5 active:scale-95 transition-all ease-linear"
             type="submit"
           >
             submit
-          </button>
+          </Button>
         </form>
       </div>
     </div>

@@ -20,7 +20,7 @@ export default function Home({ data }: Props) {
   const sectionRef = useRef<HTMLDivElement>(null);
 
   return (
-    <div className="text-white h-screen z-0 snap-mandatory snap-both overflow-y-scroll scrollbar scrollbar-thumb-white scrollbar-track-transparent scrollbar-rounded-0">
+    <div className="text-white h-screen z-0 snap-mandatory snap-both overflow-y-scroll scroll-smooth scrollbar scrollbar-thumb-white scrollbar-track-transparent scrollbar-rounded-0">
       <Head>
         <title>Ahmed&apos;s Portfolio</title>
       </Head>

@@ -1,27 +1,20 @@
 import { useEffect, useRef, useState } from 'react';
+import TextareaAutosize from '@mui/base/TextareaAutosize';
 
-export const Input = ({
+export const Inputs = ({
   label,
   placeholder,
-
   type,
   name,
 }: {
   label: string;
   placeholder: string;
-
   type: string;
   name: string;
 }) => {
   const [value, setValue] = useState<string>('');
   const ref = useRef<HTMLInputElement>(null);
-  const { current } = ref;
-  useEffect(() => {
-    if (current) {
-      console.log(current);
-    }
-  }, [current]);
-  console.log(value);
+
   return (
     <span className="relative my-2">
       <input
@@ -66,7 +59,7 @@ export const TextArea = ({
   console.log(value);
   return (
     <span className="flex relative w-full mx-auto mt-4">
-      <textarea
+      <TextareaAutosize
         value={value}
         onChange={(e) => setValue(e.target.value)}
         placeholder={placeholder}
