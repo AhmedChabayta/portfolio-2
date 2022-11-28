@@ -21,7 +21,7 @@ export const Inputs = ({
         value={value}
         onChange={(e) => setValue(e.target.value)}
         ref={ref}
-        className="form-input peer placeholder:opacity-0 text-black"
+        className="form-input peer placeholder:opacity-0 text-black rounded min-w-[350px]"
         type={type}
         placeholder={`${placeholder}`}
         name={name}
@@ -58,12 +58,12 @@ export const TextArea = ({
   }, [current]);
   console.log(value);
   return (
-    <span className="flex relative w-full mx-auto mt-4">
+    <span className="flex relative mx-auto mt-4">
       <TextareaAutosize
         value={value}
         onChange={(e) => setValue(e.target.value)}
         placeholder={placeholder}
-        className="form-input text-black resize w-full min-h-[200px] peer placeholder:opacity-0"
+        className="rounded text-black resize lg:w-[710px] min-w-[350px] min-h-[200px] peer placeholder:opacity-0"
         name={name}
       />
       <label

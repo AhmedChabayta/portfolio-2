@@ -8,8 +8,6 @@ import { EyeSlashIcon, EyeIcon } from '@heroicons/react/24/solid';
 import {
   Button,
   FormControl,
-  IconButton,
-  InputLabel,
   MenuItem,
   Select,
   SelectChangeEvent,
@@ -152,17 +150,17 @@ export default function Header({ social }: { social: Social[] }) {
             </Select>
           </FormControl>
         </Tooltip>
-        <Tooltip title={canvas ? 'Rectangles' : 'Circles'}>
+        <Tooltip title={shape === 'rect' ? 'Rectangles' : 'Circles'}>
           <div className="flex">
             {shape === 'rect' ? (
               <div
                 onClick={handleShapeChange}
-                className="w-5 h-5 border bg-sky-500 lg:bg-transparent border-sky-500"
+                className="w-5 h-5 border border-dotted lg:bg-transparent border-sky-500 lg:hover:bg-sky-500 active:scale-[0.9]"
               />
             ) : (
               <div
                 onClick={handleShapeChange}
-                className="w-5 h-5 border bg-sky-500 lg:bg-transparent border-sky-500 rounded-full"
+                className="w-5 h-5 border border-dotted  lg:bg-transparent border-sky-500 rounded-full lg:hover:bg-sky-500 active:scale-[0.9]"
               />
             )}
           </div>

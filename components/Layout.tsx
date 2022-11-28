@@ -10,8 +10,7 @@ import {
   UserCircleIcon,
 } from '@heroicons/react/24/solid';
 import { useRecoilValue } from 'recoil';
-import { canvasState } from '../atoms/canvasState';
-import { AnimatePresence, motion } from 'framer-motion';
+import { canvasShape, canvasState, qualityState } from '../atoms/canvasState';
 
 const links = [
   {
@@ -41,6 +40,8 @@ export default function Layout({ children }: { children: ReactNode }) {
   const router = useRouter();
 
   const canvas = useRecoilValue(canvasState);
+  const quality = useRecoilValue(qualityState);
+  const shape = useRecoilValue(canvasShape);
 
   useEffect(() => {
     setHue(Math.ceil(Math.random() * 290));
@@ -48,20 +49,8 @@ export default function Layout({ children }: { children: ReactNode }) {
 
   return (
     <div className="flex relative h-screen w-screen overflow-y-scroll overflow-x-hidden bg-black">
-      <AnimatePresence>
-        {canvas ? (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.6 }}
-          >
-            <Canvas hue={hue} />
-          </motion.div>
-        ) : (
-          ''
-        )}
-      </AnimatePresence>
+      {canvas && <Canvas quality={quality} shape={shape} hue={hue} />}
+
       <div className="hidden fixed z-[100] lg:flex justify-center flex-col top-1/2 -translate-y-1/2 left-0 bg-transparent h-fit w-fit ">
         {links.map((link) => (
           <React.Fragment key={link.link}>

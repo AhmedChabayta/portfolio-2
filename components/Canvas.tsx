@@ -1,41 +1,45 @@
-import { useEffect, useRef, useState } from 'react';
+import { useLayoutEffect, useRef, useState } from 'react';
 import { PlayIcon, PauseIcon } from '@heroicons/react/24/solid';
-import { useRecoilValue } from 'recoil';
-import { canvasShape, qualityState } from '../atoms/canvasState';
+
+
 declare global {
   // eslint-disable-next-line no-unused-vars
   interface Window {
     webkitAudioContext: typeof AudioContext;
   }
 }
-export default function Canvas({ hue = 0 }: { hue?: number }) {
+export default function Canvas({
+  hue = 0,
+  quality,
+  shape,
+}: {
+  hue?: number;
+  quality: number;
+  shape: string;
+}) {
   const [mounted, setMounted] = useState(false);
   const [isPlaying, setIsPlaying] = useState<boolean>();
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const audioRef = useRef<HTMLAudioElement>(null);
 
-  const quality = useRecoilValue(qualityState);
-  const shape = useRecoilValue(canvasShape);
-
-  useEffect(() => {
+  useLayoutEffect(() => {
     setMounted(false);
     if (canvasRef.current != null && audioRef.current != null) {
       setMounted(true);
       const canvas = canvasRef.current;
       const audio = audioRef.current;
       const ctx = canvas?.getContext('2d');
-      let audioSource: any;
-      let analyser: any;
+      let audioSource: MediaElementAudioSourceNode;
+      let analyser: AnalyserNode;
       let bufferLength: number;
       let dataArray: Uint8Array;
       let barWidth: number;
       let barHeight: number;
       let animationFrame: number;
-      let audioCtx: any;
+      let audioCtx: AudioContext;
 
-      if (!audioCtx) {
-        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-      }
+      audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
       audio.volume = 0.5;
       audioSource = audioCtx.createMediaElementSource(audio);
       analyser = audioCtx.createAnalyser();
@@ -112,7 +116,7 @@ export default function Canvas({ hue = 0 }: { hue?: number }) {
         canvas.height = window.innerHeight;
       });
     }
-  }, [quality]);
+  }, [quality, shape, mounted]);
   return (
     <>
       <canvas
