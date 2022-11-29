@@ -21,9 +21,6 @@ export default function Home({ data }: Props) {
 
   return (
     <div className="text-white h-screen z-0 snap-mandatory snap-both overflow-y-scroll scroll-smooth scrollbar scrollbar-thumb-white scrollbar-track-transparent scrollbar-rounded-0">
-      <Head>
-        <title>Ahmed&apos;s Portfolio</title>
-      </Head>
       <Header social={data[0].social} />
       <section id="home" className="section">
         <Hero name={assets.name} title={assets.title} image={assets.images} />

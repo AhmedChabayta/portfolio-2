@@ -56,7 +56,7 @@ export const TextArea = ({
       console.log(current);
     }
   }, [current]);
-  console.log(value);
+
   return (
     <span className="flex relative mx-auto mt-4">
       <TextareaAutosize
