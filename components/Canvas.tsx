@@ -1,7 +1,6 @@
 import { useLayoutEffect, useRef, useState } from 'react';
 import { PlayIcon, PauseIcon } from '@heroicons/react/24/solid';
 
-
 declare global {
   // eslint-disable-next-line no-unused-vars
   interface Window {
@@ -9,11 +8,11 @@ declare global {
   }
 }
 export default function Canvas({
-  hue = 0,
+  hue,
   quality,
   shape,
 }: {
-  hue?: number;
+  hue: number;
   quality: number;
   shape: string;
 }) {
@@ -26,54 +25,53 @@ export default function Canvas({
     setMounted(false);
     if (canvasRef.current != null && audioRef.current != null) {
       setMounted(true);
-      const canvas = canvasRef.current;
-      const audio = audioRef.current;
-      const ctx = canvas?.getContext('2d');
-      let audioSource: MediaElementAudioSourceNode;
-      let analyser: AnalyserNode;
-      let bufferLength: number;
-      let dataArray: Uint8Array;
-      let barWidth: number;
+      const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      const ctx: CanvasRenderingContext2D | null =
+        canvasRef.current.getContext('2d');
+      const audioSource: MediaElementAudioSourceNode =
+        audioCtx.createMediaElementSource(audioRef.current);
+      const analyser: AnalyserNode = audioCtx.createAnalyser();
+      const bufferLength: number = analyser.frequencyBinCount;
+      const dataArray: Uint8Array = new Uint8Array(bufferLength);
+
+      let barWidth: number = 10;
       let barHeight: number;
       let animationFrame: number;
-      let audioCtx: AudioContext;
 
-      audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-
-      audio.volume = 0.5;
-      audioSource = audioCtx.createMediaElementSource(audio);
-      analyser = audioCtx.createAnalyser();
+      audioRef.current.volume = 0.5;
       audioSource.connect(analyser);
       analyser.connect(audioCtx.destination);
       analyser.fftSize = quality || 64;
-      bufferLength = analyser.frequencyBinCount;
-      dataArray = new Uint8Array(bufferLength);
-      barWidth = 10;
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
+      canvasRef.current.width = window.innerWidth;
+      canvasRef.current.height = window.innerHeight;
 
       const animate = () => {
-        if (canvas) {
-          ctx?.clearRect(0, 0, canvas.width, canvas.height);
+        if (canvasRef.current) {
+          ctx?.clearRect(
+            0,
+            0,
+            canvasRef.current.width,
+            canvasRef.current.height
+          );
           analyser.getByteFrequencyData(dataArray);
           shape === 'rect' ? drawVisualizer() : drawCircularVizualizer();
           animationFrame = requestAnimationFrame(animate);
         }
       };
-      audio.addEventListener('play', () => {
+      audioRef.current.addEventListener('play', () => {
         cancelAnimationFrame(animationFrame);
         animate();
         audioCtx.resume();
         setIsPlaying(true);
       });
-      audio.addEventListener('pause', () => {
+      audioRef.current.addEventListener('pause', () => {
         setIsPlaying(false);
         cancelAnimationFrame(animationFrame);
         audioCtx.suspend();
       });
 
       const drawVisualizer = () => {
-        if (ctx && canvas) {
+        if (ctx && canvasRef.current) {
           for (let i = 0; i < bufferLength; Math.floor(i++)) {
             barHeight = dataArray[i] * 4;
 
@@ -87,7 +85,7 @@ export default function Canvas({
                 : quality > 2000
                 ? i * 2
                 : i,
-              canvas.height,
+              canvasRef.current.height,
               barWidth,
               -barHeight
             );
@@ -97,23 +95,28 @@ export default function Canvas({
       };
 
       const drawCircularVizualizer = () => {
-        if (ctx && canvas) {
+        if (canvasRef.current && ctx) {
           for (let i = 0; i < bufferLength; i++) {
             barHeight = dataArray[i] * 2;
-            ctx.save();
-            ctx.translate(canvas.width / 2, canvas.height / 2);
-            ctx.rotate((i * (Math.PI * 64)) / bufferLength);
+            ctx?.save();
+            ctx?.translate(
+              canvasRef.current.width / 2,
+              canvasRef.current.height / 2
+            );
+            ctx?.rotate((i * (Math.PI * 8)) / bufferLength);
             ctx.fillStyle = '#ff00d9';
-            ctx.beginPath();
-            ctx.arc(barWidth, barHeight * 2, i / 10, i, 2 * Math.PI, true);
-            ctx.fill();
-            ctx.restore();
+            ctx?.beginPath();
+            ctx?.arc(barWidth, barHeight * 2, i / 10, i, 2 * Math.PI);
+            ctx?.fill();
+            ctx?.restore();
           }
         }
       };
       window.addEventListener('resize', () => {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
+        if (canvasRef.current) {
+          canvasRef.current.width = window.innerWidth;
+          canvasRef.current.height = window.innerHeight;
+        }
       });
     }
   }, [quality, shape, mounted]);
