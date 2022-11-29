@@ -22,14 +22,23 @@ export default function Canvas({
   const audioRef = useRef<HTMLAudioElement>(null);
 
   useLayoutEffect(() => {
-    setMounted(false);
-    if (canvasRef.current != null && audioRef.current != null) {
+    if (
+      typeof window !== 'undefined' &&
+      audioRef.current &&
+      canvasRef.current
+    ) {
+      console.log(typeof window);
+      setMounted(false);
+
       setMounted(true);
-      const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-      const ctx: CanvasRenderingContext2D | null =
-        canvasRef.current.getContext('2d');
+      const AudioCtx = AudioContext || window.webkitAudioContext;
+      const audioCtx = new AudioCtx();
+      const ctx: CanvasRenderingContext2D | null | undefined =
+        canvasRef?.current?.getContext('2d');
+
       const audioSource: MediaElementAudioSourceNode =
         audioCtx.createMediaElementSource(audioRef.current);
+
       const analyser: AnalyserNode = audioCtx.createAnalyser();
       const bufferLength: number = analyser.frequencyBinCount;
       const dataArray: Uint8Array = new Uint8Array(bufferLength);
@@ -119,7 +128,7 @@ export default function Canvas({
         }
       });
     }
-  }, [quality, shape, mounted]);
+  }, [quality, shape]);
   return (
     <>
       <canvas
