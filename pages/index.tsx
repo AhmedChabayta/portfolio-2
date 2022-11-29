@@ -1,6 +1,5 @@
 import { motion } from 'framer-motion';
 import { GetServerSideProps } from 'next';
-import Head from 'next/head';
 import { useRef } from 'react';
 import About from '../components/About';
 import Header from '../components/Header';

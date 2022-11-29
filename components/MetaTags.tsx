@@ -48,4 +48,3 @@ export default function MetaTags() {
     </>
   );
 }
-const BASE = process.env.NEXT_PUBLIC_BASE_URL;

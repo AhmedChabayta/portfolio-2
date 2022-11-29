@@ -9,6 +9,7 @@ import {
   Button,
   FormControl,
   MenuItem,
+  NoSsr,
   Select,
   SelectChangeEvent,
   Tooltip,
@@ -91,89 +92,91 @@ export default function Header({ social }: { social: Social[] }) {
   };
 
   return (
-    <header className="sticky top-0 p-5 flex items-center justify-between max-w-7xl mx-auto z-[500]">
-      <motion.div
-        variants={leftContainer}
-        initial="initial"
-        animate="animate"
-        className="flex relative justify-center items-center "
-      >
-        {social.map((social: Social) => (
-          <motion.div
-            className="relative z-[900]"
-            key={social.title}
-            variants={leftChild}
-          >
-            <SocialIcon
-              fgColor="white"
-              bgColor="transparent"
-              url={social.url}
-            />
-          </motion.div>
-        ))}
-      </motion.div>
-      <motion.div
-        variants={rightContainer}
-        initial="initial"
-        animate="animate"
-        className="flex items-center text-white cursor-pointer "
-      >
-        <Tooltip title={canvas ? 'Hide Canvas' : 'Show Canvas'}>
-          <Button
-            className="flex items-center ml-2"
-            onClick={() => setCanvas((prev: boolean) => !prev)}
-          >
-            {canvas ? (
-              <EyeSlashIcon className="w-7" />
-            ) : (
-              <EyeIcon className="w-7" />
-            )}
-          </Button>
-        </Tooltip>
-        <Tooltip title="Canvas Quality">
-          <FormControl
-            size="small"
-            className="flex items-center text-white lg:mx-3"
-          >
-            <Select
-              size="small"
-              variant="standard"
-              value={quality?.toString()}
-              onChange={handleChange}
-              className="text-white bg-transparent w-14 lg:w-44"
+    <NoSsr>
+      <header className="sticky top-0 p-5 flex items-center justify-between max-w-7xl mx-auto z-[500]">
+        <motion.div
+          variants={leftContainer}
+          initial="initial"
+          animate="animate"
+          className="flex relative justify-center items-center "
+        >
+          {social.map((social: Social) => (
+            <motion.div
+              className="relative z-[900]"
+              key={social.title}
+              variants={leftChild}
             >
-              <MenuItem value={64}>Low Quality(64bit)</MenuItem>
-              <MenuItem value={1024}>Medium Quality(512bit)</MenuItem>
-              <MenuItem value={2048}>High Quality(2048bit)</MenuItem>
-              <MenuItem value={4096}>Extreme Quality(4096bit)</MenuItem>
-              <MenuItem value={8192}>Crazy Quality(8192bit)</MenuItem>
-            </Select>
-          </FormControl>
-        </Tooltip>
-        <Tooltip title={shape === 'rect' ? 'Rectangles' : 'Circles'}>
-          <div className="flex">
-            {shape === 'rect' ? (
-              <div
-                onClick={handleShapeChange}
-                className="w-5 h-5 border border-dotted lg:bg-transparent border-sky-500 lg:hover:bg-sky-500 active:scale-[0.9]"
+              <SocialIcon
+                fgColor="white"
+                bgColor="transparent"
+                url={social.url}
               />
-            ) : (
-              <div
-                onClick={handleShapeChange}
-                className="w-5 h-5 border border-dotted  lg:bg-transparent border-sky-500 rounded-full lg:hover:bg-sky-500 active:scale-[0.9]"
-              />
-            )}
-          </div>
-        </Tooltip>
-        <motion.div variants={rightChild}>
-          <SocialIcon fgColor="white" bgColor="transparent" network="email" />
+            </motion.div>
+          ))}
         </motion.div>
-        <Link href="#contact">
-          <p className="uppercase hidden md:inline-flex text-sm text-white">
-            get in touch
-          </p>
-        </Link>
-      </motion.div>
-    </header>
+        <motion.div
+          variants={rightContainer}
+          initial="initial"
+          animate="animate"
+          className="flex items-center text-white cursor-pointer "
+        >
+          <Tooltip title={canvas ? 'Hide Canvas' : 'Show Canvas'}>
+            <Button
+              className="flex items-center ml-2"
+              onClick={() => setCanvas((prev: boolean) => !prev)}
+            >
+              {canvas ? (
+                <EyeSlashIcon className="w-7" />
+              ) : (
+                <EyeIcon className="w-7" />
+              )}
+            </Button>
+          </Tooltip>
+          <Tooltip title="Canvas Quality">
+            <FormControl
+              size="small"
+              className="flex items-center text-white lg:mx-3"
+            >
+              <Select
+                size="small"
+                variant="standard"
+                value={quality?.toString()}
+                onChange={handleChange}
+                className="text-white bg-transparent w-14 lg:w-44"
+              >
+                <MenuItem value={64}>Low Quality(64bit)</MenuItem>
+                <MenuItem value={1024}>Medium Quality(512bit)</MenuItem>
+                <MenuItem value={2048}>High Quality(2048bit)</MenuItem>
+                <MenuItem value={4096}>Extreme Quality(4096bit)</MenuItem>
+                <MenuItem value={8192}>Crazy Quality(8192bit)</MenuItem>
+              </Select>
+            </FormControl>
+          </Tooltip>
+          <Tooltip title={shape === 'rect' ? 'Rectangles' : 'Circles'}>
+            <div className="flex">
+              {shape === 'rect' ? (
+                <div
+                  onClick={handleShapeChange}
+                  className="w-5 h-5 border border-dotted lg:bg-transparent border-sky-500 lg:hover:bg-sky-500 active:scale-[0.9]"
+                />
+              ) : (
+                <div
+                  onClick={handleShapeChange}
+                  className="w-5 h-5 border border-dotted  lg:bg-transparent border-sky-500 rounded-full lg:hover:bg-sky-500 active:scale-[0.9]"
+                />
+              )}
+            </div>
+          </Tooltip>
+          <motion.div variants={rightChild}>
+            <SocialIcon fgColor="white" bgColor="transparent" network="email" />
+          </motion.div>
+          <Link href="#contact">
+            <p className="uppercase hidden md:inline-flex text-sm text-white">
+              get in touch
+            </p>
+          </Link>
+        </motion.div>
+      </header>
+    </NoSsr>
   );
 }
