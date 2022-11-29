@@ -1,5 +1,6 @@
 import { useLayoutEffect, useRef, useState } from 'react';
 import { PlayIcon, PauseIcon } from '@heroicons/react/24/solid';
+import { onAndOn } from '../assets/music';
 
 declare global {
   // eslint-disable-next-line no-unused-vars
@@ -136,7 +137,7 @@ export default function Canvas({
         className="fixed w-screen h-screen will-change-auto"
       />
       <audio
-        src="/On & On.mp3"
+        src={onAndOn}
         ref={audioRef}
         className="fixed bottom-0 w-screen z-10 bg-transparent"
       />
