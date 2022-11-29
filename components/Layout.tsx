@@ -50,7 +50,7 @@ export default function Layout({ children }: { children: ReactNode }) {
 
   return (
     <>
-      <MetaTags />
+      {/* <MetaTags /> */}
       <div className="flex relative h-screen w-screen overflow-y-scroll overflow-x-hidden bg-black">
         {canvas && <Canvas quality={quality} shape={shape} hue={hue} />}
 
