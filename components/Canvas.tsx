@@ -26,88 +26,97 @@ export const Canvas = forwardRef(
     const [isPlaying, setIsPlaying] = useState<boolean>();
 
     useLayoutEffect(() => {
-      setMounted(false);
-      const AudioCtx = AudioContext || window.webkitAudioContext;
-      const audioCtx = new AudioCtx();
-      const ctx: CanvasRenderingContext2D =
-        canvasRef?.current?.getContext('2d');
-      const audioSource: MediaElementAudioSourceNode =
-        audioCtx.createMediaElementSource(audioRef.current);
-      const analyser: AnalyserNode = audioCtx.createAnalyser();
-      const bufferLength: number = analyser.frequencyBinCount;
-      const dataArray: Uint8Array = new Uint8Array(bufferLength);
-      let barWidth: number = 10;
-      let barHeight: number;
-      let animationFrame: number;
-      audioRef.current.volume = 0.5;
-      audioSource.connect(analyser);
-      analyser.connect(audioCtx.destination);
-      analyser.fftSize = quality || 64;
-      canvasRef.current.width = window.innerWidth;
-      canvasRef.current.height = window.innerHeight;
-      setMounted(true);
-      const animate = () => {
-        ctx?.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
-        analyser.getByteFrequencyData(dataArray);
-        shape === 'rect' ? drawVisualizer() : drawCircularVizualizer();
-        animationFrame = requestAnimationFrame(animate);
-      };
-      audioRef.current.addEventListener('play', () => {
-        cancelAnimationFrame(animationFrame);
-        animate();
-        audioCtx.resume();
-        setIsPlaying(true);
-      });
-      audioRef.current.addEventListener('pause', () => {
-        setIsPlaying(false);
-        cancelAnimationFrame(animationFrame);
-        audioCtx.suspend();
-      });
+      if (canvasRef.current) {
+        setMounted(false);
+        const AudioCtx = AudioContext || window.webkitAudioContext;
+        const audioCtx = new AudioCtx();
+        const ctx: CanvasRenderingContext2D =
+          canvasRef?.current?.getContext('2d');
+        const audioSource: MediaElementAudioSourceNode =
+          audioCtx.createMediaElementSource(audioRef.current);
+        const analyser: AnalyserNode = audioCtx.createAnalyser();
+        const bufferLength: number = analyser.frequencyBinCount;
+        const dataArray: Uint8Array = new Uint8Array(bufferLength);
+        let barWidth: number = 10;
+        let barHeight: number;
+        let animationFrame: number;
+        audioRef.current.volume = 0.5;
+        audioSource.connect(analyser);
+        analyser.connect(audioCtx.destination);
+        analyser.fftSize = quality || 64;
+        canvasRef.current.width = window.innerWidth;
+        canvasRef.current.height = window.innerHeight;
+        setMounted(true);
+        const animate = () => {
+          if (canvasRef.current) {
+            ctx?.clearRect(
+              0,
+              0,
+              canvasRef.current.width,
+              canvasRef.current.height
+            );
+            analyser.getByteFrequencyData(dataArray);
+            shape === 'rect' ? drawVisualizer() : drawCircularVizualizer();
+            animationFrame = requestAnimationFrame(animate);
+          }
+        };
+        audioRef.current.addEventListener('play', () => {
+          cancelAnimationFrame(animationFrame);
+          animate();
+          audioCtx.resume();
+          setIsPlaying(true);
+        });
+        audioRef.current.addEventListener('pause', () => {
+          setIsPlaying(false);
+          cancelAnimationFrame(animationFrame);
+          audioCtx.suspend();
+        });
 
-      const drawVisualizer = () => {
-        for (let i = 0; i < bufferLength; Math.floor(i++)) {
-          barHeight = dataArray[i] * 4;
+        const drawVisualizer = () => {
+          for (let i = 0; i < bufferLength; Math.floor(i++)) {
+            barHeight = dataArray[i] * 4;
 
-          ctx.fillStyle = '#ff00d9';
-          ctx.strokeStyle = '#fff';
-          ctx.fillRect(
-            quality <= 64
-              ? i * 100
-              : quality > 1000
-              ? i * 20
-              : quality > 2000
-              ? i * 2
-              : i,
-            canvasRef.current.height,
-            barWidth,
-            -barHeight
-          );
-          ctx.stroke();
-        }
-      };
+            ctx.fillStyle = '#ff00d9';
+            ctx.strokeStyle = '#fff';
+            ctx.fillRect(
+              quality <= 64
+                ? i * 100
+                : quality > 1000
+                ? i * 20
+                : quality > 2000
+                ? i * 2
+                : i,
+              canvasRef.current.height,
+              barWidth,
+              -barHeight
+            );
+            ctx.stroke();
+          }
+        };
 
-      const drawCircularVizualizer = () => {
-        for (let i = 0; i < bufferLength; i++) {
-          barHeight = dataArray[i] * 2;
-          ctx?.save();
-          ctx?.translate(
-            canvasRef.current.width / 2,
-            canvasRef.current.height / 2
-          );
-          ctx?.rotate((i * (Math.PI * 8)) / bufferLength);
-          ctx.fillStyle = '#ff00d9';
-          ctx?.beginPath();
-          ctx?.arc(barWidth, barHeight * 2, i / 10, 2 * Math.PI, i);
-          ctx?.fill();
-          ctx?.restore();
-        }
-      };
-      window.addEventListener('resize', () => {
-        if (canvasRef.current) {
-          canvasRef.current.width = window.innerWidth;
-          canvasRef.current.height = window.innerHeight;
-        }
-      });
+        const drawCircularVizualizer = () => {
+          for (let i = 0; i < bufferLength; i++) {
+            barHeight = dataArray[i] * 2;
+            ctx?.save();
+            ctx?.translate(
+              canvasRef.current.width / 2,
+              canvasRef.current.height / 2
+            );
+            ctx?.rotate((i * (Math.PI * 8)) / bufferLength);
+            ctx.fillStyle = '#ff00d9';
+            ctx?.beginPath();
+            ctx?.arc(barWidth, barHeight * 2, i / 10, 2 * Math.PI, i);
+            ctx?.fill();
+            ctx?.restore();
+          }
+        };
+        window.addEventListener('resize', () => {
+          if (canvasRef.current) {
+            canvasRef.current.width = window.innerWidth;
+            canvasRef.current.height = window.innerHeight;
+          }
+        });
+      }
     }, [audioRef, canvasRef, quality, shape]);
     return (
       <>
