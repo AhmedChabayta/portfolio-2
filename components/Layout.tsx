@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import React, { ReactNode, useEffect, useState } from 'react';
-import Canvas from './Canvas';
+import React, { ReactNode, useEffect, useRef, useState } from 'react';
+import { Canvas } from './Canvas';
 import {
   HomeModernIcon,
   AcademicCapIcon,
@@ -40,7 +40,8 @@ const links = [
 export default function Layout({ children }: { children: ReactNode }) {
   const [hue, setHue] = useState(0);
   const router = useRouter();
-
+  const CANVAS = useRef<HTMLCanvasElement>(null);
+  const AUDIO = useRef<HTMLAudioElement>(null);
   const canvas = useRecoilValue(canvasState);
   const quality = useRecoilValue(qualityState);
   const shape = useRecoilValue(canvasShape);
@@ -53,7 +54,15 @@ export default function Layout({ children }: { children: ReactNode }) {
       <MetaTags />
       <div className="flex relative h-screen w-screen overflow-y-scroll overflow-x-hidden bg-black">
         <NoSsr>
-          {canvas && <Canvas quality={quality} shape={shape} hue={hue} />}
+          {canvas && (
+            <Canvas
+              canvasRef={CANVAS}
+              audioRef={AUDIO}
+              quality={quality}
+              shape={shape}
+              hue={hue}
+            />
+          )}
 
           <div className="hidden fixed z-[100] lg:flex justify-center flex-col top-1/2 -translate-y-1/2 left-0 bg-transparent h-fit w-fit ">
             {links.map((link) => (

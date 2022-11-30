@@ -132,7 +132,7 @@ export default function Header({ social }: { social: Social[] }) {
               )}
             </Button>
           </Tooltip>
-          <Tooltip title="Canvas Quality">
+          <Tooltip title="FFT Size" disableInteractive>
             <FormControl
               size="small"
               className="flex items-center text-white lg:mx-3"
@@ -142,13 +142,13 @@ export default function Header({ social }: { social: Social[] }) {
                 variant="standard"
                 value={quality?.toString()}
                 onChange={handleChange}
-                className="text-white bg-transparent w-14 lg:w-44"
+                className="text-white bg-transparent"
               >
-                <MenuItem value={64}>Low Quality(64bit)</MenuItem>
-                <MenuItem value={1024}>Medium Quality(512bit)</MenuItem>
-                <MenuItem value={2048}>High Quality(2048bit)</MenuItem>
-                <MenuItem value={4096}>Extreme Quality(4096bit)</MenuItem>
-                <MenuItem value={8192}>Crazy Quality(8192bit)</MenuItem>
+                <MenuItem value={64}>(64bit)</MenuItem>
+                <MenuItem value={1024}>(512bit)</MenuItem>
+                <MenuItem value={2048}>(2048bit)</MenuItem>
+                <MenuItem value={4096}>(4096bit)</MenuItem>
+                <MenuItem value={8192}>(8192bit)</MenuItem>
               </Select>
             </FormControl>
           </Tooltip>
