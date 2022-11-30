@@ -1,18 +1,22 @@
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { Personal } from '../types/typings';
 import ContactInfo from './ContactInfo';
 import emailjs from '@emailjs/browser';
 import { EnvelopeIcon, MapPinIcon, PhoneIcon } from '@heroicons/react/24/solid';
 import { Inputs, TextArea } from './Input';
-import { Button } from '@mui/material';
+import { Button, SnackbarCloseReason } from '@mui/material';
+import { motion } from 'framer-motion';
+import SnackbarUnstyled from '@mui/base/SnackbarUnstyled';
+
 interface PersonalProps {
   personal: Personal;
 }
 
 export default function ContactMe({ personal }: PersonalProps) {
+  const [showSnackbar, setShowSnackbar] = useState<boolean>(false);
   const form = useRef<HTMLFormElement>(null);
 
-  const sendEmail = (e: any) => {
+  const sendEmail = (e: { preventDefault: () => void }) => {
     e.preventDefault();
     if (form.current) {
       emailjs
@@ -34,8 +38,26 @@ export default function ContactMe({ personal }: PersonalProps) {
         );
     }
   };
+  const handleClose = (_: any, reason: SnackbarCloseReason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setShowSnackbar(false);
+  };
+
   return (
     <div className="h-screen relative flex items-center justify-center gap-6 z-50 ">
+      <SnackbarUnstyled
+        open={showSnackbar}
+        autoHideDuration={3000}
+        onClose={handleClose}
+        className="flex justify-center fixed top-0 left-0 right-0 w-full bg-sky-500/60 border-b border-white backdrop-blur-3xl"
+      >
+        <motion.p initial={{ opacity: 0.1 }} whileInView={{ opacity: 1 }}>
+          Copied!
+        </motion.p>
+      </SnackbarUnstyled>
+
       <div className="flex flex-col space-y-10 items-center mt-8">
         <h4 className="text-4xl font-semibold text-center relative w-fit mx-auto mt-12">
           Lets{' '}
@@ -45,11 +67,13 @@ export default function ContactMe({ personal }: PersonalProps) {
         </h4>
         <div className="space-y-5">
           <ContactInfo
+            setShowSnackbar={setShowSnackbar}
             title="WhatsApp"
             text={personal.phoneNumber}
             Icon={<PhoneIcon className="w-8" />}
           />
           <ContactInfo
+            setShowSnackbar={setShowSnackbar}
             title=""
             text={personal.email}
             Icon={<EnvelopeIcon className="w-8" />}

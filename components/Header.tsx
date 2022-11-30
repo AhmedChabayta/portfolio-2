@@ -171,13 +171,20 @@ export default function Header({ social }: { social: Social[] }) {
               )}
             </div>
           </Tooltip>
-          <motion.div variants={rightChild}>
-            <SocialIcon fgColor="white" bgColor="transparent" network="email" />
-          </motion.div>
           <Link href="#contact">
-            <p className="uppercase hidden md:inline-flex text-sm text-white">
-              get in touch
-            </p>
+            <div className="flex items-center">
+              <motion.div variants={rightChild}>
+                <SocialIcon
+                  fgColor="white"
+                  bgColor="transparent"
+                  network="email"
+                />
+              </motion.div>
+
+              <p className="uppercase hidden md:inline-flex text-sm text-white">
+                get in touch
+              </p>
+            </div>
           </Link>
         </motion.div>
       </header>

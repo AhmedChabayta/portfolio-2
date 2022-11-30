@@ -21,12 +21,15 @@ export default function Home({ data }: Props) {
   return (
     <div className="text-white h-screen z-0 snap-mandatory snap-both overflow-y-scroll scroll-smooth scrollbar scrollbar-thumb-white scrollbar-track-transparent scrollbar-rounded-0">
       <Header social={data[0].social} />
+
       <section id="home" className="section">
         <Hero name={assets.name} title={assets.title} image={assets.images} />
       </section>
+
       <section ref={sectionRef} id="about" className="section">
         <About personalImage={assets.images} />
       </section>
+
       <section
         className="w-fit h-fit mx-auto relative snap-center section"
         id="skills"
@@ -49,6 +52,7 @@ export default function Home({ data }: Props) {
           <ProjectsContainer projects={assets.project} />
         </div>
       </section>
+
       <section id="contact" className="section">
         <ContactMe personal={assets} />
       </section>
@@ -57,7 +61,6 @@ export default function Home({ data }: Props) {
 }
 export const getServerSideProps: GetServerSideProps<Props> = async () => {
   const res = await fetch(`${BASE}/api/details`);
-
   const { data } = await res.json();
   return {
     props: {
