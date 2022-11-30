@@ -3,7 +3,11 @@ import { motion } from 'framer-motion';
 import { Social } from '../types/typings';
 import Link from 'next/link';
 import { useRecoilState } from 'recoil';
-import { canvasShape, canvasState, qualityState } from '../atoms/canvasState';
+import {
+  canvasShapeAtom,
+  canvasStateAtom,
+  qualityStateAtom,
+} from '../atoms/canvasStateAtoms';
 import { EyeSlashIcon, EyeIcon } from '@heroicons/react/24/solid';
 import {
   Button,
@@ -18,10 +22,10 @@ import { useState } from 'react';
 import { useRouter } from 'next/router';
 
 export default function Header({ social }: { social: Social[] }) {
-  const [quality, setQuality] = useRecoilState(qualityState);
-  const [canvas, setCanvas] = useRecoilState(canvasState);
+  const [quality, setQuality] = useRecoilState(qualityStateAtom);
+  const [canvas, setCanvas] = useRecoilState(canvasStateAtom);
   const [changingQuality, setChangingQuality] = useState(false);
-  const [shape, setShape] = useRecoilState(canvasShape);
+  const [shape, setShape] = useRecoilState(canvasShapeAtom);
 
   const router = useRouter();
 

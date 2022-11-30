@@ -10,7 +10,11 @@ import {
   UserCircleIcon,
 } from '@heroicons/react/24/solid';
 import { useRecoilValue } from 'recoil';
-import { canvasShape, canvasState, qualityState } from '../atoms/canvasState';
+import {
+  canvasShapeAtom,
+  canvasStateAtom,
+  qualityStateAtom,
+} from '../atoms/canvasStateAtoms';
 import MetaTags from './MetaTags';
 import { NoSsr } from '@mui/material';
 
@@ -42,9 +46,9 @@ export default function Layout({ children }: { children: ReactNode }) {
   const router = useRouter();
   const CANVAS = useRef<HTMLCanvasElement>(null);
   const AUDIO = useRef<HTMLAudioElement>(null);
-  const canvas = useRecoilValue(canvasState);
-  const quality = useRecoilValue(qualityState);
-  const shape = useRecoilValue(canvasShape);
+  const canvas = useRecoilValue(canvasStateAtom);
+  const quality = useRecoilValue(qualityStateAtom);
+  const shape = useRecoilValue(canvasShapeAtom);
   useEffect(() => {
     setHue(Math.ceil(Math.random() * 290));
   }, [router]);
