@@ -12,7 +12,6 @@ export default function ContactInfo({
   title: string;
   setShowSnackbar?: (_arg0: boolean) => void;
 }) {
-
   return (
     <Tooltip title={title}>
       <div
@@ -22,7 +21,7 @@ export default function ContactInfo({
             setShowSnackbar(true);
           }
         }}
-        className="flex items-center space-x-4"
+        className="flex items-center space-x-4 select-all"
       >
         {Icon}
         <p className="text-xl">{text}</p>
