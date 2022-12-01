@@ -126,7 +126,10 @@ export const Canvas = ({
         ref={canvasRef}
         animate={{
           backgroundImage: `linear-gradient(-145deg, hsl(290,100%,65%) 0%,hsl(205,100%,65%) 100%)`,
-          filter: `hue-rotate(${hue}deg) brightness(1.1) contrast(1.1) saturate(1.1)`,
+          filter:
+            shape === 'rect'
+              ? `hue-rotate(${hue}deg) brightness(1.1) contrast(1.1) saturate(1.1) blur(5px)`
+              : `hue-rotate(${hue}deg) brightness(1.1) contrast(1.1) saturate(1.1) `,
         }}
         transition={{
           duration: 0.7,

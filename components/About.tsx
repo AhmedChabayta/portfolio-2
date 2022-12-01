@@ -27,13 +27,12 @@ export default function About({ personalImage }: Props) {
     >
       <SectionTitle title="about" />
       <motion.div
+        layout
         className="relative flex items-center justify-center shadow-[0px_0px_15px_5px_#ffffff] lg:w-96 lg:h-96 xl:w-[500px] xl:h-[500px] rounded-full lg:rounded bg-yellow-100"
         animate={{
           transform: isInView ? 'translateX(0px)' : 'translateX(-100px)',
         }}
-        transition={{
-          duration: 0.2,
-        }}
+        style={{ transition: 'all 0.2s linear' }}
         ref={imageRef}
       >
         <Image
@@ -42,7 +41,7 @@ export default function About({ personalImage }: Props) {
           width={200}
           height={200}
           alt=""
-          style={{ WebkitAppearance: 'none' }}
+          style={{ WebkitAppearance: 'none', transition: 'all 0.3s' }}
           className="relative p-[2px] z-50 w-56 h-56 object-cover rounded-full lg:rounded-none lg:w-96 lg:h-96 xl:w-[500px] xl:h-[500px] shadow-[0px_0px_10px_#ffffff_inset]"
         />
       </motion.div>

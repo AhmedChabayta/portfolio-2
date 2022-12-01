@@ -19,7 +19,7 @@ export default function Home({ data }: Props) {
   const sectionRef = useRef<HTMLDivElement>(null);
 
   return (
-    <div className="text-white h-screen z-0 snap-mandatory snap-both overflow-y-scroll scroll-smooth scrollbar scrollbar-thumb-white scrollbar-track-transparent scrollbar-rounded-0">
+    <motion.div layout transition={{duration:0.2}} className="text-white h-screen z-0 snap-mandatory snap-both overflow-y-scroll scroll-smooth scrollbar scrollbar-thumb-white scrollbar-track-transparent scrollbar-rounded-0">
       <Header social={data[0].social} />
 
       <section id="home" className="section">
@@ -56,7 +56,7 @@ export default function Home({ data }: Props) {
       <section id="contact" className="section">
         <ContactMe personal={assets} />
       </section>
-    </div>
+    </motion.div>
   );
 }
 export const getServerSideProps: GetServerSideProps<Props> = async () => {
