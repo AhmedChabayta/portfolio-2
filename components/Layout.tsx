@@ -42,6 +42,7 @@ const links = [
 ];
 
 export default function Layout({ children }: { children: ReactNode }) {
+  const [hue, setHue] = useState<number>(0);
 
   const router = useRouter();
   const CANVAS = useRef<HTMLCanvasElement>(null);
