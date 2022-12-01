@@ -20,6 +20,7 @@
   margin: 0;
   box-sizing: border-box;
   background-color: transparent;
+  image-rendering: optimizeQuality !important;
 }
 p {
   -webkit-user-select: auto; /* Safari */

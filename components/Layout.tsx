@@ -42,7 +42,6 @@ const links = [
 ];
 
 export default function Layout({ children }: { children: ReactNode }) {
-  const [hue, setHue] = useState(0);
 
   const router = useRouter();
   const CANVAS = useRef<HTMLCanvasElement>(null);
@@ -50,9 +49,13 @@ export default function Layout({ children }: { children: ReactNode }) {
   const canvas = useRecoilValue(canvasStateAtom);
   const quality = useRecoilValue(qualityStateAtom);
   const shape = useRecoilValue(canvasShapeAtom);
+
   useEffect(() => {
-    let x = Math.ceil(Math.random() * 360);
-    setHue(x >= 100 ? x + 120 : x === 200 ? x + 20 : x);
+    let prevHue: number;
+    let hues: number;
+    hues = Math.ceil(Math.random() * 100);
+    prevHue = hues;
+    setHue(hues === prevHue ? hues * 2 : hues);
   }, [router]);
 
   return (

@@ -90,13 +90,10 @@ export const Canvas = forwardRef(
         for (let i = 0; i < bufferLength; Math.floor(i++)) {
           barHeight = dataArray[i] * 3;
           ctx.fillStyle = `#ee00ff`;
-          ctx.strokeStyle = '#26ff00';
-          ctx.stroke();
-          ctx.strokeRect(i * 2, canvasRef.current.height, barWidth, -barHeight);
           ctx.fillRect(
             i * 3,
             canvasRef.current.height,
-            barWidth + 2,
+            barWidth,
             -barHeight + 2
           );
         }
@@ -111,16 +108,15 @@ export const Canvas = forwardRef(
             canvasRef.current.height / 2
           );
           ctx?.rotate(
-            (i * 0.1 * Math.PI * (quality > 4000 ? 128 : 64)) / bufferLength
+            (i * 640 + Math.PI * (quality > 4000 ? 128 : 64)) / bufferLength
           );
-          ctx.fillStyle = '#ff00d9';
-          ctx.shadowColor = 'red';
+          ctx.fillStyle = `#04f7fb`;
           ctx.globalCompositeOperation = 'luminosity';
           ctx?.beginPath();
           ctx.arc(
             i / 4 + barHeight / 2,
             i / 4 + barHeight / 2,
-            15,
+            barWidth,
             i * 2,
             2 * Math.PI,
             true
@@ -139,37 +135,23 @@ export const Canvas = forwardRef(
 
     return (
       <>
-        <canvas
+        <motion.canvas
           ref={canvasRef}
-          className="fixed w-screen h-screen will-change-auto "
-        />
-        <audio
-          src={onAndOn}
-          ref={audioRef}
-          className="fixed bottom-0 w-screen z-10 bg-transparent"
-        />
-        <motion.div
           animate={{
-            backgroundImage: `linear-gradient(145deg, rgba(100,0,151,0.6) 0%, rgba(255,0,0,0.6) 100%)`,
-            filter: `hue-rotate(${hue}deg)`,
+            backgroundImage: `linear-gradient(-145deg, #ff5e00  0%, #99ff00 100%)`,
+            filter: `hue-rotate(${hue}deg) blur(0px) brightness(1)`,
           }}
+          className="fixed w-screen h-screen will-change-auto "
           transition={{
             duration: hue / 100,
             repeatType: 'mirror',
             ease: 'easeInOut',
           }}
-          style={{
-            backdropFilter: 'blur(2px)',
-            WebkitBackdropFilter: 'blur(2px)',
-            position: 'fixed',
-            zIndex: 0,
-            top: 0,
-            bottom: 0,
-            left: 0,
-            right: 0,
-            height: '100vh',
-            width: '100vw',
-          }}
+        />
+        <audio
+          src={onAndOn}
+          ref={audioRef}
+          className="fixed bottom-0 w-screen z-10 bg-transparent"
         />
 
         {mounted ? (
