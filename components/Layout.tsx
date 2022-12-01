@@ -50,7 +50,8 @@ export default function Layout({ children }: { children: ReactNode }) {
   const quality = useRecoilValue(qualityStateAtom);
   const shape = useRecoilValue(canvasShapeAtom);
   useEffect(() => {
-    setHue(Math.ceil(Math.random() * 290));
+    let x = Math.ceil(Math.random() * 360);
+    setHue(x >= 70 && x <= 148 ? x * 2 + x : x > 360 ? x - 360 : 360 - x);
   }, [router]);
 
   return (
