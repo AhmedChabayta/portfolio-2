@@ -73,27 +73,22 @@ export default function Layout({ children }: { children: ReactNode }) {
               hue={hue}
             />
           )}
-
-          <div className="hidden fixed z-[100] lg:flex justify-center flex-col top-1/2 -translate-y-1/2 left-0 bg-transparent h-fit w-fit ">
+          <div
+            className={`hidden ml-2 lg:flex flex-col fixed z-[100] top-[50%] translate-y-[-50%] left-0 text-gray-500`}
+          >
             {links.map((link) => (
               <React.Fragment key={link.link}>
                 <Link href={link.link}>
                   <button className="heroButton">
                     <link.icon
-                      className={`w-8 ${
-                        router.asPath === `/${link.link}`
-                          ? ' text-[#00e7f3]'
-                          : 'text-white'
+                      className={`w-8 text-white font-[900] transition-all duration-150 ease-linear ${
+                        router.asPath === `/${link.link}` ? 'text-2xl' : ''
                       }`}
                     />
                     <p
-                      style={{
-                        color:
-                          router.asPath === `/${link.link}`
-                            ? '#00e7f3'
-                            : '#fff',
-                      }}
-                      className="hidden md:inline"
+                      className={`hidden md:inline text-white font-[900] transition-all duration-150 ease-linear ${
+                        router.asPath === `/${link.link}` ? 'text-2xl' : ''
+                      }`}
                     >
                       {link.link.split('#')}
                     </p>

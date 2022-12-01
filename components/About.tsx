@@ -27,7 +27,7 @@ export default function About({ personalImage }: Props) {
     >
       <SectionTitle title="about" />
       <motion.div
-        className="relative shadow-[0px_0px_10px_rgba(255,255,255,0.9)] w-72 h-72 object-contain rounded-full lg:rounded-2xl lg:w-96 lg:h-96 xl:w-[500px] xl:h-[500px]"
+        className="relative flex items-center justify-center shadow-[0px_0px_15px_5px_#ffffff] lg:w-96 lg:h-96 xl:w-[500px] xl:h-[500px] rounded-full lg:rounded bg-yellow-100"
         animate={{
           transform: isInView ? 'translateX(0px)' : 'translateX(-100px)',
         }}
@@ -39,9 +39,11 @@ export default function About({ personalImage }: Props) {
         <Image
           priority
           src={urlFor(personalImage.asset).url()}
-          fill
+          width={200}
+          height={200}
           alt=""
-          className="relative z-50 w-56 h-56 object-contain rounded-full lg:rounded-lg lg:w-96 lg:h-96 xl:w-[500px] xl:h-[500px] border-8 border-spacing-0 border-white shadow-[0px_0px_10px_rgba(255,255,255,0.8)_inset]"
+          style={{ WebkitAppearance: 'none' }}
+          className="relative p-[2px] z-50 w-56 h-56 object-cover rounded-full lg:rounded-none lg:w-96 lg:h-96 xl:w-[500px] xl:h-[500px] shadow-[0px_0px_10px_#ffffff_inset]"
         />
       </motion.div>
       <div className="space-y-10 md:px-10">

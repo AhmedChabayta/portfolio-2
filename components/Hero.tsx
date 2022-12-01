@@ -29,7 +29,7 @@ export default function Hero({ name, title, image }: Props) {
       id="hero"
       className="h-screen relative z-10 flex flex-col space-y-12 items-center justify-center text-center"
     >
-      <h1 className="text-5xl lg:text-6xl font-semibold relative z-50 my-4 p-8 ">
+      <h1 className="text-5xl lg:text-6xl font-black relative z-50 my-4 p-8 ">
         <span dir="auto">
           {text} <Cursor cursorColor="#fff" />
         </span>
