@@ -1,7 +1,7 @@
-import { forwardRef, useEffect, useLayoutEffect, useState } from 'react';
+import { useLayoutEffect, useState } from 'react';
 import { PlayIcon, PauseIcon } from '@heroicons/react/24/solid';
 import { onAndOn } from '../assets/music';
-import { motion, useSpring } from 'framer-motion';
+import { motion } from 'framer-motion';
 declare global {
   // eslint-disable-next-line no-unused-vars
   interface Window {
