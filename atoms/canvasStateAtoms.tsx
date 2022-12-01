@@ -11,7 +11,7 @@ export const canvasStateAtom = atom({
 
 export const qualityStateAtom = atom({
   key: 'qualityState',
-  default: 64,
+  default: 128,
   effects_UNSTABLE: [persistAtom],
 });
 

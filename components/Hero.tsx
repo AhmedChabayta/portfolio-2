@@ -41,7 +41,7 @@ export default function Hero({ name, title, image }: Props) {
         src={urlFor(image.asset).url()}
         alt=""
       />
-      <h2 className="text-sm uppercase text-white pb-2 tracking-[7px] leading-10 z-50 relative">
+      <h2 className="text-lg uppercase text-white pb-2 tracking-[7px] leading-10 z-50 relative font-black">
         {name} <br />
         {title}
       </h2>

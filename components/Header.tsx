@@ -122,7 +122,7 @@ export default function Header({ social }: { social: Social[] }) {
           variants={rightContainer}
           initial="initial"
           animate="animate"
-          className="flex items-center text-white cursor-pointer "
+          className="flex space-x-2 items-center text-white cursor-pointer "
         >
           <Tooltip title={canvas ? 'Hide Canvas' : 'Show Canvas'}>
             <Button
@@ -148,7 +148,7 @@ export default function Header({ social }: { social: Social[] }) {
                 onChange={handleChange}
                 className="text-white bg-transparent"
               >
-                <MenuItem value={64}>(64bit)</MenuItem>
+                <MenuItem value={128}>(128bit)</MenuItem>
                 <MenuItem value={1024}>(512bit)</MenuItem>
                 <MenuItem value={2048}>(2048bit)</MenuItem>
                 <MenuItem value={4096}>(4096bit)</MenuItem>

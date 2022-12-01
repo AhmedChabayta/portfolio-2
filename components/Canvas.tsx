@@ -1,7 +1,7 @@
 import { forwardRef, useLayoutEffect, useState } from 'react';
 import { PlayIcon, PauseIcon } from '@heroicons/react/24/solid';
 import { onAndOn } from '../assets/music';
-
+import { motion } from 'framer-motion';
 declare global {
   // eslint-disable-next-line no-unused-vars
   interface Window {
@@ -11,7 +11,7 @@ declare global {
 
 export const Canvas = forwardRef(
   ({
-    hue,
+    hue = 90,
     quality,
     shape,
     canvasRef,
@@ -32,6 +32,7 @@ export const Canvas = forwardRef(
       const audioCtx = new AudioCtx();
       const ctx: CanvasRenderingContext2D =
         canvasRef?.current?.getContext('2d');
+      ctx.filter = 'brightness(200)';
       const audioSource: MediaElementAudioSourceNode =
         audioCtx.createMediaElementSource(audioRef.current);
       const analyser: AnalyserNode = audioCtx.createAnalyser();
@@ -43,7 +44,7 @@ export const Canvas = forwardRef(
       audioRef.current.volume = 0.5;
       audioSource.connect(analyser);
       analyser.connect(audioCtx.destination);
-      analyser.fftSize = quality || 64;
+      analyser.fftSize = quality || 128;
       canvasRef.current.width = window.innerWidth;
       canvasRef.current.height = window.innerHeight;
       setMounted(true);
@@ -88,34 +89,16 @@ export const Canvas = forwardRef(
       const drawVisualizer = () => {
         for (let i = 0; i < bufferLength; Math.floor(i++)) {
           barHeight = dataArray[i] * 3;
-
-          ctx.fillStyle = `#f6ff00`;
-          ctx.strokeStyle = '#fff';
-          ctx.strokeRect(
-            quality <= 64
-              ? i * 100
-              : quality > 1000
-              ? i * 4
-              : quality > 2000
-              ? i * 2
-              : i,
-            canvasRef.current.height,
-            barWidth,
-            -barHeight
-          );
-          ctx.fillRect(
-            quality <= 64
-              ? i * 100
-              : quality > 1000
-              ? i * 4
-              : quality > 2000
-              ? i * 2
-              : i,
-            canvasRef.current.height,
-            barWidth,
-            -barHeight
-          );
+          ctx.fillStyle = `#ee00ff`;
+          ctx.strokeStyle = '#26ff00';
           ctx.stroke();
+          ctx.strokeRect(i * 2, canvasRef.current.height, barWidth, -barHeight);
+          ctx.fillRect(
+            i * 3,
+            canvasRef.current.height,
+            barWidth + 2,
+            -barHeight + 2
+          );
         }
       };
 
@@ -131,8 +114,8 @@ export const Canvas = forwardRef(
             (i * 0.1 * Math.PI * (quality > 4000 ? 128 : 64)) / bufferLength
           );
           ctx.fillStyle = '#ff00d9';
-          ctx?.stroke();
-          ctx.strokeStyle = '#000';
+          ctx.shadowColor = 'red';
+          ctx.globalCompositeOperation = 'luminosity';
           ctx?.beginPath();
           ctx.arc(
             i / 4 + barHeight / 2,
@@ -156,25 +139,28 @@ export const Canvas = forwardRef(
 
     return (
       <>
-        <p className="fixed top-0 left-0 text-white z-[909090090909090]">
-          {hue}
-        </p>
         <canvas
           ref={canvasRef}
-          className="fixed w-screen h-screen will-change-auto invert contrast-200"
+          className="fixed w-screen h-screen will-change-auto "
         />
         <audio
           src={onAndOn}
           ref={audioRef}
           className="fixed bottom-0 w-screen z-10 bg-transparent"
         />
-        <div
-          className="wallpaper"
+        <motion.div
+          animate={{
+            backgroundImage: `linear-gradient(145deg, rgba(100,0,151,0.6) 0%, rgba(255,0,0,0.6) 100%)`,
+            filter: `hue-rotate(${hue}deg)`,
+          }}
+          transition={{
+            duration: hue / 100,
+            repeatType: 'mirror',
+            ease: 'easeInOut',
+          }}
           style={{
-            background:
-              'linear-gradient(145deg, rgba(34,137,195,0.8) 0%, rgba(55,205,55,0.8) 100%)',
-            filter: `contrast(2) hue-rotate(${hue}deg)`,
-            backdropFilter: 'blur(5px)',
+            backdropFilter: 'blur(2px)',
+            WebkitBackdropFilter: 'blur(2px)',
             position: 'fixed',
             zIndex: 0,
             top: 0,

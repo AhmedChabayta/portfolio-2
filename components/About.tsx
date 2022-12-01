@@ -16,7 +16,7 @@ interface Props {
 
 export default function About({ personalImage }: Props) {
   const imageRef = useRef(null);
-  const isInView = useInView(imageRef, { amount: 'all', once: true });
+  const isInView = useInView(imageRef, { amount: 'some', once: true });
 
   return (
     <motion.div
@@ -27,6 +27,7 @@ export default function About({ personalImage }: Props) {
     >
       <SectionTitle title="about" />
       <motion.div
+        className="relative shadow-[0px_0px_10px_rgba(255,255,255,0.9)] w-72 h-72 object-contain rounded-full lg:rounded-2xl lg:w-96 lg:h-96 xl:w-[500px] xl:h-[500px]"
         animate={{
           transform: isInView ? 'translateX(0px)' : 'translateX(-100px)',
         }}
@@ -38,10 +39,9 @@ export default function About({ personalImage }: Props) {
         <Image
           priority
           src={urlFor(personalImage.asset).url()}
-          width={200}
-          height={200}
+          fill
           alt=""
-          className="relative z-50 w-56 h-56 object-cover rounded-full lg:rounded-lg lg:w-64 lg:h-96 xl:w-[500px] xl:h-[500px] mt-28"
+          className="relative z-50 w-56 h-56 object-contain rounded-full lg:rounded-lg lg:w-96 lg:h-96 xl:w-[500px] xl:h-[500px] border-8 border-spacing-0 border-white shadow-[0px_0px_10px_rgba(255,255,255,0.8)_inset]"
         />
       </motion.div>
       <div className="space-y-10 md:px-10">
