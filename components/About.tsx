@@ -1,6 +1,8 @@
 import { motion, useInView } from 'framer-motion';
 import Image from 'next/image';
 import { useRef } from 'react';
+import { useRecoilValue } from 'recoil';
+import { canvasStateAtom } from '../atoms/canvasStateAtoms';
 import { urlFor } from '../sanity/sanity';
 import SectionTitle from './SectionTitle';
 
@@ -17,7 +19,7 @@ interface Props {
 export default function About({ personalImage }: Props) {
   const imageRef = useRef(null);
   const isInView = useInView(imageRef, { amount: 'some', once: true });
-
+  const canvas = useRecoilValue(canvasStateAtom);
   return (
     <motion.div
       initial={{ opacity: 0.1 }}
@@ -28,7 +30,9 @@ export default function About({ personalImage }: Props) {
       <SectionTitle title="about" />
       <motion.div
         layout
-        className="relative flex items-center justify-center shadow-[0px_0px_15px_5px_#ffffff] lg:w-96 lg:h-96 xl:w-[500px] xl:h-[500px] rounded-full lg:rounded bg-yellow-100"
+        className={`relative flex items-center justify-center ${
+          canvas ? 'shadow-[0px_0px_25px_5px_#ffffff]' : ''
+        }  lg:w-96 lg:h-96 xl:w-[500px] xl:h-[500px] rounded-full lg:rounded bg-gray-50 lg:shadow-none`}
         animate={{
           transform: isInView ? 'translateX(0px)' : 'translateX(-100px)',
         }}
@@ -42,7 +46,7 @@ export default function About({ personalImage }: Props) {
           height={200}
           alt=""
           style={{ WebkitAppearance: 'none', transition: 'all 0.3s' }}
-          className="relative p-[2px] z-50 w-56 h-56 object-cover rounded-full lg:rounded-none lg:w-96 lg:h-96 xl:w-[500px] xl:h-[500px] shadow-[0px_0px_10px_#ffffff_inset]"
+          className="relative p-[2px] z-50 w-56 h-56 object-cover rounded-full lg:rounded-none lg:w-96 lg:h-96 xl:w-[500px] xl:h-[500px] shadow-[0px_0px_15px_#ffffff_inset] lg:shadow-none"
         />
       </motion.div>
       <div className="space-y-10 md:px-10">

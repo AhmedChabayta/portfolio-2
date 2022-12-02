@@ -19,7 +19,11 @@ export default function Home({ data }: Props) {
   const sectionRef = useRef<HTMLDivElement>(null);
 
   return (
-    <motion.div layout transition={{duration:0.2}} className="text-white h-screen z-0 snap-mandatory snap-both overflow-y-scroll scroll-smooth scrollbar scrollbar-thumb-white scrollbar-track-transparent scrollbar-rounded-0">
+    <motion.div
+      layout
+      transition={{ duration: 0.2 }}
+      className={`text-white h-screen z-0 snap-mandatory snap-both overflow-y-scroll scroll-smooth scrollbar scrollbar-thumb-white scrollbar-track-transparent scrollbar-rounded-0 shadow-[0px_0px_5px_1px_inset_#ffffff] border-[1px]`}
+    >
       <Header social={data[0].social} />
 
       <section id="home" className="section">

@@ -1,4 +1,5 @@
 import { SocialIcon } from 'react-social-icons';
+import { EnvelopeIcon } from '@heroicons/react/24/solid';
 import { motion } from 'framer-motion';
 import { Social } from '../types/typings';
 import Link from 'next/link';
@@ -172,19 +173,13 @@ export default function Header({ social }: { social: Social[] }) {
             </div>
           </Tooltip>
           <Link href="#contact">
-            <div className="flex items-center">
-              <motion.div variants={rightChild}>
-                <SocialIcon
-                  fgColor="white"
-                  bgColor="transparent"
-                  network="email"
-                />
-              </motion.div>
+            <motion.div variants={rightChild} className="flex items-center">
+              <EnvelopeIcon className="w-5 mx-2" />
 
               <p className="uppercase hidden md:inline-flex text-sm text-white">
                 get in touch
               </p>
-            </div>
+            </motion.div>
           </Link>
         </motion.div>
       </header>

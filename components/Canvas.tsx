@@ -46,64 +46,70 @@ export const Canvas = ({
     canvasRef.current.height = window.innerHeight;
     setMounted(true);
     const animate = () => {
-      if (canvasRef.current) {
+      if (canvasRef.current && audioRef.current) {
         ctx?.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
+
         analyser.getByteFrequencyData(dataArray);
         shape === 'rect' ? drawVisualizer() : drawCircularVizualizer();
         animationFrame = requestAnimationFrame(animate);
       }
     };
-    if (audioRef.current && canvasRef.current) {
-      audioRef.current.addEventListener('play', () => {
-        cancelAnimationFrame(animationFrame);
-        animate();
-        audioCtx.resume();
-        setIsPlaying(true);
-      });
-      audioRef.current.removeEventListener('play', () => {
-        cancelAnimationFrame(animationFrame);
-        animate();
-        audioCtx.resume();
-        setIsPlaying(true);
-      });
-      audioRef.current.addEventListener('pause', () => {
-        setIsPlaying(false);
-        cancelAnimationFrame(animationFrame);
-        audioCtx.suspend();
-      });
-      audioRef.current.addEventListener('pause', () => {
-        setIsPlaying(false);
-        cancelAnimationFrame(animationFrame);
-        audioCtx.suspend();
-      });
-    }
+
+    audioRef.current.addEventListener('play', () => {
+      cancelAnimationFrame(animationFrame);
+      animate();
+      audioCtx.resume();
+      setIsPlaying(true);
+    });
+    audioRef.current.removeEventListener('play', () => {
+      cancelAnimationFrame(animationFrame);
+      animate();
+      audioCtx.resume();
+      setIsPlaying(true);
+    });
+    audioRef.current.addEventListener('pause', () => {
+      setIsPlaying(false);
+      cancelAnimationFrame(animationFrame);
+      audioCtx.suspend();
+    });
+    audioRef.current.addEventListener('pause', () => {
+      setIsPlaying(false);
+      cancelAnimationFrame(animationFrame);
+      audioCtx.suspend();
+    });
 
     const drawVisualizer = () => {
       for (let i = 0; i < bufferLength; Math.floor(i++)) {
         barHeight = dataArray[i] * 3;
-        ctx.fillStyle = `#ee00ff`;
-        ctx.fillRect(i * 3, canvasRef.current.height, barWidth, -barHeight + 2);
-      }
-    };
-
-    const drawCircularVizualizer = () => {
-      for (let i = 0; i < bufferLength; i++) {
-        barHeight = dataArray[i] * 2;
         ctx?.save();
         ctx?.translate(
           canvasRef.current.width / 2,
           canvasRef.current.height / 2
         );
-        ctx?.rotate(
-          (i * 640 + Math.PI * (quality > 4000 ? 128 : 64)) / bufferLength
+        ctx?.rotate((Math.PI + 360 + i * 100) / bufferLength);
+        ctx.fillStyle = `#ee00ff`;
+        ctx.globalCompositeOperation = 'exclusion';
+        ctx.fillRect(0, 0, barWidth, barHeight);
+        ctx?.restore();
+      }
+    };
+
+    const drawCircularVizualizer = () => {
+      for (let i = 0; i < bufferLength; i++) {
+        barHeight = dataArray[i];
+        ctx?.save();
+        ctx?.translate(
+          canvasRef.current.width / 2,
+          canvasRef.current.height / 2
         );
+        ctx?.rotate(i * bufferLength);
         ctx.fillStyle = `#04f7fb`;
-        ctx.globalCompositeOperation = 'luminosity';
+        ctx.globalCompositeOperation = 'hue';
         ctx?.beginPath();
         ctx.arc(
           i / 4 + barHeight / 2,
           i / 4 + barHeight / 2,
-          barWidth,
+          barWidth * 2,
           i * 2,
           2 * Math.PI,
           true
@@ -113,13 +119,12 @@ export const Canvas = ({
       }
     };
     window.addEventListener('resize', () => {
-      if (canvasRef.current) {
+      if (canvasRef.current && audioRef.current) {
         canvasRef.current.width = window.innerWidth;
         canvasRef.current.height = window.innerHeight;
       }
     });
   }, [audioRef, canvasRef, quality, shape]);
-  console.log((360 - hue) * 0.002);
   return (
     <>
       <motion.canvas
@@ -134,7 +139,7 @@ export const Canvas = ({
         transition={{
           duration: 0.7,
         }}
-        className="fixed w-screen h-screen will-change-auto shadow-[0px_0px_3px_3px_#ffffff_inset]"
+        className="fixed w-screen h-screen will-change-auto shadow-[0px_0px_3px_3px_#ffffff_inset] border"
       />
       <audio
         src={onAndOn}

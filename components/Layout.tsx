@@ -17,7 +17,7 @@ import {
 } from '../atoms/canvasStateAtoms';
 import MetaTags from './MetaTags';
 import { NoSsr } from '@mui/material';
-import { keyFor } from 'react-social-icons';
+import { AnimatePresence, motion } from 'framer-motion';
 
 const links = [
   {
@@ -74,21 +74,36 @@ export default function Layout({ children }: { children: ReactNode }) {
       });
     };
   }, []);
-
   return (
     <>
       <MetaTags />
       <div className="flex relative h-screen w-screen overflow-y-scroll overflow-x-hidden bg-black">
         <NoSsr>
-          {canvas && (
-            <Canvas
-              canvasRef={CANVAS}
-              audioRef={AUDIO}
-              quality={quality}
-              shape={shape}
-              hue={hue}
-            />
-          )}
+          <AnimatePresence>
+            {canvas && (
+              <motion.div
+                initial={{
+                  opacity: 0,
+                }}
+                animate={{
+                  opacity: 1,
+                }}
+                exit={{
+                  x: '100vw',
+                  opacity: 0,
+                }}
+                transition={{ duration: 0.3, ease: 'easeInOut' }}
+              >
+                <Canvas
+                  canvasRef={CANVAS}
+                  audioRef={AUDIO}
+                  quality={quality}
+                  shape={shape}
+                  hue={hue}
+                />
+              </motion.div>
+            )}
+          </AnimatePresence>
           {fullScreen ? (
             ''
           ) : (
