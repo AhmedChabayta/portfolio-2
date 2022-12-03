@@ -15,6 +15,7 @@ import {
   Select,
   SelectChangeEvent,
 } from '@mui/material';
+import SectionTitle from './SectionTitle';
 
 export default function CanvasSettings() {
   const [quality, setQuality] = useRecoilState(qualityStateAtom);
@@ -41,8 +42,8 @@ export default function CanvasSettings() {
   };
   return (
     <div className="fixed top-0 left-0 right-0 bottom-0  z-10 flex h-screen w-screen items-center justify-center bg-black bg-gradient-to-bl from-orange-500 to-sky-500">
-      <h1 className=" absolute top-24 font-black ">Canvas Settings</h1>
-      <div className="flex h-[500px] w-[350px] flex-col items-center justify-center space-y-6 rounded md:w-[450px] lg:w-[550px]">
+      <SectionTitle title="Settings" />
+      <div className="flex h-[500px] w-[350px] flex-col items-center justify-center space-y-6 rounded pt-10 md:w-[450px] lg:w-[550px]">
         <Button
           className="z-50 ml-2 flex cursor-pointer flex-col items-center space-y-2"
           onClick={() => setCanvas((prev: boolean) => !prev)}

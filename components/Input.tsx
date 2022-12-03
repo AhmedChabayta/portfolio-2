@@ -21,7 +21,7 @@ export const Inputs = ({
         value={value}
         onChange={(e) => setValue(e.target.value)}
         ref={ref}
-        className="peer form-input min-w-[350px] rounded font-[800] text-black placeholder:opacity-0"
+        className="peer form-input my-4 rounded font-[800] text-black placeholder:opacity-0  lg:min-w-[250px]"
         type={type}
         placeholder={`${placeholder}`}
         name={name}
@@ -30,8 +30,8 @@ export const Inputs = ({
         onClick={() => ref.current?.focus()}
         htmlFor={name}
         className={`${
-          value ? '-top-3 left-0 text-white' : 'left-2 top-1/2'
-        } absolute -translate-y-1/2 font-bold uppercase text-black transition-all duration-150 ease-linear peer-placeholder-shown:text-xs peer-focus:-top-3 peer-focus:text-white`}
+          value ? 'top-0 left-0 text-white' : 'left-2 top-1/2 -translate-y-1/2'
+        } absolute font-bold uppercase text-black transition-all duration-150 ease-linear peer-placeholder-shown:text-xs peer-focus:-top-0 peer-focus:text-white sm:peer-placeholder-shown:text-sm`}
       >
         {label}
       </label>
@@ -63,14 +63,14 @@ export const TextArea = ({
         value={value}
         onChange={(e) => setValue(e.target.value)}
         placeholder={placeholder}
-        className="peer min-h-[200px] min-w-[350px] resize rounded font-[800] text-black placeholder:opacity-0 lg:w-[710px]"
+        className="peer resize rounded font-black text-black placeholder:opacity-0 lg:min-h-[200px] lg:w-[500px] lg:min-w-[350px]"
         name={name}
       />
       <label
         htmlFor={name}
         className={`${
           value ? '-top-3 text-white' : 'left-2 top-1/2 '
-        } absolute  -translate-y-1/2 font-bold  uppercase text-black transition-all duration-150 ease-linear peer-placeholder-shown:text-xl peer-focus:-top-3 peer-focus:text-white`}
+        } absolute -translate-y-1/2 font-bold  uppercase text-black transition-all duration-150 ease-linear peer-placeholder-shown:text-xs peer-focus:-top-3 peer-focus:text-white sm:peer-placeholder-shown:text-sm`}
       >
         {label}
       </label>

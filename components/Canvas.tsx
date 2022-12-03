@@ -167,11 +167,6 @@ export const Canvas = ({
       ) : (
         ''
       )}
-      <div className="fixed right-2 bottom-0 max-w-xs text-gray-200/40 lg:max-w-none">
-        <p>
-          MUSIC FOR DEMO PURPOSES ONLY. I DO NOT OWN ANY OF THE MUSIC PRESENT
-        </p>
-      </div>
     </>
   );
 };

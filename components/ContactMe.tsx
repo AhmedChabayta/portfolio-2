@@ -47,7 +47,7 @@ export default function ContactMe({ personal }: PersonalProps) {
   };
 
   return (
-    <div className="relative z-50 flex h-screen flex-col items-center justify-center pt-20">
+    <div className="relative z-50 flex min-h-screen flex-col items-center justify-evenly md:justify-center">
       <SectionTitle title="contact" />
       <SnackbarUnstyled
         open={showSnackbar}
@@ -60,7 +60,7 @@ export default function ContactMe({ personal }: PersonalProps) {
         </motion.p>
       </SnackbarUnstyled>
 
-      <article className=" space-y-5">
+      <div className="my-10 flex flex-col space-y-4">
         <ContactInfo
           setShowSnackbar={setShowSnackbar}
           title="WhatsApp"
@@ -78,13 +78,13 @@ export default function ContactMe({ personal }: PersonalProps) {
           text={personal.address}
           Icon={<MapPinIcon className="w-8" />}
         />
-      </article>
+      </div>
       <form
-        className="form-control flex flex-col justify-center gap-4 space-y-8 rounded p-10"
+        className="form-control flex flex-col justify-center rounded"
         ref={form}
         onSubmit={sendEmail}
       >
-        <div className="flex flex-col items-center space-y-8 lg:flex-row lg:space-y-0 lg:space-x-2">
+        <div className="flex flex-col items-center lg:flex-row lg:space-x-2">
           <Inputs
             label="user name"
             placeholder="user name"
@@ -102,7 +102,7 @@ export default function ContactMe({ personal }: PersonalProps) {
         <TextArea placeholder="message" name="message" label="message" />
         <Button
           variant="contained"
-          className="rounded bg-sky-500 py-5 font-black uppercase transition-all ease-linear active:scale-95"
+          className="mx-auto my-5 h-10 w-1/2 rounded font-black uppercase transition-all ease-linear active:scale-95 xs:my-2 sm:my-4 md:my-8"
           type="submit"
         >
           submit

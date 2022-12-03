@@ -23,7 +23,7 @@ export default function Home({ data }: Props) {
     <motion.div
       layout
       transition={{ duration: 0.2 }}
-      className={`scrollbar-rounded-0h-screen z-0 snap-both snap-mandatory  overflow-y-scroll scroll-smooth border-[1px] text-white shadow-[0px_0px_5px_1px_inset_#ffffff] scrollbar scrollbar-track-transparent scrollbar-thumb-white`}
+      className={`scrollbar-rounded-0h-screen z-0 snap-both snap-mandatory overflow-y-scroll scroll-smooth text-white scrollbar scrollbar-track-transparent scrollbar-thumb-white`}
     >
       <Header social={data[0].social} />
 

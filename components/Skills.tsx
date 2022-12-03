@@ -10,14 +10,14 @@ export default function Skills({ skill }: { skill: Skill[] }) {
 
   return (
     <>
-      <div className="flex h-screen max-w-[800px] items-center justify-center rounded-lg lg:w-[800px] ">
+      <div className="flex min-h-screen max-w-[800px] items-center justify-center rounded-lg lg:w-[800px] ">
         <SectionTitle title="skills" />
 
-        <div className="relative flex w-[90%] flex-wrap items-center justify-center gap-12 ">
+        <div className="relative grid w-[90%] grid-cols-4 gap-8 xs:gap-8 sm:grid-cols-5 sm:gap-12 lg:grid-cols-6">
           {skill.map(({ title, image, progress }) => (
             <motion.div
               ref={iconRef}
-              className="group cursor-pointer will-change-transform"
+              className="group relative h-16 w-16 cursor-pointer will-change-transform xs:h-12 xs:w-12 md:h-20 md:w-20"
               initial={{ filter: 'brightness(0.2)' }}
               whileInView={{
                 filter: 'brightness(1)',
@@ -26,9 +26,8 @@ export default function Skills({ skill }: { skill: Skill[] }) {
               key={title}
             >
               <Image
-                className="w-[60px] object-contain transition-transform duration-200 ease-linear group-hover:-translate-x-[50%] group-hover:-translate-y-[50%] group-hover:scale-[0.5] md:w-[80px]"
-                height={100}
-                width={100}
+                className="object-contain transition-transform duration-200 ease-linear group-hover:-translate-x-[50%] group-hover:-translate-y-[50%] group-hover:scale-[0.5] "
+                fill
                 src={urlFor(image.asset).url()}
                 alt=""
               />

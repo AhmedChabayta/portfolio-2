@@ -119,31 +119,33 @@ export default function Layout({ children }: { children: ReactNode }) {
           {fullScreen || !canvas ? (
             ''
           ) : (
-            <div
-              className={`fixed top-[50%] left-0 z-[100] ml-2 hidden translate-y-[-50%] flex-col lg:flex`}
-            >
-              {links.map((link) => (
-                <React.Fragment key={link.link}>
-                  <Link href={link.link}>
-                    <button className="heroButton">
-                      <link.icon
-                        className={`w-8 transition-all duration-150 ease-linear ${
-                          router.asPath === `/${link.link}` ? 'w-10 ' : ''
-                        }`}
-                      />
-                      <p
-                        className={`hidden transition-all duration-150 ease-linear lg:inline ${
-                          router.asPath === `/${link.link}`
-                            ? 'typography typography-white font-black'
-                            : ''
-                        }`}
-                      >
-                        {link.link.split('#')}
-                      </p>
-                    </button>
-                  </Link>
-                </React.Fragment>
-              ))}
+            <div className="hidden w-44 min-w-[11rem] px-8 lg:inline">
+              <div
+                className={`fixed top-[50%] left-0 z-[100] ml-2 hidden w-44 translate-y-[-50%] flex-col lg:flex`}
+              >
+                {links.map((link) => (
+                  <React.Fragment key={link.link}>
+                    <Link href={link.link}>
+                      <button className="heroButton">
+                        <link.icon
+                          className={`w-8 transition-all duration-150 ease-linear ${
+                            router.asPath === `/${link.link}` ? 'w-10 ' : ''
+                          }`}
+                        />
+                        <p
+                          className={`hidden transition-all duration-150 ease-linear lg:inline ${
+                            router.asPath === `/${link.link}`
+                              ? 'typography typography-white font-black'
+                              : ''
+                          }`}
+                        >
+                          {link.link.split('#')}
+                        </p>
+                      </button>
+                    </Link>
+                  </React.Fragment>
+                ))}
+              </div>
             </div>
           )}
         </NoSsr>
