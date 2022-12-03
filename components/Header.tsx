@@ -58,7 +58,7 @@ export default function Header({ social }: { social: Social[] }) {
 
   return (
     <NoSsr>
-      <header className="sticky top-0 z-[500] mx-auto flex items-center justify-between sm:w-3/4 sm:p-5">
+      <header className="sticky top-0 z-[500] mx-auto flex items-center justify-between xs:w-full sm:w-3/4 sm:p-5">
         <motion.div
           variants={leftContainer}
           initial="initial"
