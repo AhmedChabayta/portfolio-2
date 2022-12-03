@@ -21,7 +21,7 @@ export default function ContactInfo({
             setShowSnackbar(true);
           }
         }}
-        className="flex items-center space-x-4 select-all"
+        className="flex select-all items-center space-x-4"
       >
         {Icon}
         <p className="">{text}</p>

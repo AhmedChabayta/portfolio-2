@@ -2,7 +2,7 @@ import { Cursor, useTypewriter } from 'react-simple-typewriter';
 import hello from '../hello.json';
 import Image from 'next/image';
 import { urlFor } from '../sanity/sanity';
-import { Roboto, Cairo_Play as CP } from '@next/font/google';
+import { Cairo_Play as CP } from '@next/font/google';
 
 const cairo = CP({
   subsets: ['latin', 'latin-ext'],
@@ -36,10 +36,10 @@ export default function Hero({ name, title, image }: Props) {
   return (
     <div
       id="hero"
-      className="h-screen relative z-10 flex flex-col space-y-12 items-center justify-center text-center"
+      className="relative z-10 flex h-screen flex-col items-center justify-center space-y-12 text-center"
     >
       <h1
-        className={`${cairo.className} font-black relative z-50 my-4 p-8 font-cairo typography typography-2xl text-4xl`}
+        className={`${cairo.className} typography typography-2xl relative z-50 my-4 p-8 font-cairo text-4xl font-black`}
       >
         <span className="" dir="auto">
           {text} <Cursor cursorColor="#ffffff" />
@@ -52,7 +52,7 @@ export default function Hero({ name, title, image }: Props) {
         src={urlFor(image.asset).url()}
         alt=""
       />
-      <div className="uppercase text-white pb-2 tracking-[7px] leading-10 space-y-2 z-50 relative font-black">
+      <div className="relative z-50 space-y-2 pb-2 font-black uppercase leading-10 tracking-[7px] text-white">
         <h2>
           {name} <br />
         </h2>

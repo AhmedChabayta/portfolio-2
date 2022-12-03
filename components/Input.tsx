@@ -21,7 +21,7 @@ export const Inputs = ({
         value={value}
         onChange={(e) => setValue(e.target.value)}
         ref={ref}
-        className="form-input peer placeholder:opacity-0 text-black font-[800] rounded min-w-[350px]"
+        className="peer form-input min-w-[350px] rounded font-[800] text-black placeholder:opacity-0"
         type={type}
         placeholder={`${placeholder}`}
         name={name}
@@ -31,7 +31,7 @@ export const Inputs = ({
         htmlFor={name}
         className={`${
           value ? '-top-3 left-0 text-white' : 'left-2 top-1/2'
-        } text-black absolute font-bold -translate-y-1/2 peer-placeholder-shown:text-xs transition-all duration-150 ease-linear peer-focus:-top-3 peer-focus:text-white uppercase`}
+        } absolute -translate-y-1/2 font-bold uppercase text-black transition-all duration-150 ease-linear peer-placeholder-shown:text-xs peer-focus:-top-3 peer-focus:text-white`}
       >
         {label}
       </label>
@@ -58,19 +58,19 @@ export const TextArea = ({
   }, [current]);
 
   return (
-    <span className="flex relative mx-auto mt-4">
+    <span className="relative mx-auto mt-4 flex">
       <TextareaAutosize
         value={value}
         onChange={(e) => setValue(e.target.value)}
         placeholder={placeholder}
-        className="rounded text-black font-[800] resize lg:w-[710px] min-w-[350px] min-h-[200px] peer placeholder:opacity-0"
+        className="peer min-h-[200px] min-w-[350px] resize rounded font-[800] text-black placeholder:opacity-0 lg:w-[710px]"
         name={name}
       />
       <label
         htmlFor={name}
         className={`${
           value ? '-top-3 text-white' : 'left-2 top-1/2 '
-        } text-black  absolute font-bold  -translate-y-1/2 peer-placeholder-shown:text-xl transition-all duration-150 ease-linear peer-focus:-top-3 peer-focus:text-white uppercase`}
+        } absolute  -translate-y-1/2 font-bold  uppercase text-black transition-all duration-150 ease-linear peer-placeholder-shown:text-xl peer-focus:-top-3 peer-focus:text-white`}
       >
         {label}
       </label>

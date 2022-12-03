@@ -58,12 +58,12 @@ export default function Header({ social }: { social: Social[] }) {
 
   return (
     <NoSsr>
-      <header className="sticky top-0 p-5 flex items-center justify-between max-w-7xl mx-auto z-[500]">
+      <header className="sticky top-0 z-[500] mx-auto flex max-w-7xl items-center justify-between p-5">
         <motion.div
           variants={leftContainer}
           initial="initial"
           animate="animate"
-          className="flex relative justify-center items-center "
+          className="relative flex items-center justify-center "
         >
           {social.map((social: Social) => (
             <motion.div
@@ -83,11 +83,11 @@ export default function Header({ social }: { social: Social[] }) {
           variants={rightContainer}
           initial="initial"
           animate="animate"
-          className="flex space-x-2 items-center cursor-pointer "
+          className="flex cursor-pointer items-center space-x-2 "
         >
           <Tooltip title={canvas ? 'Hide Canvas' : 'Show Canvas'}>
             <Button
-              className="flex items-center ml-2"
+              className="ml-2 flex items-center"
               onClick={() => setCanvas((prev: boolean) => !prev)}
             >
               {canvas ? (
@@ -100,9 +100,9 @@ export default function Header({ social }: { social: Social[] }) {
 
           <Link href="#contact">
             <motion.div variants={rightChild} className="flex items-center">
-              <EnvelopeIcon className="w-5 mx-2" />
+              <EnvelopeIcon className="mx-2 w-5" />
 
-              <p className="uppercase hidden md:inline-flex">get in touch</p>
+              <p className="hidden uppercase md:inline-flex">get in touch</p>
             </motion.div>
           </Link>
         </motion.div>

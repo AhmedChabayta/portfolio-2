@@ -15,7 +15,7 @@ export default function SectionTitle({ title }: { title: string }) {
       whileInView={{ color: ['#acb3c2', '#576175', '#fff'] }}
       transition={{ duration: 2 }}
       viewport={{ once: true }}
-      className={`${cairo.className} absolute typography typography-2xl font-bold top-24 left-1/2 -translate-x-1/2 uppercase tracking-[20px]`}
+      className={`${cairo.className}  typography typography-2xl absolute top-24 left-1/2 -translate-x-1/2 font-bold uppercase tracking-[20px]`}
     >
       {title}
     </motion.h2>

@@ -14,7 +14,6 @@ import {
   MenuItem,
   Select,
   SelectChangeEvent,
-  Tooltip,
 } from '@mui/material';
 
 export default function CanvasSettings() {
@@ -41,13 +40,11 @@ export default function CanvasSettings() {
     }
   };
   return (
-    <div className="w-screen h-screen bg-gradient-to-bl from-orange-500 to-sky-500  fixed top-0 left-0 right-0 bottom-0 bg-black z-10 flex items-center justify-center">
-      <h1 className=" absolute top-24 font-black ">
-        Canvas Settings
-      </h1>
-      <div className="flex flex-col space-y-6 items-center justify-center w-[350px] md:w-[450px] lg:w-[550px] h-[500px] rounded">
+    <div className="fixed top-0 left-0 right-0 bottom-0  z-10 flex h-screen w-screen items-center justify-center bg-black bg-gradient-to-bl from-orange-500 to-sky-500">
+      <h1 className=" absolute top-24 font-black ">Canvas Settings</h1>
+      <div className="flex h-[500px] w-[350px] flex-col items-center justify-center space-y-6 rounded md:w-[450px] lg:w-[550px]">
         <Button
-          className="flex flex-col space-y-2 items-center ml-2 cursor-pointer z-50"
+          className="z-50 ml-2 flex cursor-pointer flex-col items-center space-y-2"
           onClick={() => setCanvas((prev: boolean) => !prev)}
         >
           {canvas ? (
@@ -69,19 +66,19 @@ export default function CanvasSettings() {
             <>
               <div
                 onClick={handleShapeChange}
-                className="w-5 h-5 border border-dotted bg-sky-500 border-sky-500 lg:hover:bg-sky-500 active:scale-[0.9]"
+                className="h-5 w-5 border border-dotted border-sky-500 bg-sky-500 active:scale-[0.9] lg:hover:bg-sky-500"
               />
             </>
           ) : (
             <div
               onClick={handleShapeChange}
-              className="w-5 h-5 border border-dotted  bg-sky-500 border-sky-500 rounded-full lg:hover:bg-sky-500 active:scale-[0.9]"
+              className="h-5 w-5 rounded-full border  border-dotted border-sky-500 bg-sky-500 active:scale-[0.9] lg:hover:bg-sky-500"
             />
           )}
         </Button>
 
         <FormControl size="small">
-          <InputLabel className="text-[#1871c9] text-xl " id="fft size">
+          <InputLabel className="text-xl text-[#1871c9] " id="fft size">
             FFT Size
           </InputLabel>
           <Select
@@ -91,7 +88,7 @@ export default function CanvasSettings() {
             variant="outlined"
             value={quality}
             onChange={handleChange}
-            className="text-white mt-4 w-[130px]"
+            className="mt-4 w-[130px] text-white"
             label="fft size"
           >
             <MenuItem className="menuitem" value={128}>
@@ -113,7 +110,7 @@ export default function CanvasSettings() {
         </FormControl>
 
         <FormControl>
-          <InputLabel className="text-[#1871c9] text-xl " id="rotations">
+          <InputLabel className="text-xl text-[#1871c9] " id="rotations">
             Rotations
           </InputLabel>
           <Select
@@ -123,7 +120,7 @@ export default function CanvasSettings() {
             variant="outlined"
             value={rotation}
             onChange={handleRotationChange}
-            className="text-white mt-4 w-[130px]"
+            className="mt-4 w-[130px] text-white"
             label="rotations"
           >
             <MenuItem className="menuitem" value={1}>
@@ -144,7 +141,7 @@ export default function CanvasSettings() {
           </Select>
         </FormControl>
         <FormControl>
-          <InputLabel className="text-[#1871c9] text-xl " id="length">
+          <InputLabel className="text-xl text-[#1871c9] " id="length">
             Length
           </InputLabel>
           <Select
@@ -154,7 +151,7 @@ export default function CanvasSettings() {
             variant="outlined"
             value={barLength}
             onChange={handleLengthChange}
-            className="text-white mt-4 w-[130px]"
+            className="mt-4 w-[130px] text-white"
             label="length"
           >
             <MenuItem className="menuitem" value={1}>

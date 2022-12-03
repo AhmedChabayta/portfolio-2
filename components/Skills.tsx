@@ -10,14 +10,14 @@ export default function Skills({ skill }: { skill: Skill[] }) {
 
   return (
     <>
-      <div className="h-screen flex justify-center items-center rounded-lg max-w-[800px] lg:w-[800px] ">
+      <div className="flex h-screen max-w-[800px] items-center justify-center rounded-lg lg:w-[800px] ">
         <SectionTitle title="skills" />
 
-        <div className="flex items-center justify-center w-[90%] flex-wrap gap-12 relative ">
+        <div className="relative flex w-[90%] flex-wrap items-center justify-center gap-12 ">
           {skill.map(({ title, image, progress }) => (
             <motion.div
               ref={iconRef}
-              className="cursor-pointer group will-change-transform"
+              className="group cursor-pointer will-change-transform"
               initial={{ filter: 'brightness(0.2)' }}
               whileInView={{
                 filter: 'brightness(1)',
@@ -26,13 +26,13 @@ export default function Skills({ skill }: { skill: Skill[] }) {
               key={title}
             >
               <Image
-                className="group-hover:-translate-x-[50%] group-hover:-translate-y-[50%] group-hover:scale-[0.5] transition-transform duration-200 ease-linear object-contain w-[60px] md:w-[80px]"
+                className="w-[60px] object-contain transition-transform duration-200 ease-linear group-hover:-translate-x-[50%] group-hover:-translate-y-[50%] group-hover:scale-[0.5] md:w-[80px]"
                 height={100}
                 width={100}
                 src={urlFor(image.asset).url()}
                 alt=""
               />
-              <p className="hidden group-hover:block text-2xl absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+              <p className="absolute top-1/2 left-1/2 hidden -translate-x-1/2 -translate-y-1/2 text-2xl group-hover:block">
                 {progress}%
               </p>
             </motion.div>

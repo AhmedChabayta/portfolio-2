@@ -143,12 +143,12 @@ export const Canvas = ({
         transition={{
           duration: 0.7,
         }}
-        className="fixed w-screen h-screen will-change-auto shadow-[0px_0px_3px_3px_#ffffff_inset] border"
+        className="fixed h-screen w-screen border shadow-[0px_0px_3px_3px_#ffffff_inset] will-change-auto"
       />
       <audio
         src={onAndOn}
         ref={audioRef}
-        className="fixed bottom-0 w-screen z-10 bg-transparent"
+        className="fixed bottom-0 z-10 w-screen bg-transparent"
       />
 
       {mounted ? (
@@ -156,7 +156,7 @@ export const Canvas = ({
           onClick={() => {
             isPlaying ? audioRef?.current?.pause() : audioRef?.current?.play();
           }}
-          className="fixed bottom-2 left-[20px] z-[500] font-black text-white text-3xl cursor-pointer"
+          className="fixed bottom-2 left-[20px] z-[500] cursor-pointer text-3xl font-black text-white"
         >
           {isPlaying ? (
             <PauseIcon className="w-8" />
@@ -167,7 +167,7 @@ export const Canvas = ({
       ) : (
         ''
       )}
-      <div className="fixed right-2 bottom-0 max-w-xs lg:max-w-none text-gray-200/40">
+      <div className="fixed right-2 bottom-0 max-w-xs text-gray-200/40 lg:max-w-none">
         <p>
           MUSIC FOR DEMO PURPOSES ONLY. I DO NOT OWN ANY OF THE MUSIC PRESENT
         </p>

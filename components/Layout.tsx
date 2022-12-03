@@ -78,7 +78,7 @@ export default function Layout({ children }: { children: ReactNode }) {
   return (
     <>
       <MetaTags />
-      <div className="flex relative h-screen w-screen overflow-y-scroll overflow-x-hidden bg-white">
+      <div className="relative flex h-screen w-screen overflow-y-scroll bg-white overflow-x-hidden">
         <NoSsr>
           <AnimatePresence>
             {canvas && (
@@ -120,7 +120,7 @@ export default function Layout({ children }: { children: ReactNode }) {
             ''
           ) : (
             <div
-              className={`hidden ml-2 lg:flex flex-col fixed z-[100] top-[50%] translate-y-[-50%] left-0`}
+              className={`fixed top-[50%] left-0 z-[100] ml-2 hidden translate-y-[-50%] flex-col lg:flex`}
             >
               {links.map((link) => (
                 <React.Fragment key={link.link}>
@@ -132,9 +132,9 @@ export default function Layout({ children }: { children: ReactNode }) {
                         }`}
                       />
                       <p
-                        className={`hidden lg:inline transition-all duration-150 ease-linear ${
+                        className={`hidden transition-all duration-150 ease-linear lg:inline ${
                           router.asPath === `/${link.link}`
-                            ? 'font-black typography typography-white'
+                            ? 'typography typography-white font-black'
                             : ''
                         }`}
                       >

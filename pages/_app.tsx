@@ -4,9 +4,6 @@ import Layout from '../components/Layout';
 import { RecoilRoot } from 'recoil';
 import { StyledEngineProvider } from '@mui/material';
 import { Roboto } from '@next/font/google';
-import localFont from '@next/font/local';
-
-const myFont = localFont({ src: '../assets/avenir_ff/AvenirLTStd-Black.otf' });
 
 const ROBOTO = Roboto({
   subsets: ['latin', 'latin-ext'],

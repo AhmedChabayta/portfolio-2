@@ -23,7 +23,7 @@ export default function Home({ data }: Props) {
     <motion.div
       layout
       transition={{ duration: 0.2 }}
-      className={`text-white h-screen z-0 snap-mandatory snap-both overflow-y-scroll scroll-smooth scrollbar scrollbar-thumb-white scrollbar-track-transparent scrollbar-rounded-0 shadow-[0px_0px_5px_1px_inset_#ffffff] border-[1px]`}
+      className={`scrollbar-rounded-0h-screen z-0 snap-both snap-mandatory  overflow-y-scroll scroll-smooth border-[1px] text-white shadow-[0px_0px_5px_1px_inset_#ffffff] scrollbar scrollbar-track-transparent scrollbar-thumb-white`}
     >
       <Header social={data[0].social} />
 
@@ -36,14 +36,14 @@ export default function Home({ data }: Props) {
       </section>
 
       <section
-        className="w-fit h-fit mx-auto relative snap-center section"
+        className="section relative mx-auto h-fit w-fit snap-center"
         id="skills"
       >
         <Skills skill={assets.skill} />
       </section>
 
-      <section id="projects" className="relative section">
-        <div className="flex h-screen items-center overflow-y-hidden overflow-x-scroll snap-x snap-mandatory scrollbar-thin scrollbar-thumb-white scrollbar-track-transparent pt-24">
+      <section id="projects" className="section relative">
+        <div className="flex h-screen snap-x snap-mandatory items-center overflow-x-scroll pt-24 overflow-y-hidden scrollbar-thin scrollbar-track-transparent scrollbar-thumb-white">
           <SectionTitle title="Projects" />
           <ProjectsContainer projects={assets.project} />
         </div>

@@ -19,7 +19,7 @@ function Projects({ image, title, description, linkToBuild }: Props) {
   return (
     <div
       id="title"
-      className="flex flex-col h-screen w-full shrink-0 items-center justify-center relative z-10 snap-center"
+      className="relative z-10 flex h-screen w-full shrink-0 snap-center flex-col items-center justify-center"
     >
       <Image
         priority
@@ -30,9 +30,9 @@ function Projects({ image, title, description, linkToBuild }: Props) {
         alt=""
         style={{ width: 'auto', height: 'auto' }}
       />
-      <div className="mt-20 text-center space-y-16">
+      <div className="mt-20 space-y-16 text-center">
         <Link target="_void" href={`${linkToBuild}`}>
-          <h1 className="typography typography-white typography-2xl text-4xl">
+          <h1 className="typography typography-2xl typography-white text-4xl">
             {title}
           </h1>
         </Link>

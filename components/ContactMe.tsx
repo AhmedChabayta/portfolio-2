@@ -47,13 +47,13 @@ export default function ContactMe({ personal }: PersonalProps) {
   };
 
   return (
-    <div className="h-screen relative flex flex-col items-center justify-center z-50 pt-20">
+    <div className="relative z-50 flex h-screen flex-col items-center justify-center pt-20">
       <SectionTitle title="contact" />
       <SnackbarUnstyled
         open={showSnackbar}
         autoHideDuration={3000}
         onClose={handleClose}
-        className="flex justify-center fixed top-0 left-0 right-0 w-full bg-sky-500/60 border-b border-white backdrop-blur-3xl"
+        className="fixed top-0 left-0 right-0 flex w-full justify-center border-b border-white bg-sky-500/60 backdrop-blur-3xl"
       >
         <motion.p initial={{ opacity: 0.1 }} whileInView={{ opacity: 1 }}>
           Copied!
@@ -80,11 +80,11 @@ export default function ContactMe({ personal }: PersonalProps) {
         />
       </article>
       <form
-        className="form-control flex flex-col justify-center gap-4 p-10 rounded space-y-8"
+        className="form-control flex flex-col justify-center gap-4 space-y-8 rounded p-10"
         ref={form}
         onSubmit={sendEmail}
       >
-        <div className="flex flex-col items-center lg:flex-row space-y-8 lg:space-y-0 lg:space-x-2">
+        <div className="flex flex-col items-center space-y-8 lg:flex-row lg:space-y-0 lg:space-x-2">
           <Inputs
             label="user name"
             placeholder="user name"
@@ -102,7 +102,7 @@ export default function ContactMe({ personal }: PersonalProps) {
         <TextArea placeholder="message" name="message" label="message" />
         <Button
           variant="contained"
-          className="font-black uppercase bg-sky-500 rounded py-5 active:scale-95 transition-all ease-linear"
+          className="rounded bg-sky-500 py-5 font-black uppercase transition-all ease-linear active:scale-95"
           type="submit"
         >
           submit
