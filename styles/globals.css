@@ -4,7 +4,7 @@
 
 @layer components {
   .heroButton {
-    @apply flex items-center space-x-4 px-6 py-2 my-4 uppercase text-xs tracking-widest font-black;
+    @apply flex items-center space-x-4 px-6 py-2 my-4 uppercase tracking-widest;
   }
   .wallpaper {
     @apply transition-[filter] duration-[1s] ease-linear;
@@ -23,6 +23,14 @@
   color: white;
 }
 p {
+  -webkit-user-select: all !important;
+  -ms-user-select: all !important;
+  user-select: all !important;
+}
+h1,
+h2,
+h3,
+h4 {
   -webkit-user-select: none !important;
   -ms-user-select: none !important;
   user-select: none !important;

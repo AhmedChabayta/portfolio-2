@@ -31,7 +31,7 @@ export const Inputs = ({
         htmlFor={name}
         className={`${
           value ? '-top-3 left-0 text-white' : 'left-2 top-1/2'
-        } absolute font-bold -translate-y-1/2 peer-placeholder-shown:text-xs transition-all duration-150 ease-linear peer-focus:-top-3 peer-focus:text-white uppercase`}
+        } text-black absolute font-bold -translate-y-1/2 peer-placeholder-shown:text-xs transition-all duration-150 ease-linear peer-focus:-top-3 peer-focus:text-white uppercase`}
       >
         {label}
       </label>
@@ -69,8 +69,8 @@ export const TextArea = ({
       <label
         htmlFor={name}
         className={`${
-          value ? '-top-3 text-white' : 'left-2 top-1/2'
-        } absolute font-bold  -translate-y-1/2 peer-placeholder-shown:text-xl transition-all duration-150 ease-linear peer-focus:-top-3 peer-focus:text-white uppercase`}
+          value ? '-top-3 text-white' : 'left-2 top-1/2 '
+        } text-black  absolute font-bold  -translate-y-1/2 peer-placeholder-shown:text-xl transition-all duration-150 ease-linear peer-focus:-top-3 peer-focus:text-white uppercase`}
       >
         {label}
       </label>

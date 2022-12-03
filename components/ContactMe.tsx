@@ -47,7 +47,8 @@ export default function ContactMe({ personal }: PersonalProps) {
   };
 
   return (
-    <div className="h-screen relative flex items-center justify-center gap-6 z-50 ">
+    <div className="h-screen relative flex flex-col items-center justify-center z-50 pt-20">
+      <SectionTitle title="contact" />
       <SnackbarUnstyled
         open={showSnackbar}
         autoHideDuration={3000}
@@ -59,57 +60,54 @@ export default function ContactMe({ personal }: PersonalProps) {
         </motion.p>
       </SnackbarUnstyled>
 
-      <div className="flex flex-col space-y-10 items-center mt-8">
-        <SectionTitle title="contact" />
-        <div className="space-y-5 pt-24">
-          <ContactInfo
-            setShowSnackbar={setShowSnackbar}
-            title="WhatsApp"
-            text={personal.phoneNumber}
-            Icon={<PhoneIcon className="w-8" />}
+      <article className=" space-y-5">
+        <ContactInfo
+          setShowSnackbar={setShowSnackbar}
+          title="WhatsApp"
+          text={personal.phoneNumber}
+          Icon={<PhoneIcon className="w-8" />}
+        />
+        <ContactInfo
+          setShowSnackbar={setShowSnackbar}
+          title=""
+          text={personal.email}
+          Icon={<EnvelopeIcon className="w-8" />}
+        />
+        <ContactInfo
+          title=""
+          text={personal.address}
+          Icon={<MapPinIcon className="w-8" />}
+        />
+      </article>
+      <form
+        className="form-control flex flex-col justify-center gap-4 p-10 rounded space-y-8"
+        ref={form}
+        onSubmit={sendEmail}
+      >
+        <div className="flex flex-col items-center lg:flex-row space-y-8 lg:space-y-0 lg:space-x-2">
+          <Inputs
+            label="user name"
+            placeholder="user name"
+            name="from_name"
+            type="text"
           />
-          <ContactInfo
-            setShowSnackbar={setShowSnackbar}
-            title=""
-            text={personal.email}
-            Icon={<EnvelopeIcon className="w-8" />}
-          />
-          <ContactInfo
-            title=""
-            text={personal.address}
-            Icon={<MapPinIcon className="w-8" />}
+          <Inputs
+            label="user email"
+            placeholder="user email"
+            name="from_email"
+            type="text"
           />
         </div>
-        <form
-          className="form-control flex flex-col justify-center gap-4 p-10 rounded"
-          ref={form}
-          onSubmit={sendEmail}
-        >
-          <div className="flex flex-col items-center lg:flex-row space-y-4 md:space-y-0 lg:space-x-2">
-            <Inputs
-              label="user name"
-              placeholder="user name"
-              name="from_name"
-              type="text"
-            />
-            <Inputs
-              label="user email"
-              placeholder="user email"
-              name="from_email"
-              type="text"
-            />
-          </div>
 
-          <TextArea placeholder="message" name="message" label="message" />
-          <Button
-            variant="contained"
-            className="text-white font-black uppercase bg-sky-500 rounded py-5 active:scale-95 transition-all ease-linear"
-            type="submit"
-          >
-            submit
-          </Button>
-        </form>
-      </div>
+        <TextArea placeholder="message" name="message" label="message" />
+        <Button
+          variant="contained"
+          className="font-black uppercase bg-sky-500 rounded py-5 active:scale-95 transition-all ease-linear"
+          type="submit"
+        >
+          submit
+        </Button>
+      </form>
     </div>
   );
 }

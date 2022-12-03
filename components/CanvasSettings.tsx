@@ -42,7 +42,7 @@ export default function CanvasSettings() {
   };
   return (
     <div className="w-screen h-screen bg-gradient-to-bl from-orange-500 to-sky-500  fixed top-0 left-0 right-0 bottom-0 bg-black z-10 flex items-center justify-center">
-      <h1 className="text-white absolute top-24 font-black text-4xl">
+      <h1 className=" absolute top-24 font-black ">
         Canvas Settings
       </h1>
       <div className="flex flex-col space-y-6 items-center justify-center w-[350px] md:w-[450px] lg:w-[550px] h-[500px] rounded">

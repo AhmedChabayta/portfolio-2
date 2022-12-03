@@ -32,11 +32,11 @@ function Projects({ image, title, description, linkToBuild }: Props) {
       />
       <div className="mt-20 text-center space-y-16">
         <Link target="_void" href={`${linkToBuild}`}>
-          <h1 className="text-white text-4xl md:text-5xl lg:text-6xl font-extrabold">
+          <h1 className="typography typography-white typography-2xl text-4xl">
             {title}
           </h1>
         </Link>
-        <p className="text-xl lg:text-2xl">{description}</p>
+        <p className="typography typography-white text-xl">{description}</p>
       </div>
     </div>
   );

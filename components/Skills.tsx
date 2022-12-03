@@ -26,13 +26,13 @@ export default function Skills({ skill }: { skill: Skill[] }) {
               key={title}
             >
               <Image
-                className="group-hover:rotate-[360deg] group-hover:-translate-x-[50%] group-hover:-translate-y-[50%] group-hover:scale-[0.5] transition-transform duration-200 ease-linear object-contain w-[60px] md:w-[80px]"
+                className="group-hover:-translate-x-[50%] group-hover:-translate-y-[50%] group-hover:scale-[0.5] transition-transform duration-200 ease-linear object-contain w-[60px] md:w-[80px]"
                 height={100}
                 width={100}
                 src={urlFor(image.asset).url()}
                 alt=""
               />
-              <p className="numbers_container hidden group-hover:block text-2xl absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+              <p className="hidden group-hover:block text-2xl absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
                 {progress}%
               </p>
             </motion.div>

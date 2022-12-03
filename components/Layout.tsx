@@ -128,15 +128,13 @@ export default function Layout({ children }: { children: ReactNode }) {
                     <button className="heroButton">
                       <link.icon
                         className={`w-8 transition-all duration-150 ease-linear ${
-                          router.asPath === `/${link.link}`
-                            ? 'w-10 font-black fill-cyan-300'
-                            : ''
+                          router.asPath === `/${link.link}` ? 'w-10 ' : ''
                         }`}
                       />
                       <p
-                        className={`hidden lg:inline text-white font-bold transition-all duration-150 ease-linear ${
+                        className={`hidden lg:inline transition-all duration-150 ease-linear ${
                           router.asPath === `/${link.link}`
-                            ? 'text-3xl font-black '
+                            ? 'font-black typography typography-white'
                             : ''
                         }`}
                       >

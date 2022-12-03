@@ -21,10 +21,10 @@ export default function ContactInfo({
             setShowSnackbar(true);
           }
         }}
-        className="flex items-center space-x-4 select-all font-sans"
+        className="flex items-center space-x-4 select-all"
       >
         {Icon}
-        <p className="text-xl">{text}</p>
+        <p className="">{text}</p>
       </div>
     </Tooltip>
   );

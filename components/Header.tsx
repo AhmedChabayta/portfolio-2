@@ -83,7 +83,7 @@ export default function Header({ social }: { social: Social[] }) {
           variants={rightContainer}
           initial="initial"
           animate="animate"
-          className="flex space-x-2 items-center text-white cursor-pointer "
+          className="flex space-x-2 items-center cursor-pointer "
         >
           <Tooltip title={canvas ? 'Hide Canvas' : 'Show Canvas'}>
             <Button
@@ -102,9 +102,7 @@ export default function Header({ social }: { social: Social[] }) {
             <motion.div variants={rightChild} className="flex items-center">
               <EnvelopeIcon className="w-5 mx-2" />
 
-              <p className="uppercase hidden md:inline-flex text-sm text-white">
-                get in touch
-              </p>
+              <p className="uppercase hidden md:inline-flex">get in touch</p>
             </motion.div>
           </Link>
         </motion.div>
