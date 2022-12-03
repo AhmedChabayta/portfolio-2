@@ -1,8 +1,6 @@
 import { motion, useInView } from 'framer-motion';
 import Image from 'next/image';
 import { useRef } from 'react';
-import { useRecoilValue } from 'recoil';
-import { canvasStateAtom } from '../atoms/canvasStateAtoms';
 import { urlFor } from '../sanity/sanity';
 import SectionTitle from './SectionTitle';
 
@@ -19,18 +17,18 @@ interface Props {
 export default function About({ personalImage }: Props) {
   const imageRef = useRef(null);
   const isInView = useInView(imageRef, { amount: 'some', once: true });
-  const canvas = useRecoilValue(canvasStateAtom);
+
   return (
     <motion.div
       initial={{ opacity: 0.1 }}
       whileInView={{ opacity: 1 }}
       transition={{ duration: 0.8 }}
-      className="relative mx-auto flex min-h-screen flex-col items-center justify-center text-center md:text-left lg:space-y-8 lg:space-x-8 xl:flex-row"
+      className="relative mx-auto  flex min-h-screen flex-col items-center justify-center text-center md:text-left lg:space-y-8 lg:space-x-8 lg:pl-44 xl:flex-row"
     >
       <SectionTitle title="about" />
       <motion.div
         layout
-        className={`relative flex h-60 w-60 items-center justify-center rounded sm:my-10 sm:h-72 sm:w-72 md:h-80 md:w-80 lg:h-96 lg:w-96 lg:rounded-lg xl:h-[500px] xl:w-[500px]`}
+        className={`relative mb-4 flex h-60 w-60 items-center justify-center rounded sm:my-10 sm:h-72 sm:w-72 md:h-80 md:w-80 lg:h-96 lg:w-96 lg:rounded-lg xl:h-[500px] xl:w-[500px]`}
         animate={{
           transform: isInView ? 'translateX(0px)' : 'translateX(-100px)',
         }}
