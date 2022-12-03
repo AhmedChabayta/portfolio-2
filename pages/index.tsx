@@ -8,6 +8,7 @@ import Skills from '../components/Skills';
 import ContactMe from '../components/ContactMe';
 import { Personal } from '../types/typings';
 import ProjectsContainer from '../components/ProjectsContainer';
+import SectionTitle from '../components/SectionTitle';
 
 interface Props {
   data: Personal[];
@@ -42,17 +43,8 @@ export default function Home({ data }: Props) {
       </section>
 
       <section id="projects" className="relative section">
-        <div className="flex items-center mt-24 overflow-scroll snap-x snap-mandatory scrollbar-thin scrollbar-thumb-white scrollbar-track-transparent">
-          <motion.h3
-            initial={{ color: 'rgb(107,114,128)' }}
-            whileInView={{ color: ['#acb3c2', '#576175', '#fff'] }}
-            transition={{ duration: 2 }}
-            viewport={{ once: true }}
-            className="absolute top-24 left-1/2 -translate-x-1/2 uppercase tracking-[20px] text-2xl z-50"
-          >
-            Projects
-          </motion.h3>
-
+        <div className="flex h-screen items-center mt-24 overflow-y-hidden overflow-x-scroll snap-x snap-mandatory scrollbar-thin scrollbar-thumb-white scrollbar-track-transparent pt-24">
+          <SectionTitle title="Projects" />
           <ProjectsContainer projects={assets.project} />
         </div>
       </section>

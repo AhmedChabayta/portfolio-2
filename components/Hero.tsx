@@ -30,7 +30,7 @@ export default function Hero({ name, title, image }: Props) {
       className="h-screen relative z-10 flex flex-col space-y-12 items-center justify-center text-center"
     >
       <h1 className="text-5xl lg:text-6xl font-black relative z-50 my-4 p-8 ">
-        <span dir="auto">
+        <span className="" dir="auto">
           {text} <Cursor cursorColor="#fff" />
         </span>
       </h1>
@@ -41,10 +41,12 @@ export default function Hero({ name, title, image }: Props) {
         src={urlFor(image.asset).url()}
         alt=""
       />
-      <h2 className="text-lg uppercase text-white pb-2 tracking-[7px] leading-10 z-50 relative font-black">
-        {name} <br />
-        {title}
-      </h2>
+      <div className="text-2xl xl:text-4xl uppercase text-white pb-2 tracking-[7px] leading-10 space-y-2 z-50 relative font-black">
+        <h2>
+          {name} <br />
+        </h2>
+        <h2 className="text-xl xl:text-3xl ">{title}</h2>
+      </div>
     </div>
   );
 }

@@ -12,7 +12,7 @@ export const Inputs = ({
   type: string;
   name: string;
 }) => {
-  const [value, setValue] = useState<string>('');
+  const [value, setValue] = useState<string | undefined>();
   const ref = useRef<HTMLInputElement>(null);
 
   return (
@@ -21,7 +21,7 @@ export const Inputs = ({
         value={value}
         onChange={(e) => setValue(e.target.value)}
         ref={ref}
-        className="form-input peer placeholder:opacity-0 text-black rounded min-w-[350px]"
+        className="form-input peer placeholder:opacity-0 text-black font-[800] rounded min-w-[350px]"
         type={type}
         placeholder={`${placeholder}`}
         name={name}
@@ -30,8 +30,8 @@ export const Inputs = ({
         onClick={() => ref.current?.focus()}
         htmlFor={name}
         className={`${
-          value ? '-top-3 text-white' : ''
-        } absolute left-2 top-1/2 text-gray-500 -translate-y-1/2 peer-placeholder-shown:text-xs transition-all duration-150 ease-linear peer-focus:-top-3 peer-focus:text-white uppercase`}
+          value ? '-top-3 left-0 text-white' : 'left-2 top-1/2'
+        } absolute font-bold -translate-y-1/2 peer-placeholder-shown:text-xs transition-all duration-150 ease-linear peer-focus:-top-3 peer-focus:text-white uppercase`}
       >
         {label}
       </label>
@@ -48,7 +48,7 @@ export const TextArea = ({
   name: string;
   label: string;
 }) => {
-  const [value, setValue] = useState<string>('');
+  const [value, setValue] = useState<string | undefined>();
   const ref = useRef<HTMLInputElement>(null);
   const { current } = ref;
   useEffect(() => {
@@ -63,14 +63,14 @@ export const TextArea = ({
         value={value}
         onChange={(e) => setValue(e.target.value)}
         placeholder={placeholder}
-        className="rounded text-black resize lg:w-[710px] min-w-[350px] min-h-[200px] peer placeholder:opacity-0"
+        className="rounded text-black font-[800] resize lg:w-[710px] min-w-[350px] min-h-[200px] peer placeholder:opacity-0"
         name={name}
       />
       <label
         htmlFor={name}
         className={`${
-          value ? '-top-3 text-white' : 'text-gray-500'
-        } absolute left-2 top-1/2 -translate-y-1/2 peer-placeholder-shown:text-xs transition-all duration-150 ease-linear peer-focus:-top-3 peer-focus:text-white uppercase`}
+          value ? '-top-3 text-white' : 'left-2 top-1/2'
+        } absolute font-bold  -translate-y-1/2 peer-placeholder-shown:text-xl transition-all duration-150 ease-linear peer-focus:-top-3 peer-focus:text-white uppercase`}
       >
         {label}
       </label>

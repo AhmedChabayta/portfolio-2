@@ -9,6 +9,7 @@ module.exports = {
     extend: {
       fontFamily: {
         cairo: [`var(--font-cairo)`],
+        roboto: [`var(--font-roboto)`],
       },
     },
   },

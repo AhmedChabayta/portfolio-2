@@ -25,7 +25,7 @@ export default function About({ personalImage }: Props) {
       initial={{ opacity: 0.1 }}
       whileInView={{ opacity: 1 }}
       transition={{ duration: 0.8 }}
-      className="flex flex-col relative h-screen text-center md:text-center xl:flex-row max-w-7xl px-10 justify-center items-center lg:space-x-8 space-y-16 mx-auto"
+      className="flex flex-col relative h-screen text-center md:text-center xl:flex-row pt-24 justify-center items-center lg:space-x-8 space-y-16 mx-auto"
     >
       <SectionTitle title="about" />
       <motion.div
@@ -49,19 +49,14 @@ export default function About({ personalImage }: Props) {
           className="relative p-[2px] z-50 w-56 h-56 object-cover rounded-full lg:rounded-none lg:w-96 lg:h-96 xl:w-[500px] xl:h-[500px] shadow-[0px_0px_15px_#ffffff_inset] lg:shadow-none"
         />
       </motion.div>
-      <div className="space-y-10 md:px-10">
-        <h4 className="text-4xl font-semibold ">
-          Here is a{' '}
-          <span className="underline decoration-teal-500 underline-offset-4">
-            little
-          </span>{' '}
-          background
-        </h4>
-        <p className="text-base max-w-xl">
-          Ahmed Chabayta, Junior Front-end web-developer, specializing in
-          ReactJs, NextJs.
+      <article className="space-y-10 md:px-10">
+        <h4 className="text-7xl font-semibold ">Background:</h4>
+        <p className="text-2xl font-sans font-semibold max-w-xl capitalize">
+          Self taught front end web developer, specializing in ReactJs, NextJs.
+          My passion is to meet great artists, learn and be inspired to create
+          efficient work.
         </p>
-      </div>
+      </article>
     </motion.div>
   );
 }

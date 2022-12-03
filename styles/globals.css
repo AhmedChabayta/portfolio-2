@@ -21,11 +21,12 @@
   box-sizing: border-box;
   background-color: transparent;
   image-rendering: optimizeQuality !important;
+  color: white;
 }
 p {
-  -webkit-user-select: auto; /* Safari */
-  -ms-user-select: auto; /* IE 10 and IE 11 */
-  user-select: auto; /* Standard syntax */
+  -webkit-user-select: auto;
+  -ms-user-select: auto;
+  user-select: auto;
 }
 
 textarea {
@@ -49,10 +50,6 @@ ul {
   color: white;
 }
 
-li:hover {
-  background-color: white !important;
-  color: black;
-}
 .MuiPaper-root {
   background-color: black;
   border-radius: 5px;

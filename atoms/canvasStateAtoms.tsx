@@ -20,3 +20,13 @@ export const canvasShapeAtom = atom({
   default: 'rect',
   effects_UNSTABLE: [persistAtom],
 });
+export const canvasRotationAtom = atom({
+  key: 'canvasRotation',
+  default: 1,
+  effects_UNSTABLE: [persistAtom],
+});
+export const barLengthAtom = atom({
+  key: 'barLength',
+  default: 1,
+  effects_UNSTABLE: [persistAtom],
+});

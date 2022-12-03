@@ -4,52 +4,12 @@ import { motion } from 'framer-motion';
 import { Social } from '../types/typings';
 import Link from 'next/link';
 import { useRecoilState } from 'recoil';
-import {
-  canvasShapeAtom,
-  canvasStateAtom,
-  qualityStateAtom,
-} from '../atoms/canvasStateAtoms';
+import { canvasStateAtom } from '../atoms/canvasStateAtoms';
 import { EyeSlashIcon, EyeIcon } from '@heroicons/react/24/solid';
-import {
-  Button,
-  FormControl,
-  MenuItem,
-  NoSsr,
-  Select,
-  SelectChangeEvent,
-  Tooltip,
-} from '@mui/material';
-import { useState } from 'react';
-import { useRouter } from 'next/router';
+import { Button, NoSsr, Tooltip } from '@mui/material';
 
 export default function Header({ social }: { social: Social[] }) {
-  const [quality, setQuality] = useRecoilState(qualityStateAtom);
   const [canvas, setCanvas] = useRecoilState(canvasStateAtom);
-  const [changingQuality, setChangingQuality] = useState(false);
-  const [shape, setShape] = useRecoilState(canvasShapeAtom);
-
-  const router = useRouter();
-
-  const handleChange = (event: SelectChangeEvent) => {
-    setChangingQuality(true);
-    if (changingQuality === true) {
-      setCanvas(false);
-    }
-    router.reload();
-    setQuality(event.target.value);
-    setChangingQuality(false);
-    setCanvas(true);
-  };
-
-  const handleShapeChange = () => {
-    if (shape === 'rect') {
-      setShape('arc');
-      router.reload();
-    } else if (shape === 'arc') {
-      setShape('rect');
-      router.reload();
-    }
-  };
 
   const leftContainer = {
     initial: {
@@ -137,41 +97,7 @@ export default function Header({ social }: { social: Social[] }) {
               )}
             </Button>
           </Tooltip>
-          <Tooltip title="FFT Size" disableInteractive>
-            <FormControl
-              size="small"
-              className="flex items-center text-white lg:mx-3"
-            >
-              <Select
-                size="small"
-                variant="standard"
-                value={quality?.toString()}
-                onChange={handleChange}
-                className="text-white bg-transparent"
-              >
-                <MenuItem value={128}>(128bit)</MenuItem>
-                <MenuItem value={1024}>(512bit)</MenuItem>
-                <MenuItem value={2048}>(2048bit)</MenuItem>
-                <MenuItem value={4096}>(4096bit)</MenuItem>
-                <MenuItem value={8192}>(8192bit)</MenuItem>
-              </Select>
-            </FormControl>
-          </Tooltip>
-          <Tooltip title={shape === 'rect' ? 'Rectangles' : 'Circles'}>
-            <div className="flex">
-              {shape === 'rect' ? (
-                <div
-                  onClick={handleShapeChange}
-                  className="w-5 h-5 border border-dotted lg:bg-transparent border-sky-500 lg:hover:bg-sky-500 active:scale-[0.9]"
-                />
-              ) : (
-                <div
-                  onClick={handleShapeChange}
-                  className="w-5 h-5 border border-dotted  lg:bg-transparent border-sky-500 rounded-full lg:hover:bg-sky-500 active:scale-[0.9]"
-                />
-              )}
-            </div>
-          </Tooltip>
+
           <Link href="#contact">
             <motion.div variants={rightChild} className="flex items-center">
               <EnvelopeIcon className="w-5 mx-2" />

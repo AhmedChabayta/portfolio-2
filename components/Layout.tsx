@@ -18,6 +18,7 @@ import {
 import MetaTags from './MetaTags';
 import { NoSsr } from '@mui/material';
 import { AnimatePresence, motion } from 'framer-motion';
+import CanvasSettings from './CanvasSettings';
 
 const links = [
   {
@@ -77,22 +78,21 @@ export default function Layout({ children }: { children: ReactNode }) {
   return (
     <>
       <MetaTags />
-      <div className="flex relative h-screen w-screen overflow-y-scroll overflow-x-hidden bg-black">
+      <div className="flex relative h-screen w-screen overflow-y-scroll overflow-x-hidden bg-white">
         <NoSsr>
           <AnimatePresence>
             {canvas && (
               <motion.div
                 initial={{
-                  opacity: 0,
+                  y: -2000,
                 }}
                 animate={{
-                  opacity: 1,
+                  y: 0,
                 }}
                 exit={{
-                  x: '100vw',
-                  opacity: 0,
+                  x: 2000,
                 }}
-                transition={{ duration: 0.3, ease: 'easeInOut' }}
+                transition={{ duration: 0.8, ease: 'backInOut' }}
               >
                 <Canvas
                   canvasRef={CANVAS}
@@ -104,24 +104,40 @@ export default function Layout({ children }: { children: ReactNode }) {
               </motion.div>
             )}
           </AnimatePresence>
-          {fullScreen ? (
+          <AnimatePresence>
+            {!canvas && (
+              <motion.div
+                initial={{ x: -2000 }}
+                animate={{ x: 0 }}
+                exit={{ y: 2000 }}
+                transition={{ duration: 0.8, ease: 'backInOut' }}
+              >
+                <CanvasSettings />
+              </motion.div>
+            )}
+          </AnimatePresence>
+          {fullScreen || !canvas ? (
             ''
           ) : (
             <div
-              className={`hidden ml-2 lg:flex flex-col fixed z-[100] top-[50%] translate-y-[-50%] left-0 text-gray-500`}
+              className={`hidden ml-2 lg:flex flex-col fixed z-[100] top-[50%] translate-y-[-50%] left-0`}
             >
               {links.map((link) => (
                 <React.Fragment key={link.link}>
                   <Link href={link.link}>
                     <button className="heroButton">
                       <link.icon
-                        className={`w-8 text-white font-[900] transition-all duration-150 ease-linear ${
-                          router.asPath === `/${link.link}` ? 'text-2xl' : ''
+                        className={`w-8 transition-all duration-150 ease-linear ${
+                          router.asPath === `/${link.link}`
+                            ? 'w-10 font-black fill-cyan-300'
+                            : ''
                         }`}
                       />
                       <p
-                        className={`hidden md:inline text-white font-[900] transition-all duration-150 ease-linear ${
-                          router.asPath === `/${link.link}` ? 'text-2xl' : ''
+                        className={`hidden lg:inline text-white font-bold transition-all duration-150 ease-linear ${
+                          router.asPath === `/${link.link}`
+                            ? 'text-3xl font-black '
+                            : ''
                         }`}
                       >
                         {link.link.split('#')}
@@ -134,7 +150,7 @@ export default function Layout({ children }: { children: ReactNode }) {
           )}
         </NoSsr>
 
-        {fullScreen ? '' : <>{children}</>}
+        {fullScreen || (canvas && <>{children}</>)}
       </div>
     </>
   );

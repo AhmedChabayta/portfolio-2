@@ -7,6 +7,7 @@ import { Inputs, TextArea } from './Input';
 import { Button, SnackbarCloseReason } from '@mui/material';
 import { motion } from 'framer-motion';
 import SnackbarUnstyled from '@mui/base/SnackbarUnstyled';
+import SectionTitle from './SectionTitle';
 
 interface PersonalProps {
   personal: Personal;
@@ -59,13 +60,8 @@ export default function ContactMe({ personal }: PersonalProps) {
       </SnackbarUnstyled>
 
       <div className="flex flex-col space-y-10 items-center mt-8">
-        <h4 className="text-4xl font-semibold text-center relative w-fit mx-auto mt-12">
-          Lets{' '}
-          <span className="before:absolute before:w-1/2 before:h-1 before:rounded before:bg-red-500 text-blue-500 before:top-[110%] before:-skew-y-3 -skew-y-6 before:shadow-[10px_5px_5px_#000]">
-            talk
-          </span>
-        </h4>
-        <div className="space-y-5">
+        <SectionTitle title="contact" />
+        <div className="space-y-5 pt-24">
           <ContactInfo
             setShowSnackbar={setShowSnackbar}
             title="WhatsApp"

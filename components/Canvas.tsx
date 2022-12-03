@@ -2,6 +2,8 @@ import { useLayoutEffect, useState } from 'react';
 import { PlayIcon, PauseIcon } from '@heroicons/react/24/solid';
 import { onAndOn } from '../assets/music';
 import { motion } from 'framer-motion';
+import { useRecoilValue } from 'recoil';
+import { barLengthAtom, canvasRotationAtom } from '../atoms/canvasStateAtoms';
 declare global {
   // eslint-disable-next-line no-unused-vars
   interface Window {
@@ -24,6 +26,8 @@ export const Canvas = ({
 }) => {
   const [mounted, setMounted] = useState(false);
   const [isPlaying, setIsPlaying] = useState<boolean>();
+  const rotation = useRecoilValue(canvasRotationAtom);
+  const barLength = useRecoilValue(barLengthAtom);
 
   useLayoutEffect(() => {
     setMounted(false);
@@ -80,13 +84,13 @@ export const Canvas = ({
 
     const drawVisualizer = () => {
       for (let i = 0; i < bufferLength; Math.floor(i++)) {
-        barHeight = dataArray[i] * 3;
+        barHeight = dataArray[i] * barLength;
         ctx?.save();
         ctx?.translate(
           canvasRef.current.width / 2,
           canvasRef.current.height / 2
         );
-        ctx?.rotate((Math.PI + 360 + i * 100) / bufferLength);
+        ctx?.rotate((Math.PI + 360 + i * 100 + rotation) / bufferLength);
         ctx.fillStyle = `#ee00ff`;
         ctx.globalCompositeOperation = 'exclusion';
         ctx.fillRect(0, 0, barWidth, barHeight);
@@ -96,13 +100,13 @@ export const Canvas = ({
 
     const drawCircularVizualizer = () => {
       for (let i = 0; i < bufferLength; i++) {
-        barHeight = dataArray[i];
+        barHeight = dataArray[i] * barLength;
         ctx?.save();
         ctx?.translate(
           canvasRef.current.width / 2,
           canvasRef.current.height / 2
         );
-        ctx?.rotate(i * bufferLength);
+        ctx?.rotate(i * bufferLength * rotation);
         ctx.fillStyle = `#04f7fb`;
         ctx.globalCompositeOperation = 'hue';
         ctx?.beginPath();
@@ -124,7 +128,7 @@ export const Canvas = ({
         canvasRef.current.height = window.innerHeight;
       }
     });
-  }, [audioRef, canvasRef, quality, shape]);
+  }, [audioRef, barLength, canvasRef, quality, rotation, shape]);
   return (
     <>
       <motion.canvas
