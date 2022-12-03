@@ -7,7 +7,7 @@ export default function SectionTitle({ title }: { title: string }) {
       whileInView={{ color: ['#acb3c2', '#576175', '#fff'] }}
       transition={{ duration: 2 }}
       viewport={{ once: true }}
-      className="absolute top-24 left-1/2 -translate-x-1/2 uppercase tracking-[20px] font-bold text-3xl xl:text-4xl"
+      className="absolute font-cairo top-24 left-1/2 -translate-x-1/2 uppercase tracking-[20px] font-bold text-3xl xl:text-4xl "
     >
       {title}
     </motion.h3>

@@ -43,7 +43,7 @@ export default function Home({ data }: Props) {
       </section>
 
       <section id="projects" className="relative section">
-        <div className="flex h-screen items-center mt-24 overflow-y-hidden overflow-x-scroll snap-x snap-mandatory scrollbar-thin scrollbar-thumb-white scrollbar-track-transparent pt-24">
+        <div className="flex h-screen items-center overflow-y-hidden overflow-x-scroll snap-x snap-mandatory scrollbar-thin scrollbar-thumb-white scrollbar-track-transparent pt-24">
           <SectionTitle title="Projects" />
           <ProjectsContainer projects={assets.project} />
         </div>

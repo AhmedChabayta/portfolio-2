@@ -6,7 +6,6 @@
   .heroButton {
     @apply flex items-center space-x-4 px-6 py-2 my-4 uppercase text-xs tracking-widest font-black;
   }
-
   .wallpaper {
     @apply transition-[filter] duration-[1s] ease-linear;
   }
@@ -24,9 +23,9 @@
   color: white;
 }
 p {
-  -webkit-user-select: auto;
-  -ms-user-select: auto;
-  user-select: auto;
+  -webkit-user-select: none !important;
+  -ms-user-select: none !important;
+  user-select: none !important;
 }
 
 textarea {

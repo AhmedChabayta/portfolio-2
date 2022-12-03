@@ -31,7 +31,7 @@ export default function Hero({ name, title, image }: Props) {
     >
       <h1 className="text-5xl lg:text-6xl font-black relative z-50 my-4 p-8 ">
         <span className="" dir="auto">
-          {text} <Cursor cursorColor="#fff" />
+          {text.toString().split('W')} <Cursor cursorColor="#fff" />
         </span>
       </h1>
       <Image
@@ -41,11 +41,11 @@ export default function Hero({ name, title, image }: Props) {
         src={urlFor(image.asset).url()}
         alt=""
       />
-      <div className="text-2xl xl:text-4xl uppercase text-white pb-2 tracking-[7px] leading-10 space-y-2 z-50 relative font-black">
+      <div className="text-2xl lg:text-3xl uppercase text-white pb-2 tracking-[7px] leading-10 space-y-2 z-50 relative font-black">
         <h2>
           {name} <br />
         </h2>
-        <h2 className="text-xl xl:text-3xl ">{title}</h2>
+        <h2 className="text-xl lg:text-2xl ">{title}</h2>
       </div>
     </div>
   );

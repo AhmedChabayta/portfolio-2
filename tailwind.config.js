@@ -1,3 +1,5 @@
+const { fontFamily } = require('tailwindcss/defaultTheme');
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
@@ -8,8 +10,7 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        cairo: [`var(--font-cairo)`],
-        roboto: [`var(--font-roboto)`],
+        roboto: [`var(--font-roboto)`, ...fontFamily.sans],
       },
     },
   },
