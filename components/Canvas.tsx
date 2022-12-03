@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 import { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import { PlayIcon, PauseIcon } from '@heroicons/react/24/solid';
@@ -92,6 +93,51 @@ export default function Canvas({ hue = 0 }: { hue?: number }) {
       />
 
       {audioRef.current != null && canvasRef.current && (
+=======
+import { PlayIcon, PauseIcon } from '@heroicons/react/24/solid';
+import { onAndOn } from '../assets/music';
+import { motion } from 'framer-motion';
+import useCanvas from '../hooks/useCanvas';
+import { Suspense } from 'react';
+
+export default function Canvas({
+  hue = 90,
+  quality,
+  shape,
+}: {
+  hue: number;
+  quality: number;
+  shape: string;
+}) {
+  const { audioRef, canvasRef, mounted, isPlaying } = useCanvas(quality, shape);
+
+  return (
+    <>
+      <Suspense>
+        <motion.canvas
+          ref={canvasRef}
+          animate={{
+            backgroundImage: `linear-gradient(-145deg, hsl(290,100%,65%) 0%,hsl(205,100%,65%) 100%)`,
+            filter:
+              shape === 'rect'
+                ? `hue-rotate(${hue}deg) brightness(1.1) contrast(1.1) saturate(1.1) blur(5px)`
+                : `hue-rotate(${hue}deg) brightness(1.1) contrast(1.1) saturate(1.1) `,
+          }}
+          transition={{
+            duration: 0.7,
+          }}
+          className="fixed h-screen w-screen border shadow-[0px_0px_3px_3px_#ffffff_inset] will-change-auto"
+        />
+
+        <audio
+          src={onAndOn}
+          ref={audioRef}
+          className="fixed bottom-0 z-10 w-screen bg-transparent"
+        />
+      </Suspense>
+
+      {mounted && (
+>>>>>>> Stashed changes
         <div
           onClick={() => {
             isPlaying ? audioRef?.current?.pause() : audioRef?.current?.play();

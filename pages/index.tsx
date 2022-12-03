@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 import { motion } from 'framer-motion';
 import { GetServerSideProps } from 'next';
 import Head from 'next/head';
@@ -9,12 +10,14 @@ import Skills from '../components/Skills';
 import ContactMe from '../components/ContactMe';
 import { Personal } from '../types/typings';
 import ProjectsContainer from '../components/ProjectsContainer';
+=======
+import { Suspense, useEffect, useState } from 'react';
+import Stream from '../components/Stream';
+>>>>>>> Stashed changes
 
-interface Props {
-  data: Personal[];
-}
 const BASE = process.env.NEXT_PUBLIC_BASE_URL;
 
+<<<<<<< Updated upstream
 export default function Home({ data }: Props) {
   const assets = data[0];
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -68,3 +71,26 @@ export const getServerSideProps: GetServerSideProps<Props> = async () => {
     },
   };
 };
+=======
+export default function Home() {
+  const [data, setData] = useState();
+
+  console.log(data?.[0]);
+  useEffect(() => {
+    const fetchData = async () => {
+      const res = await fetch(`${BASE}/api/details`);
+      const { data } = await res.json();
+      setData(data);
+      console.log(data);
+    };
+    fetchData();
+  }, []);
+
+  return (
+    <Suspense fallback="...Loading">
+      {' '}
+      {data ? <Stream data={data} /> : <p>Loading</p>}
+    </Suspense>
+  );
+}
+>>>>>>> Stashed changes
