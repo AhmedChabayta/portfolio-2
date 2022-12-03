@@ -19,22 +19,22 @@ function Projects({ image, title, description, linkToBuild }: Props) {
   return (
     <div
       id="title"
-      className="flex flex-col h-screen w-screen shrink-0 items-center justify-center relative z-10 snap-center"
+      className="relative z-10 flex min-h-screen w-full shrink-0 snap-center flex-col items-center justify-center"
     >
       <Image
         priority
-        className="object-cover"
+        className="object-cover px-8 lg:px-0"
         width={400}
         height={400}
         src={urlFor(image).url()}
         alt=""
         style={{ width: 'auto', height: 'auto' }}
       />
-      <div className="mt-20 text-center">
+      <div className="mt-20 space-y-16 text-center">
         <Link target="_void" href={`${linkToBuild}`}>
-          <h1 className="text-3xl font-semibold">{title}</h1>
+          <h1 className="text-4xl">{title}</h1>
         </Link>
-        <p className="text-xl my-8 max-w-lg font-light">{description}</p>
+        <p className="text-sm sm:text-lg md:text-2xl">{description}</p>
       </div>
     </div>
   );

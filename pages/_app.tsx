@@ -2,21 +2,32 @@ import '../styles/globals.css';
 import type { AppProps } from 'next/app';
 import Layout from '../components/Layout';
 import { RecoilRoot } from 'recoil';
-<<<<<<< Updated upstream
-=======
-import { NoSsr, StyledEngineProvider } from '@mui/material';
-import { Roboto } from '@next/font/google';
->>>>>>> Stashed changes
 
+
+import { StyledEngineProvider } from '@mui/material';
+import { Roboto } from '@next/font/google';
+
+
+const ROBOTO = Roboto({
+  subsets: ['latin', 'latin-ext'],
+  weight: ['300', '400', '500', '700', '900', '100'],
+  display: 'auto',
+  variable: '--font-roboto',
+  fallback: ['system-ui', 'arial'],
+});
 export default function App({ Component, pageProps }: AppProps) {
   return (
-<<<<<<< Updated upstream
+
     <RecoilRoot>
-      <Layout>
-        <Component {...pageProps} />
-      </Layout>
+      <StyledEngineProvider injectFirst>
+        <main className={`${ROBOTO.variable} font-roboto `}>
+          <Layout>
+            <Component {...pageProps} />
+          </Layout>
+        </main>
+      </StyledEngineProvider>
     </RecoilRoot>
-=======
+
     <NoSsr>
       <RecoilRoot>
         <StyledEngineProvider injectFirst>
@@ -28,6 +39,6 @@ export default function App({ Component, pageProps }: AppProps) {
         </StyledEngineProvider>
       </RecoilRoot>
     </NoSsr>
->>>>>>> Stashed changes
+
   );
 }

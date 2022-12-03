@@ -34,6 +34,11 @@ export default {
       type: 'image',
     },
     {
+      name: 'metaImage',
+      title: 'Meta Image',
+      type: 'image',
+    },
+    {
       name: 'socials',
       title: 'Socials',
       type: 'array',

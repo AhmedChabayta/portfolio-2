@@ -4,22 +4,7 @@
 
 @layer components {
   .heroButton {
-    @apply flex items-center space-x-2 px-6 py-2 my-4 uppercase text-xs tracking-widest font-black;
-  }
-  .contact-inputs {
-    @apply focus:outline-none
-    outline-none
-    bg-transparent
-    rounded
-    border-b
-    border-sky-200/20
-    px-5 py-4
-    text-white
-    placeholder-gray-100
-    transition-all
-    font-bold
-    w-44
-    md:w-full;
+    @apply my-4 flex items-center space-x-4 px-6 py-2 uppercase tracking-widest;
   }
   .wallpaper {
     @apply transition-[filter] duration-[1s] ease-linear;
@@ -33,26 +18,52 @@
   padding: 0;
   margin: 0;
   box-sizing: border-box;
-  scroll-behavior: smooth;
   background-color: transparent;
+  image-rendering: optimizeQuality !important;
+  color: white;
+}
+p {
+  -webkit-user-select: all !important;
+  -ms-user-select: all !important;
+  user-select: all !important;
+}
+h1,
+h2,
+h3,
+h4 {
+  -webkit-user-select: none !important;
+  -ms-user-select: none !important;
+  user-select: none !important;
 }
 
-.skill > svg {
-  transition: all 500ms ease;
+textarea {
+  outline: none !important;
+  border: none !important;
 }
-.skill > img {
-  transition: all 500ms ease;
+textarea:focus {
+  outline: none !important;
+  border: none !important;
+}
+input {
+  outline: none !important;
+  border: none !important;
+}
+input:focus {
+  outline: none !important;
+  border: none !important;
 }
 
-.skill:hover > svg {
-  -moz-transform: rotate(360deg) scale(0.3) translate3d(-60px, -40px, 0);
-  -webkit-transform: rotate(360deg) scale(0.3) translate3d(-60px, -40px, 0);
-  -o-transform: rotate(360deg) scale(0.3) translate3d(-60px, -40px, 0);
-  transform: rotate(360deg) scale(0.3) translate3d(-60px, -40px, 0);
+ul {
+  color: white;
+}
 
-  -webkit-transition: all 0.4s ease-in-out;
-  -moz-transition: all 0.4s ease-in-out;
-  -o-transition: all 0.4s ease-in-out;
-  transition: all 0.4s ease-in-out;
-  z-index: -10;
+.MuiPaper-root {
+  background-color: black;
+  border-radius: 5px;
+  padding: 0 !important;
+  height: fit-content;
+}
+::selection {
+  background: transparent !important;
+  color: rgb(59 130 246);
 }

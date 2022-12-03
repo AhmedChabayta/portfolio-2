@@ -18,7 +18,6 @@ import {
 import SectionTitle from './SectionTitle';
 
 
-
 export default function CanvasSettings() {
   const [quality, setQuality] = useRecoilState(qualityStateAtom);
   const [canvas, setCanvas] = useRecoilState(canvasStateAtom);

@@ -2,6 +2,15 @@ import { Cursor, useTypewriter } from 'react-simple-typewriter';
 import hello from '../hello.json';
 import Image from 'next/image';
 import { urlFor } from '../sanity/sanity';
+import { Cairo_Play as CP } from '@next/font/google';
+
+const cairo = CP({
+  subsets: ['latin', 'latin-ext'],
+  weight: ['300', '400', '500', '700', '900'],
+  display: 'auto',
+  variable: '--font-cairo',
+  fallback: ['system-ui', 'arial'],
+});
 
 interface Props {
   name: string;
@@ -23,14 +32,17 @@ export default function Hero({ name, title, image }: Props) {
     delaySpeed: 1000,
     typeSpeed: 80,
   });
+
   return (
     <div
       id="hero"
-      className="h-screen relative z-10 flex flex-col space-y-12 items-center justify-center text-center"
+      className="relative z-10 flex h-screen flex-col items-center justify-center space-y-12 text-center"
     >
-      <h1 className="text-5xl lg:text-6xl font-semibold relative z-50 my-4">
-        <span dir="auto">
-          {text} <Cursor cursorColor="#fff" />
+      <h1
+        className={`${cairo.className} typography typography-2xl relative z-50 my-4 p-8 font-cairo text-4xl font-black lg:text-3xl`}
+      >
+        <span className="" dir="auto">
+          {text} <Cursor cursorColor="#ffffff" />
         </span>
       </h1>
       <Image
@@ -40,10 +52,12 @@ export default function Hero({ name, title, image }: Props) {
         src={urlFor(image.asset).url()}
         alt=""
       />
-      <h2 className="text-sm uppercase text-white pb-2 tracking-[7px] leading-10 z-50 relative">
-        {name} <br />
-        {title}
-      </h2>
+      <div className="relative z-50 space-y-2 pb-2 text-sm font-black uppercase leading-10 tracking-[7px] text-white sm:text-lg md:text-2xl">
+        <h2>
+          {name} <br />
+        </h2>
+        <h2 className="">{title}</h2>
+      </div>
     </div>
   );
 }

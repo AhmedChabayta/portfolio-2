@@ -2,6 +2,7 @@ import { motion, useInView } from 'framer-motion';
 import Image from 'next/image';
 import { useRef } from 'react';
 import { urlFor } from '../sanity/sanity';
+import SectionTitle from './SectionTitle';
 
 interface Props {
   personalImage: {
@@ -15,53 +16,40 @@ interface Props {
 
 export default function About({ personalImage }: Props) {
   const imageRef = useRef(null);
-  const isInView = useInView(imageRef, { amount: 'all', once: true });
+  const isInView = useInView(imageRef, { amount: 'some', once: true });
 
   return (
     <motion.div
       initial={{ opacity: 0.1 }}
       whileInView={{ opacity: 1 }}
       transition={{ duration: 0.8 }}
-      className="flex flex-col relative h-screen text-center md:text-center lg:flex-row max-w-7xl px-10 justify-start items-center space-x-8 space-y-8 mx-auto"
+      className="relative mx-auto  flex min-h-screen flex-col items-center justify-center text-center md:text-left lg:space-y-8 lg:space-x-8 lg:pl-44 xl:flex-row"
     >
-      <motion.h3
-        initial={{ color: 'rgb(107,114,128)' }}
-        whileInView={{ color: ['#acb3c2', '#576175', '#fff'] }}
-        transition={{ duration: 2 }}
-        viewport={{ once: true }}
-        className="absolute top-24 left-1/2 -translate-x-1/2 uppercase tracking-[20px] text-2xl"
-      >
-        About
-      </motion.h3>
+      <SectionTitle title="about" />
       <motion.div
+        layout
+        className={`relative mb-4 flex h-60 w-60 items-center justify-center rounded sm:my-10 sm:h-72 sm:w-72 md:h-80 md:w-80 lg:h-96 lg:w-96 lg:rounded-lg xl:h-[500px] xl:w-[500px]`}
         animate={{
           transform: isInView ? 'translateX(0px)' : 'translateX(-100px)',
         }}
-        transition={{
-          duration: 0.2,
-        }}
+        style={{ transition: 'all 0.2s linear' }}
         ref={imageRef}
       >
         <Image
           priority
           src={urlFor(personalImage.asset).url()}
-          width={200}
-          height={200}
+          fill
           alt=""
-          className="relative z-50 w-56 h-56 object-cover rounded-full lg:rounded-lg lg:w-64 lg:h-96 xl:w-[500px] xl:h-[500px] mt-28"
+          style={{ WebkitAppearance: 'none', transition: 'all 0.3s' }}
+          className="relative z-50 rounded object-cover p-[2px] sm:rounded-sm md:rounded-md lg:rounded-lg"
         />
       </motion.div>
-      <div className="space-y-10 md:px-10">
-        <h4 className="text-4xl font-semibold ">
-          Here is a{' '}
-          <span className="underline decoration-teal-500 underline-offset-4">
-            little
-          </span>{' '}
-          background
-        </h4>
-        <p className="text-base max-w-xl">
-          Ahmed Chabayta, Junior Front-end web-developer, specializing in
-          ReactJs, NextJs.
+      <div className="space-y-10 lg:px-10">
+        <h4 className="text-lg md:text-2xl lg:text-3xl">Background:</h4>
+        <p className="max-w-xs text-lg capitalize md:max-w-xl">
+          Self taught front end web developer, specializing in ReactJs, NextJs.
+          My passion is to meet great artists, learn and be inspired to create
+          efficient work.
         </p>
       </div>
     </motion.div>

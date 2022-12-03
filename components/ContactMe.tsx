@@ -1,93 +1,113 @@
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { Personal } from '../types/typings';
 import ContactInfo from './ContactInfo';
 import emailjs from '@emailjs/browser';
 import { EnvelopeIcon, MapPinIcon, PhoneIcon } from '@heroicons/react/24/solid';
+import { Inputs, TextArea } from './Input';
+import { Button, SnackbarCloseReason } from '@mui/material';
+import { motion } from 'framer-motion';
+import SnackbarUnstyled from '@mui/base/SnackbarUnstyled';
+import SectionTitle from './SectionTitle';
 
 interface PersonalProps {
   personal: Personal;
 }
 
 export default function ContactMe({ personal }: PersonalProps) {
+  const [showSnackbar, setShowSnackbar] = useState<boolean>(false);
   const form = useRef<HTMLFormElement>(null);
 
-  const sendEmail = (e: any) => {
+  const sendEmail = (e: { preventDefault: () => void }) => {
     e.preventDefault();
     if (form.current) {
       emailjs
         .sendForm(
-          'service_fq4cchd',
-          'template_f81r4zw',
+          `${process.env.NEXT_PUBLIC_SERVICE}`,
+          `${process.env.NEXT_PUBLIC_TEMPLATE}`,
           form.current,
-          'FTSB3T9QVjfnESP97'
+          `${process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY}`
         )
         .then(
           (result) => {
-            console.log(result.text);
+            if (result.text === 'OK') {
+              console.log(result.text);
+            }
           },
           (error) => {
-            console.log(error.text);
+            console.log(error);
           }
         );
     }
   };
+  const handleClose = (_: any, reason: SnackbarCloseReason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setShowSnackbar(false);
+  };
 
   return (
-    <div className="h-screen relative flex items-center justify-center gap-6 z-50 ">
-      <div className="flex flex-col space-y-10 items-center">
-        <h4 className="text-4xl font-semibold text-center relative w-fit mx-auto mt-12">
-          Lets{' '}
-          <span className="before:absolute before:w-1/2 before:h-1 before:rounded before:bg-red-500 before:top-[110%] before:-skew-y-3 -skew-y-6">
-            talk
-          </span>
-        </h4>
-        <div className="space-y-5">
-          <ContactInfo
-            text={personal.phoneNumber}
-            Icon={<PhoneIcon className="w-8" />}
+    <div className="relative z-50 flex min-h-screen flex-col items-center justify-evenly md:justify-center">
+      <SectionTitle title="contact" />
+      <SnackbarUnstyled
+        open={showSnackbar}
+        autoHideDuration={3000}
+        onClose={handleClose}
+        className="fixed top-0 left-0 right-0 flex w-full justify-center border-b border-white bg-sky-500/60 backdrop-blur-3xl"
+      >
+        <motion.p initial={{ opacity: 0.1 }} whileInView={{ opacity: 1 }}>
+          Copied!
+        </motion.p>
+      </SnackbarUnstyled>
+
+      <div className="my-10 flex flex-col space-y-4">
+        <ContactInfo
+          setShowSnackbar={setShowSnackbar}
+          title="WhatsApp"
+          text={personal.phoneNumber}
+          Icon={<PhoneIcon className="w-8" />}
+        />
+        <ContactInfo
+          setShowSnackbar={setShowSnackbar}
+          title=""
+          text={personal.email}
+          Icon={<EnvelopeIcon className="w-8" />}
+        />
+        <ContactInfo
+          title=""
+          text={personal.address}
+          Icon={<MapPinIcon className="w-8" />}
+        />
+      </div>
+      <form
+        className="form-control flex flex-col justify-center rounded"
+        ref={form}
+        onSubmit={sendEmail}
+      >
+        <div className="flex flex-col items-center lg:flex-row lg:space-x-2">
+          <Inputs
+            label="user name"
+            placeholder="user name"
+            name="from_name"
+            type="text"
           />
-          <ContactInfo
-            text={personal.email}
-            Icon={<EnvelopeIcon className="w-8" />}
-          />
-          <ContactInfo
-            text={personal.address}
-            Icon={<MapPinIcon className="w-8" />}
+          <Inputs
+            label="user email"
+            placeholder="user email"
+            name="from_email"
+            type="text"
           />
         </div>
-        <form
-          className="form-control flex flex-col justify-center gap-2 p-10 rounded"
-          ref={form}
-          onSubmit={sendEmail}
-        >
-          <div className="flex space-x-2">
-            <input
-              placeholder="name"
-              className="contact-inputs"
-              type="text"
-              name="from_name"
-            />
-            <input
-              placeholder="email"
-              className="contact-inputs"
-              type="text"
-              name="from_email"
-            />
-          </div>
 
-          <textarea
-            placeholder="message"
-            className="contact-inputs w-full"
-            name="message"
-          />
-          <button
-            className="text-white font-black uppercase bg-sky-200/20 rounded py-5 active:scale-95 transition-all ease-linear"
-            type="submit"
-          >
-            submit
-          </button>
-        </form>
-      </div>
+        <TextArea placeholder="message" name="message" label="message" />
+        <Button
+          variant="contained"
+          className="mx-auto my-5 h-10 w-1/2 rounded font-black uppercase transition-all ease-linear active:scale-95 xs:my-2 sm:my-4 md:my-8"
+          type="submit"
+        >
+          submit
+        </Button>
+      </form>
     </div>
   );
 }
