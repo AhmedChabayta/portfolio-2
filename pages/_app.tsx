@@ -1,8 +1,8 @@
 import '../styles/globals.css';
 import type { AppProps } from 'next/app';
 import { RecoilRoot, RecoilEnv } from 'recoil';
-import { StyledEngineProvider } from '@mui/material';
 import { Roboto } from '@next/font/google';
+import { Layout } from '../components';
 
 RecoilEnv.RECOIL_DUPLICATE_ATOM_KEY_CHECKING_ENABLED = false;
 
@@ -17,12 +17,14 @@ const ROBOTO = Roboto({
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
-    <StyledEngineProvider injectFirst>
+    <>
       <RecoilRoot>
-        <main className={`${ROBOTO.variable} font-roboto `}>
-          <Component {...pageProps} />
-        </main>
+        <Layout>
+          <main className={`${ROBOTO.variable} font-roboto `}>
+            <Component {...pageProps} />
+          </main>
+        </Layout>
       </RecoilRoot>
-    </StyledEngineProvider>
+    </>
   );
 }

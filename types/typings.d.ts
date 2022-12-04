@@ -1,5 +1,18 @@
 /* eslint-disable no-unused-vars */
 export interface Personal {
+  data: {
+    title: string;
+    address: string;
+    email: string;
+    images: Image;
+    name: string;
+    phoneNumber: string;
+    project: Project[];
+    skill: Skill[];
+    social: Social[];
+  };
+}
+export interface Personal2 {
   title: string;
   address: string;
   email: string;

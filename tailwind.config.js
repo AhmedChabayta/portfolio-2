@@ -19,7 +19,6 @@ module.exports = {
     extend: {
       fontFamily: {
         roboto: [`var(--font-roboto)`, ...fontFamily.sans],
-        cairo: [`var(--font-cairo)`],
       },
       typography: ({ theme }) => ({
         white: {

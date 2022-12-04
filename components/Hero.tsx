@@ -2,17 +2,6 @@ import { Cursor, useTypewriter } from 'react-simple-typewriter';
 import hello from '../hello.json';
 import Image from 'next/image';
 import { urlFor } from '../sanity/sanity';
-import { Cairo_Play as CP } from '@next/font/google';
-
-const cairo = CP({
-  subsets: ['latin', 'latin-ext'],
-  weight: ['300', '400', '500', '700', '900'],
-  display: 'auto',
-  variable: '--font-cairo',
-  fallback: ['system-ui', 'arial'],
-  preload: true,
-});
-
 interface Props {
   name: string;
   title: string;
@@ -40,13 +29,14 @@ export default function Hero({ name, title, image }: Props) {
       className="relative z-10 flex h-screen flex-col items-center justify-center space-y-12 text-center"
     >
       <h1
-        className={`${cairo.className} typography typography-2xl relative z-50 my-4 p-8 font-cairo text-4xl font-black lg:text-3xl`}
+        className={`typography typography-2xl relative z-50 my-4 p-8  text-4xl font-black lg:text-3xl`}
       >
         <span className="" dir="auto">
           {text} <Cursor cursorColor="#ffffff" />
         </span>
       </h1>
       <Image
+        priority
         className="rounded object-cover"
         width={200}
         height={200}

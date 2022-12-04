@@ -76,7 +76,7 @@ export default function Layout({ children }: { children: ReactNode }) {
     };
   }, []);
   return (
-    <NoSsr>
+    <>
       <MetaTags />
       <div className="relative flex h-screen w-screen overflow-x-hidden overflow-y-scroll bg-white">
         <AnimatePresence>
@@ -148,6 +148,6 @@ export default function Layout({ children }: { children: ReactNode }) {
 
         {fullScreen || (canvas && <>{children}</>)}
       </div>
-    </NoSsr>
+    </>
   );
 }

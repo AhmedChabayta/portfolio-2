@@ -1,31 +1,27 @@
 import { motion } from 'framer-motion';
-import { GetStaticProps, NextPage } from 'next';
 import { Suspense } from 'react';
-import { Personal } from '../types/typings';
+import { Personal2 } from '../types/typings';
 import dynamic from 'next/dynamic';
 import {
   About,
   ContactMe,
   Header,
-  Layout,
   ProjectsContainer,
   SectionTitle,
   Hero,
   Skills,
 } from '../components';
+import { sanityClient } from '../sanity/sanity';
+import { query } from '../sanity/query';
 
 const DynamicWrapper = dynamic(() => import('../components/DynamicWrapper'), {
   suspense: true,
 });
 interface Props {
-  DATA: {
-    data: Personal[];
-  };
+  data: Personal2;
 }
-const BASE = process.env.NEXT_PUBLIC_BASE_URL;
 
-export const Home: NextPage<Props> = ({ DATA }) => {
-  const { data } = DATA;
+export default function Home({ data }: Props) {
   const {
     name,
     title,
@@ -36,61 +32,62 @@ export const Home: NextPage<Props> = ({ DATA }) => {
     phoneNumber,
     email,
     address,
-  } = data[0];
+  } = data;
 
+  if (!data) {
+    return null;
+  }
   return (
     <Suspense>
       <DynamicWrapper>
-        <Layout>
-          <motion.div
-            layout
-            transition={{ duration: 0.2 }}
-            className={`z-0 grid h-screen snap-both snap-mandatory grid-cols-1 items-center overflow-y-scroll scroll-smooth text-white scrollbar scrollbar-track-transparent scrollbar-thumb-white`}
+        <motion.div
+          layout
+          transition={{ duration: 0.2 }}
+          className={`z-0 grid h-screen snap-both snap-mandatory grid-cols-1 items-center overflow-y-scroll scroll-smooth text-white scrollbar scrollbar-track-transparent scrollbar-thumb-white`}
+        >
+          <Header social={social} />
+
+          <section id="home" className="section">
+            <Hero name={name} title={title} image={images} />
+          </section>
+
+          <section id="about" className="section">
+            <About personalImage={images} />
+          </section>
+
+          <section
+            className="section relative mx-auto h-fit w-fit snap-center"
+            id="skills"
           >
-            <Header social={social} />
+            <Skills skill={skill} />
+          </section>
 
-            <section id="home" className="section">
-              <Hero name={name} title={title} image={images} />
-            </section>
+          <section id="projects" className="section relative">
+            <div className="flex h-screen snap-x snap-mandatory items-center overflow-x-scroll pt-24 overflow-y-hidden scrollbar-thin scrollbar-track-transparent scrollbar-thumb-white">
+              <SectionTitle title="Projects" />
+              <ProjectsContainer projects={project} />
+            </div>
+          </section>
 
-            <section id="about" className="section">
-              <About personalImage={images} />
-            </section>
-
-            <section
-              className="section relative mx-auto h-fit w-fit snap-center"
-              id="skills"
-            >
-              <Skills skill={skill} />
-            </section>
-
-            <section id="projects" className="section relative">
-              <div className="flex h-screen snap-x snap-mandatory items-center overflow-x-scroll pt-24 overflow-y-hidden scrollbar-thin scrollbar-track-transparent scrollbar-thumb-white">
-                <SectionTitle title="Projects" />
-                <ProjectsContainer projects={project} />
-              </div>
-            </section>
-
-            <section id="contact" className="section">
-              <ContactMe
-                phoneNumber={phoneNumber}
-                email={email}
-                address={address}
-              />
-            </section>
-          </motion.div>
-        </Layout>
+          <section id="contact" className="section">
+            <ContactMe
+              phoneNumber={phoneNumber}
+              email={email}
+              address={address}
+            />
+          </section>
+        </motion.div>
       </DynamicWrapper>
     </Suspense>
   );
-};
-export const getServerSideProps = async () => {
-  const res = await fetch(`${BASE}/api/details`);
-  const DATA = await res.json();
+}
+export async function getStaticProps() {
+  const res = await sanityClient.fetch(query);
+
   return {
     props: {
-      DATA,
+      data: res[0],
     },
+    revalidate: 10,
   };
-};
-export default Home;
+}
