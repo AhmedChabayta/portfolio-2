@@ -36,8 +36,11 @@ export default function About({ personalImage }: Props) {
         ref={imageRef}
       >
         <Image
-          priority
+
           src={urlFor(personalImage.asset).url()}
+          sizes="(max-width: 768px) 100vw,
+              (max-width: 1200px) 50vw,
+              33vw"
           fill
           alt=""
           style={{ WebkitAppearance: 'none', transition: 'all 0.3s' }}

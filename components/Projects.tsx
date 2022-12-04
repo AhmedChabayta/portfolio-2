@@ -22,7 +22,6 @@ function Projects({ image, title, description, linkToBuild }: Props) {
       className="relative z-10 flex min-h-screen w-full shrink-0 snap-center flex-col items-center justify-center"
     >
       <Image
-        priority
         className="object-cover px-8 lg:px-0"
         width={400}
         height={400}

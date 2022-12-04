@@ -5,7 +5,9 @@ import {
   canvasShapeAtom,
   canvasStateAtom,
   qualityStateAtom,
-} from '../atoms/canvasStateAtoms';
+  trackAtom,
+  trackNameAtom,
+} from '../atoms/canvasAtoms';
 import { EyeSlashIcon, EyeIcon } from '@heroicons/react/24/solid';
 import {
   Button,
@@ -23,6 +25,9 @@ export default function CanvasSettings() {
   const [rotation, setRotation] = useRecoilState(canvasRotationAtom);
   const [shape, setShape] = useRecoilState(canvasShapeAtom);
   const [barLength, setBarLength] = useRecoilState(barLengthAtom);
+  const [track, setTrack] = useRecoilState(trackAtom);
+  const [trackName, setTrackName] = useRecoilState(trackNameAtom);
+
   const handleChange = (event: SelectChangeEvent) => {
     setQuality(event.target.value);
   };
@@ -60,7 +65,23 @@ export default function CanvasSettings() {
             </>
           )}
         </Button>
-
+        <Button variant="outlined" className="text-white">
+          {trackName || `Upload Track`}
+          <input
+            onChange={(e: {
+              target: { files: FileList | null };
+              preventDefault: () => void;
+            }) => {
+              if (!e.target.files) return;
+              e.preventDefault();
+              setTrackName(e.target.files[0].name);
+              setTrack(URL.createObjectURL(e.target.files[0]));
+              console.log(track, 'track file');
+            }}
+            type="file"
+            hidden
+          />
+        </Button>
         <Button className="flex flex-col space-y-2">
           <p>Change Shape</p>
           {shape === 'rect' ? (
@@ -79,7 +100,7 @@ export default function CanvasSettings() {
         </Button>
 
         <FormControl size="small">
-          <InputLabel className="text-xl text-[#1871c9] " id="fft size">
+          <InputLabel className="text-xl text-white " id="fft size">
             FFT Size
           </InputLabel>
           <Select
@@ -111,7 +132,7 @@ export default function CanvasSettings() {
         </FormControl>
 
         <FormControl>
-          <InputLabel className="text-xl text-[#1871c9] " id="rotations">
+          <InputLabel className="text-white] text-xl " id="rotations">
             Rotations
           </InputLabel>
           <Select
@@ -142,7 +163,7 @@ export default function CanvasSettings() {
           </Select>
         </FormControl>
         <FormControl>
-          <InputLabel className="text-xl text-[#1871c9] " id="length">
+          <InputLabel className="text-xl text-white " id="length">
             Length
           </InputLabel>
           <Select
@@ -152,7 +173,7 @@ export default function CanvasSettings() {
             variant="outlined"
             value={barLength}
             onChange={handleLengthChange}
-            className="mt-4 w-[130px] text-white"
+            className="mt-4 w-[130px] border-white text-white"
             label="length"
           >
             <MenuItem className="menuitem" value={1}>

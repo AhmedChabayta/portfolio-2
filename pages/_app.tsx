@@ -1,9 +1,10 @@
 import '../styles/globals.css';
 import type { AppProps } from 'next/app';
-import Layout from '../components/Layout';
-import { RecoilRoot } from 'recoil';
+import { RecoilRoot, RecoilEnv } from 'recoil';
 import { StyledEngineProvider } from '@mui/material';
 import { Roboto } from '@next/font/google';
+
+RecoilEnv.RECOIL_DUPLICATE_ATOM_KEY_CHECKING_ENABLED = false;
 
 const ROBOTO = Roboto({
   subsets: ['latin', 'latin-ext'],
@@ -11,17 +12,17 @@ const ROBOTO = Roboto({
   display: 'auto',
   variable: '--font-roboto',
   fallback: ['system-ui', 'arial'],
+  preload: true,
 });
+
 export default function App({ Component, pageProps }: AppProps) {
   return (
-    <RecoilRoot>
-      <StyledEngineProvider injectFirst>
+    <StyledEngineProvider injectFirst>
+      <RecoilRoot>
         <main className={`${ROBOTO.variable} font-roboto `}>
-          <Layout>
-            <Component {...pageProps} />
-          </Layout>
+          <Component {...pageProps} />
         </main>
-      </StyledEngineProvider>
-    </RecoilRoot>
+      </RecoilRoot>
+    </StyledEngineProvider>
   );
 }

@@ -5,7 +5,6 @@ export const query = groq`
   email,
   address,
   images,
-  metaImage,
   phoneNumber,
   title,
   "project": *[_type=='project']{
@@ -24,6 +23,7 @@ export const query = groq`
   title, url}
 }
 `;
+
 export const metaQuery = groq`
 *[_type=="personal"]{
   "imageUrl": metaImage.asset->url

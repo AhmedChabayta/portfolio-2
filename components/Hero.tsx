@@ -10,6 +10,7 @@ const cairo = CP({
   display: 'auto',
   variable: '--font-cairo',
   fallback: ['system-ui', 'arial'],
+  preload: true,
 });
 
 interface Props {

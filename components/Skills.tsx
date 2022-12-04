@@ -13,11 +13,11 @@ export default function Skills({ skill }: { skill: Skill[] }) {
       <div className="flex min-h-screen max-w-[800px] items-center justify-center rounded-lg lg:w-[800px] ">
         <SectionTitle title="skills" />
 
-        <div className="relative grid w-[90%] grid-cols-4 gap-8 xs:gap-8 sm:grid-cols-5 sm:gap-12 lg:grid-cols-6">
+        <div className="relative grid w-[90%] grid-cols-4 items-center justify-center gap-8 xs:gap-8 sm:grid-cols-5 sm:gap-12 lg:grid-cols-6">
           {skill.map(({ title, image, progress }) => (
             <motion.div
               ref={iconRef}
-              className="group relative h-16 w-16 cursor-pointer will-change-transform xs:h-12 xs:w-12 md:h-20 md:w-20"
+              className="group relative cursor-pointer will-change-transform "
               initial={{ filter: 'brightness(0.2)' }}
               whileInView={{
                 filter: 'brightness(1)',
@@ -27,7 +27,8 @@ export default function Skills({ skill }: { skill: Skill[] }) {
             >
               <Image
                 className="object-contain transition-transform duration-200 ease-linear group-hover:-translate-x-[50%] group-hover:-translate-y-[50%] group-hover:scale-[0.5] "
-                fill
+                height={90}
+                width={90}
                 src={urlFor(image.asset).url()}
                 alt=""
               />

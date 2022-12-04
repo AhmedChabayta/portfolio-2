@@ -1,5 +1,4 @@
 import { useRef, useState } from 'react';
-import { Personal } from '../types/typings';
 import ContactInfo from './ContactInfo';
 import emailjs from '@emailjs/browser';
 import { EnvelopeIcon, MapPinIcon, PhoneIcon } from '@heroicons/react/24/solid';
@@ -9,11 +8,15 @@ import { motion } from 'framer-motion';
 import SnackbarUnstyled from '@mui/base/SnackbarUnstyled';
 import SectionTitle from './SectionTitle';
 
-interface PersonalProps {
-  personal: Personal;
-}
-
-export default function ContactMe({ personal }: PersonalProps) {
+export default function ContactMe({
+  phoneNumber,
+  email,
+  address,
+}: {
+  phoneNumber: string;
+  email: string;
+  address: string;
+}) {
   const [showSnackbar, setShowSnackbar] = useState<boolean>(false);
   const form = useRef<HTMLFormElement>(null);
 
@@ -64,18 +67,18 @@ export default function ContactMe({ personal }: PersonalProps) {
         <ContactInfo
           setShowSnackbar={setShowSnackbar}
           title="WhatsApp"
-          text={personal.phoneNumber}
+          text={phoneNumber}
           Icon={<PhoneIcon className="w-8" />}
         />
         <ContactInfo
           setShowSnackbar={setShowSnackbar}
           title=""
-          text={personal.email}
+          text={email}
           Icon={<EnvelopeIcon className="w-8" />}
         />
         <ContactInfo
           title=""
-          text={personal.address}
+          text={address}
           Icon={<MapPinIcon className="w-8" />}
         />
       </div>

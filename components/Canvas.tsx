@@ -1,15 +1,12 @@
-import { useLayoutEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { PlayIcon, PauseIcon } from '@heroicons/react/24/solid';
-import { onAndOn } from '../assets/music';
 import { motion } from 'framer-motion';
 import { useRecoilValue } from 'recoil';
-import { barLengthAtom, canvasRotationAtom } from '../atoms/canvasStateAtoms';
-declare global {
-  // eslint-disable-next-line no-unused-vars
-  interface Window {
-    webkitAudioContext: typeof AudioContext;
-  }
-}
+import {
+  barLengthAtom,
+  canvasRotationAtom,
+  trackAtom,
+} from '../atoms/canvasAtoms';
 
 export const Canvas = ({
   hue = 90,
@@ -24,15 +21,16 @@ export const Canvas = ({
   canvasRef: any;
   audioRef: any;
 }) => {
-  const [mounted, setMounted] = useState(false);
   const [isPlaying, setIsPlaying] = useState<boolean>();
   const rotation = useRecoilValue(canvasRotationAtom);
   const barLength = useRecoilValue(barLengthAtom);
+  const track = useRecoilValue(trackAtom);
 
-  useLayoutEffect(() => {
-    setMounted(false);
-    const AudioCtx = AudioContext || window.webkitAudioContext;
-    const audioCtx = new AudioCtx();
+  useEffect(() => {
+    if (track.length) {
+      audioRef.current.src = track;
+    }
+    const audioCtx = new AudioContext();
     const ctx: CanvasRenderingContext2D = canvasRef?.current?.getContext('2d');
     const audioSource: MediaElementAudioSourceNode =
       audioCtx.createMediaElementSource(audioRef.current);
@@ -48,11 +46,10 @@ export const Canvas = ({
     analyser.fftSize = quality || 128;
     canvasRef.current.width = window.innerWidth;
     canvasRef.current.height = window.innerHeight;
-    setMounted(true);
+
     const animate = () => {
       if (canvasRef.current && audioRef.current) {
         ctx?.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
-
         analyser.getByteFrequencyData(dataArray);
         shape === 'rect' ? drawVisualizer() : drawCircularVizualizer();
         animationFrame = requestAnimationFrame(animate);
@@ -128,7 +125,7 @@ export const Canvas = ({
         canvasRef.current.height = window.innerHeight;
       }
     });
-  }, [audioRef, barLength, canvasRef, quality, rotation, shape]);
+  }, [audioRef, barLength, canvasRef, quality, rotation, shape, track]);
   return (
     <>
       <motion.canvas
@@ -146,15 +143,16 @@ export const Canvas = ({
         className="fixed h-screen w-screen border shadow-[0px_0px_3px_3px_#ffffff_inset] will-change-auto"
       />
       <audio
-        src={onAndOn}
         ref={audioRef}
         className="fixed bottom-0 z-10 w-screen bg-transparent"
       />
 
-      {mounted ? (
+      {track.length && (
         <div
           onClick={() => {
-            isPlaying ? audioRef?.current?.pause() : audioRef?.current?.play();
+            audioRef.current.paused
+              ? audioRef?.current?.play()
+              : audioRef?.current?.pause();
           }}
           className="fixed bottom-2 left-[20px] z-[500] cursor-pointer text-3xl font-black text-white"
         >
@@ -164,8 +162,6 @@ export const Canvas = ({
             <PlayIcon className="w-8" />
           )}
         </div>
-      ) : (
-        ''
       )}
     </>
   );
