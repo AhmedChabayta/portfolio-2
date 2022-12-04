@@ -65,7 +65,7 @@ export default function CanvasSettings() {
             </>
           )}
         </Button>
-        <Button variant="outlined" className="text-white">
+        <Button variant="outlined" component="label" className="text-white">
           {trackName || `Upload Track`}
           <input
             onChange={(e: {

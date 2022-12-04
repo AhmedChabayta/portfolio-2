@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import React, { ReactNode, useEffect, useRef, useState } from 'react';
+import React, { ReactNode, useEffect, useState } from 'react';
 import { Canvas } from './Canvas';
 import {
   HomeModernIcon,
@@ -16,10 +16,13 @@ import {
   qualityStateAtom,
 } from '../atoms/canvasAtoms';
 import MetaTags from './MetaTags';
-import { NoSsr } from '@mui/material';
 import { AnimatePresence, motion } from 'framer-motion';
 import CanvasSettings from './CanvasSettings';
+import dynamic from 'next/dynamic';
 
+const DynamicWrapper = dynamic(() => import('../components/DynamicWrapper'), {
+  ssr: false,
+});
 const links = [
   {
     link: '#home',
@@ -47,8 +50,6 @@ export default function Layout({ children }: { children: ReactNode }) {
   const [hue, setHue] = useState<number>(0);
   const [fullScreen, setFullScreen] = useState<boolean>(false);
   const router = useRouter();
-  const CANVAS = useRef<HTMLCanvasElement>(null);
-  const AUDIO = useRef<HTMLAudioElement>(null);
   const canvas = useRecoilValue(canvasStateAtom);
   const quality = useRecoilValue(qualityStateAtom);
   const shape = useRecoilValue(canvasShapeAtom);
@@ -78,7 +79,7 @@ export default function Layout({ children }: { children: ReactNode }) {
   return (
     <>
       <MetaTags />
-      <div className="relative flex h-screen w-screen overflow-x-hidden overflow-y-scroll bg-white">
+      <div className="relative flex h-screen w-screen overflow-y-scroll bg-white overflow-x-hidden">
         <AnimatePresence>
           {canvas && (
             <motion.div
@@ -93,13 +94,7 @@ export default function Layout({ children }: { children: ReactNode }) {
               }}
               transition={{ duration: 0.8, ease: 'backInOut' }}
             >
-              <Canvas
-                canvasRef={CANVAS}
-                audioRef={AUDIO}
-                quality={quality}
-                shape={shape}
-                hue={hue}
-              />
+              <Canvas quality={quality} shape={shape} hue={hue} />
             </motion.div>
           )}
         </AnimatePresence>
@@ -122,7 +117,7 @@ export default function Layout({ children }: { children: ReactNode }) {
             className={`fixed top-[50%] left-0 z-[100] ml-2 hidden w-44 translate-y-[-50%] flex-col lg:flex`}
           >
             {links.map((link) => (
-              <React.Fragment key={link.link}>
+              <DynamicWrapper key={link.link}>
                 <Link href={link.link}>
                   <button className="heroButton">
                     <link.icon
@@ -141,7 +136,7 @@ export default function Layout({ children }: { children: ReactNode }) {
                     </p>
                   </button>
                 </Link>
-              </React.Fragment>
+              </DynamicWrapper>
             ))}
           </div>
         )}
