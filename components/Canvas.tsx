@@ -1,15 +1,12 @@
 import { PlayIcon, PauseIcon } from '@heroicons/react/24/solid';
 import { motion } from 'framer-motion';
-
 import useCanvas from '../hooks/useCanvas';
 
 export const Canvas = ({
-
   quality,
   shape,
   colors,
 }: {
-
   quality: number;
   shape: string;
   colors: {
@@ -43,12 +40,9 @@ export const Canvas = ({
           duration: 1,
           ease: 'easeInOut',
         }}
-        className="fixed h-screen w-screen will-change-auto sm:border-2 md:shadow-[0px_0px_3px_3px_#ffffff_inset]"
+        className="fixed h-screen w-screen will-change-auto"
       />
-      <audio
-        ref={audioRef}
-        className="fixed bottom-0 z-10 w-screen bg-transparent"
-      />
+      <audio ref={audioRef} hidden className="fixed bottom-0 z-10 w-screen" />
 
       {track.length && (
         <div

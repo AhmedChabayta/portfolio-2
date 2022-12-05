@@ -80,9 +80,23 @@ export default function Layout({ children }: { children: ReactNode }) {
   }, []);
   return (
     <>
-      <div className="w-[64px]">
-        <motion.div className="fixed left-2 top-2 z-40 hidden h-[98%] w-[60px] bg-gray-900/50 backdrop-blur-md lg:block" />
-      </div>
+      {canvas && (
+        <div className="w-[64px]">
+          <motion.div
+            initial={{ y: -100 }}
+            whileInView={{ y: 0 }}
+            transition={{ duration: 0.4 }}
+            className="fixed left-2 top-0 z-40 hidden h-[25%] w-[60px] border-x bg-gradient-to-b from-white/10  to-gray-900/50  backdrop-blur-md lg:block"
+          />
+          <motion.div className="fixed left-2 top-1/2 z-40 hidden h-[50%] w-[60px] translate-y-[-50%] border-x bg-gray-900/50 backdrop-blur-md lg:block" />
+          <motion.div
+            initial={{ y: 100 }}
+            whileInView={{ y: 0 }}
+            transition={{ duration: 0.4 }}
+            className="fixed left-2 bottom-0 z-40 hidden h-[25%] w-[60px] border-x bg-gradient-to-t from-white/10  to-gray-900/50  backdrop-blur-md lg:block"
+          />
+        </div>
+      )}
 
       <MetaTags />
       <div className="relative flex h-screen w-screen overflow-y-scroll bg-white overflow-x-hidden">

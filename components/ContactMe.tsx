@@ -83,7 +83,7 @@ export default function ContactMe({
         />
       </div>
       <form
-        className="form-control flex flex-col justify-center rounded"
+        className="form-control flex flex-col items-center justify-center rounded"
         ref={form}
         onSubmit={sendEmail}
       >
@@ -104,8 +104,9 @@ export default function ContactMe({
 
         <TextArea placeholder="message" name="message" label="message" />
         <Button
+          fullWidth
           variant="contained"
-          className="mx-auto my-5 h-10 w-1/2 rounded font-black uppercase transition-all ease-linear active:scale-95 xs:my-2 sm:my-4 md:my-8"
+          className="mx-auto my-5 h-10  rounded font-black uppercase transition-all ease-linear active:scale-95 xs:my-2 sm:my-4 md:my-8 lg:w-full"
           type="submit"
         >
           submit

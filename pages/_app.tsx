@@ -20,7 +20,7 @@ export default function App({ Component, pageProps }: AppProps) {
     <>
       <RecoilRoot>
         <Layout>
-          <main className={`${ROBOTO.variable} font-roboto `}>
+          <main className={`${ROBOTO.variable} font-roboto`}>
             <Component {...pageProps} />
           </main>
         </Layout>

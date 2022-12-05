@@ -68,7 +68,3 @@ ul {
   padding: 0 !important;
   height: fit-content;
 }
-::selection {
-  background: transparent !important;
-  color: rgb(59 130 246);
-}
