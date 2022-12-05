@@ -48,7 +48,6 @@ const links = [
 
 export default function Layout({ children }: { children: ReactNode }) {
   const [colors, setColors] = useState({ red: 0, green: 0, blue: 0 });
-  const [fullScreen, setFullScreen] = useState<boolean>(false);
   const router = useRouter();
   const canvas = useRecoilValue(canvasStateAtom);
   const quality = useRecoilValue(qualityStateAtom);
@@ -62,22 +61,6 @@ export default function Layout({ children }: { children: ReactNode }) {
     });
   }, [router]);
 
-  useEffect(() => {
-    if (typeof window != 'undefined') {
-      window.addEventListener('keypress', (e) => {
-        if (e.key === 'f') {
-          setFullScreen((prev) => !prev);
-        }
-      });
-    }
-    return () => {
-      window.removeEventListener('keypress', (e) => {
-        if (e.key === 'f') {
-          setFullScreen((prev) => !prev);
-        }
-      });
-    };
-  }, []);
   return (
     <>
       {canvas && (
@@ -100,37 +83,39 @@ export default function Layout({ children }: { children: ReactNode }) {
 
       <MetaTags />
       <div className="relative flex h-screen w-screen overflow-y-scroll bg-white overflow-x-hidden">
-        <AnimatePresence>
-          {canvas && (
-            <motion.div
-              initial={{
-                y: -2000,
-              }}
-              animate={{
-                y: 0,
-              }}
-              exit={{
-                x: 2000,
-              }}
-              transition={{ duration: 0.8, ease: 'backInOut' }}
-            >
-              <Canvas colors={colors} quality={quality} shape={shape} />
-            </motion.div>
-          )}
-        </AnimatePresence>
-        <AnimatePresence>
-          {!canvas && (
-            <motion.div
-              initial={{ x: -2000 }}
-              animate={{ x: 0 }}
-              exit={{ y: 2000 }}
-              transition={{ duration: 0.8, ease: 'backInOut' }}
-            >
-              <CanvasSettings />
-            </motion.div>
-          )}
-        </AnimatePresence>
-        {fullScreen || !canvas ? (
+        <DynamicWrapper>
+          <AnimatePresence>
+            {canvas && (
+              <motion.div
+                initial={{
+                  y: -2000,
+                }}
+                animate={{
+                  y: 0,
+                }}
+                exit={{
+                  x: 2000,
+                }}
+                transition={{ duration: 0.8, ease: 'backInOut' }}
+              >
+                <Canvas colors={colors} quality={quality} shape={shape} />
+              </motion.div>
+            )}
+          </AnimatePresence>
+          <AnimatePresence>
+            {!canvas && (
+              <motion.div
+                initial={{ x: -2000 }}
+                animate={{ x: 0 }}
+                exit={{ y: 2000 }}
+                transition={{ duration: 0.8, ease: 'backInOut' }}
+              >
+                <CanvasSettings />
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </DynamicWrapper>
+        {!canvas ? (
           ''
         ) : (
           <div className="group fixed top-[50%] left-0 z-[100] ml-3 hidden w-fit translate-y-[-50%] flex-col lg:flex">
@@ -155,7 +140,7 @@ export default function Layout({ children }: { children: ReactNode }) {
           </div>
         )}
 
-        {fullScreen || (canvas && <>{children}</>)}
+        {canvas && <>{children}</>}
       </div>
     </>
   );

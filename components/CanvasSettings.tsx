@@ -25,7 +25,7 @@ export default function CanvasSettings() {
   const [rotation, setRotation] = useRecoilState(canvasRotationAtom);
   const [shape, setShape] = useRecoilState(canvasShapeAtom);
   const [barLength, setBarLength] = useRecoilState(barLengthAtom);
-  const [track, setTrack] = useRecoilState(trackAtom);
+  const [setTrack] = useRecoilState(trackAtom);
   const [trackName, setTrackName] = useRecoilState(trackNameAtom);
 
   const handleChange = (event: SelectChangeEvent) => {
@@ -76,7 +76,6 @@ export default function CanvasSettings() {
               e.preventDefault();
               setTrackName(e.target.files[0].name);
               setTrack(URL.createObjectURL(e.target.files[0]));
-              console.log(track, 'track file');
             }}
             type="file"
             hidden

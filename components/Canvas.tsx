@@ -33,8 +33,8 @@ export const Canvas = ({
           },${colors.green},${colors.blue})`,
           filter:
             shape === 'rect'
-              ? `brightness(1.2) contrast(1.1) saturate(1.1) blur(5px)`
-              : `brightness(1.2) contrast(1.1) saturate(1.1) `,
+              ? `brightness(1.2) contrast(1.5) saturate(1.1) blur(5px)`
+              : `brightness(1.2) contrast(1.5) saturate(1.1) `,
         }}
         transition={{
           duration: 1,
