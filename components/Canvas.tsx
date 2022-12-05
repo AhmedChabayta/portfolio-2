@@ -4,30 +4,46 @@ import { motion } from 'framer-motion';
 import useCanvas from '../hooks/useCanvas';
 
 export const Canvas = ({
-  hue = 90,
+
   quality,
   shape,
+  colors,
 }: {
-  hue: number;
+
   quality: number;
   shape: string;
+  colors: {
+    red: number;
+    green: number;
+    blue: number;
+  };
 }) => {
+  const { red, green, blue } = colors;
   const { canvasRef, audioRef, track, isPlaying } = useCanvas(shape, quality);
   return (
     <>
       <motion.canvas
         ref={canvasRef}
         animate={{
-          backgroundImage: `linear-gradient(-145deg, hsl(290,100%,65%) 0%,hsl(205,100%,65%) 100%)`,
+          backgroundImage: `linear-gradient(${
+            red > green + blue
+              ? '-145deg'
+              : green > red + blue
+              ? '90deg'
+              : '145deg'
+          }, rgb(${colors.red * 2},${colors.green},${colors.blue * 2}) 0%,rgb(${
+            colors.red
+          },${colors.green},${colors.blue})`,
           filter:
             shape === 'rect'
-              ? `hue-rotate(${hue}deg) brightness(1.1) contrast(1.1) saturate(1.1) blur(5px)`
-              : `hue-rotate(${hue}deg) brightness(1.1) contrast(1.1) saturate(1.1) `,
+              ? `brightness(1.2) contrast(1.1) saturate(1.1) blur(5px)`
+              : `brightness(1.2) contrast(1.1) saturate(1.1) `,
         }}
         transition={{
-          duration: 0.7,
+          duration: 1,
+          ease: 'easeInOut',
         }}
-        className="fixed h-screen w-screen border shadow-[0px_0px_3px_3px_#ffffff_inset] will-change-auto"
+        className="fixed h-screen w-screen will-change-auto sm:border-2 md:shadow-[0px_0px_3px_3px_#ffffff_inset]"
       />
       <audio
         ref={audioRef}

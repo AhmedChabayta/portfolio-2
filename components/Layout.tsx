@@ -47,7 +47,7 @@ const links = [
 ];
 
 export default function Layout({ children }: { children: ReactNode }) {
-  const [hue, setHue] = useState<number>(0);
+  const [colors, setColors] = useState({ red: 0, green: 0, blue: 0 });
   const [fullScreen, setFullScreen] = useState<boolean>(false);
   const router = useRouter();
   const canvas = useRecoilValue(canvasStateAtom);
@@ -55,11 +55,11 @@ export default function Layout({ children }: { children: ReactNode }) {
   const shape = useRecoilValue(canvasShapeAtom);
 
   useEffect(() => {
-    let prevHue: number;
-    let hues: number;
-    hues = Math.ceil(Math.random() * 100);
-    prevHue = hues;
-    setHue(hues === prevHue ? hues * 2 : hues);
+    setColors({
+      red: Math.floor(Math.random() * 127.5),
+      green: Math.floor(Math.random() * 127.5),
+      blue: Math.floor(Math.random() * 127.5),
+    });
   }, [router]);
 
   useEffect(() => {
@@ -71,13 +71,19 @@ export default function Layout({ children }: { children: ReactNode }) {
       });
     }
     return () => {
-      window.removeEventListener('keypress', () => {
-        setFullScreen(false);
+      window.removeEventListener('keypress', (e) => {
+        if (e.key === 'f') {
+          setFullScreen((prev) => !prev);
+        }
       });
     };
   }, []);
   return (
     <>
+      <div className="w-[64px]">
+        <motion.div className="fixed left-2 top-2 z-40 hidden h-[98%] w-[60px] bg-gray-900/50 backdrop-blur-md lg:block" />
+      </div>
+
       <MetaTags />
       <div className="relative flex h-screen w-screen overflow-y-scroll bg-white overflow-x-hidden">
         <AnimatePresence>
@@ -94,7 +100,7 @@ export default function Layout({ children }: { children: ReactNode }) {
               }}
               transition={{ duration: 0.8, ease: 'backInOut' }}
             >
-              <Canvas quality={quality} shape={shape} hue={hue} />
+              <Canvas colors={colors} quality={quality} shape={shape} />
             </motion.div>
           )}
         </AnimatePresence>
@@ -113,23 +119,17 @@ export default function Layout({ children }: { children: ReactNode }) {
         {fullScreen || !canvas ? (
           ''
         ) : (
-          <div
-            className={`fixed top-[50%] left-0 z-[100] ml-2 hidden w-44 translate-y-[-50%] flex-col lg:flex`}
-          >
+          <div className="group fixed top-[50%] left-0 z-[100] ml-3 hidden w-fit translate-y-[-50%] flex-col lg:flex">
             {links.map((link) => (
               <DynamicWrapper key={link.link}>
                 <Link href={link.link}>
-                  <button className="heroButton">
+                  <button className="heroButton group ml-2 ">
                     <link.icon
-                      className={`w-8 transition-all duration-150 ease-linear ${
-                        router.asPath === `/${link.link}` ? 'w-10 ' : ''
-                      }`}
+                      className={`w-8 object-cover transition-all duration-150 ease-linear`}
                     />
                     <p
-                      className={`hidden transition-all duration-150 ease-linear lg:inline ${
-                        router.asPath === `/${link.link}`
-                          ? 'typography typography-white font-black'
-                          : ''
+                      className={`invisible hidden pl-6 transition-all duration-150 ease-linear group-hover:visible lg:inline ${
+                        router.asPath === `/${link.link}` ? 'font-black' : ''
                       }`}
                     >
                       {link.link.split('#')}

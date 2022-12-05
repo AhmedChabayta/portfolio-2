@@ -4,7 +4,7 @@
 
 @layer components {
   .heroButton {
-    @apply my-4 flex items-center space-x-4 px-6 py-2 uppercase tracking-widest;
+    @apply my-4 flex items-center justify-start uppercase tracking-widest;
   }
   .wallpaper {
     @apply transition-[filter] duration-[1s] ease-linear;

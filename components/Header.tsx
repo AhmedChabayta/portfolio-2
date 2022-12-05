@@ -57,57 +57,61 @@ export default function Header({ social }: { social: Social[] }) {
   };
 
   return (
-    <header className="sticky top-0 z-[500] mx-auto flex items-center justify-between xs:w-full sm:w-3/4 sm:p-5">
-      <motion.div
-        variants={leftContainer}
-        initial="initial"
-        animate="animate"
-        className="relative flex items-center justify-center "
-      >
-        {social.map((social: Social) => (
-          <motion.div
-            className="relative z-[900]"
-            key={social.title}
-            variants={leftChild}
-          >
-            <SocialIcon
-              fgColor="white"
-              bgColor="transparent"
-              url={social.url}
-            />
-          </motion.div>
-        ))}
-      </motion.div>
-      <motion.div
-        variants={rightContainer}
-        initial="initial"
-        animate="animate"
-        className="flex cursor-pointer items-center space-x-2 "
-      >
-        <p className="whitespace-nowrap rounded p-2 xs:text-xs">
-          {trackName && trackName}
-        </p>
-        <Tooltip title={canvas ? 'Hide Canvas' : 'Show Canvas'}>
-          <Button
-            className="ml-2 flex items-center"
-            onClick={() => setCanvas((prev: boolean) => !prev)}
-          >
-            {canvas ? (
-              <EyeSlashIcon className="w-7" />
-            ) : (
-              <EyeIcon className="w-7" />
-            )}
-          </Button>
-        </Tooltip>
+    <div className="lg:h-[60px]">
+      <header className="fixed left-1/2 top-0 z-[500] mx-auto flex h-[60px] w-4/5 translate-x-[-50%] items-center justify-between rounded xs:h-[40px] xs:w-full sm:p-5 lg:top-2">
+        <motion.div
+          variants={leftContainer}
+          initial="initial"
+          animate="animate"
+          className="relative flex w-fit items-center justify-center"
+        >
+          {social.map((social: Social) => (
+            <motion.div
+              className="relative z-[900]"
+              key={social.title}
+              variants={leftChild}
+            >
+              <SocialIcon
+                fgColor="white"
+                bgColor="transparent"
+                url={social.url}
+              />
+            </motion.div>
+          ))}
+        </motion.div>
+        <motion.div
+          variants={rightContainer}
+          initial="initial"
+          animate="animate"
+          className="flex cursor-pointer items-center justify-center rounded px-4"
+        >
+          <p className="whitespace-nowrap rounded  xs:text-xs">
+            {trackName && trackName}
+          </p>
+          <Tooltip title={canvas ? 'Hide Canvas' : 'Show Canvas'}>
+            <Button
+              className="flex items-center"
+              onClick={() => setCanvas((prev: boolean) => !prev)}
+            >
+              {canvas ? (
+                <EyeSlashIcon className="w-7" />
+              ) : (
+                <EyeIcon className="w-7" />
+              )}
+            </Button>
+          </Tooltip>
 
-        <Link href="#contact">
-          <motion.div variants={rightChild} className="flex items-center">
-            <EnvelopeIcon className="mx-2 w-5" />
+          <Link href="#contact">
+            <motion.div variants={rightChild} className="flex items-center">
+              <EnvelopeIcon className="mx-2 w-7" />
 
-            <p className="hidden uppercase md:inline-flex">get in touch</p>
-          </motion.div>
-        </Link>
-      </motion.div>
-    </header>
+              <p className="hidden text-xl uppercase md:inline-flex">
+                get in touch
+              </p>
+            </motion.div>
+          </Link>
+        </motion.div>
+      </header>
+    </div>
   );
 }

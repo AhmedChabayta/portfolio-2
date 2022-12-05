@@ -68,6 +68,7 @@ export interface Template {
 }
 
 export interface Skill {
+  index: number;
   image: Image;
   progress: number | null;
   title: string;

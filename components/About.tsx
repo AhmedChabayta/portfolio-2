@@ -23,7 +23,7 @@ export default function About({ personalImage }: Props) {
       initial={{ opacity: 0.1 }}
       whileInView={{ opacity: 1 }}
       transition={{ duration: 0.8 }}
-      className="relative mx-auto  flex min-h-screen flex-col items-center justify-center text-center md:text-left lg:space-y-8 lg:space-x-8 lg:pl-44 xl:flex-row"
+      className="relative flex min-h-screen flex-col items-center justify-center text-center md:text-left lg:space-y-8 lg:space-x-8  xl:flex-row"
     >
       <SectionTitle title="about" />
       <motion.div

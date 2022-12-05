@@ -19,10 +19,10 @@ function Projects({ image, title, description, linkToBuild }: Props) {
   return (
     <div
       id="title"
-      className="relative z-10 flex min-h-screen w-full shrink-0 snap-center flex-col items-center justify-center"
+      className="relative z-10 flex min-h-screen w-full shrink-0 snap-center flex-col items-center justify-center "
     >
       <Image
-        className="object-cover px-8 lg:px-0"
+        className="object-cover px-8 lg:px-0 "
         width={400}
         height={400}
         src={urlFor(image).url()}
@@ -31,9 +31,9 @@ function Projects({ image, title, description, linkToBuild }: Props) {
       />
       <div className="mt-20 space-y-16 text-center">
         <Link target="_void" href={`${linkToBuild}`}>
-          <h1 className="text-4xl">{title}</h1>
+          <h1 className=" text-4xl font-bold md:text-5xl">{title}</h1>
         </Link>
-        <p className="text-sm sm:text-lg md:text-2xl">{description}</p>
+        <p className="mx-auto max-w-[80%] text-sm sm:text-lg ">{description}</p>
       </div>
     </div>
   );
